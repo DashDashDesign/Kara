@@ -251,6 +251,13 @@ async function handleApi(req, res, url) {
       if (provider === 'kie') updates.KIE_API_KEY = key;
       if (provider === 'fal') updates.FAL_KEY = key;
     }
+    // "Forget my key": empties the key line, for example before lending the computer.
+    if (body.forget === true && !key) {
+      if (provider === 'cloud' || provider === 'router') updates.COMFY_CLOUD_API_KEY = '';
+      if (provider === 'magnific') updates.MAGNIFIC_API_KEY = '';
+      if (provider === 'kie') updates.KIE_API_KEY = '';
+      if (provider === 'fal') updates.FAL_KEY = '';
+    }
     env.save(updates);
     return send(res, 200, settingsInfo());
   }

@@ -239,6 +239,7 @@
       save: 'Save',
       forget: 'Forget my key',
       savedOk: 'Saved.',
+      forgotOk: 'Key removed from your machine.',
       model: 'Model',
       localModels: 'On your own machine, free (a click runs it here)',
       openModels: 'Open weights',
@@ -513,6 +514,7 @@
       save: 'Enregistrer',
       forget: 'Oublier ma clé',
       savedOk: 'Enregistré.',
+      forgotOk: 'Clé retirée de votre machine.',
       model: 'Modèle',
       localModels: 'Sur votre machine, gratuit (un clic le lance ici)',
       openModels: 'Poids libres',
@@ -3009,6 +3011,7 @@
             state.history.unshift(item);
             saveOrder();
             made += 1;
+            trackUsage('image', { provider: prov });
             showCard(0, true);
           }
         }
@@ -4740,7 +4743,7 @@
     $('keyLink').href = KEY_PAGES[provider] || '#';
     $('keyLink').textContent = `${t('getKey')} ↗`;
     $('rememberRow').hidden = !info.byok;
-    $('forgetKey').hidden = !(info.byok && keys[provider]);
+    $('forgetKey').hidden = $('keyRow').hidden || !saved;
     $('settingsNote').textContent = info.byok ? t('byokNote') : provider !== 'local' && info.editable ? t('localNote') : '';
     $('saveSettings').hidden = !(info.editable || info.byok);
     syncBalances();
@@ -4768,9 +4771,22 @@
     afterKeysChanged();
   }
 
-  function forgetKey() {
-    storeKey(pendingProvider || userProvider, '', false);
+  async function forgetKey() {
+    const info = state.cfg.settings || {};
+    const provider = pendingProvider || userProvider || info.provider;
+    $('settingsResult').textContent = '';
+    if (info.byok) storeKey(provider, '', false);
+    else {
+      // On your own machine, the key line of .env is emptied.
+      try {
+        state.cfg.settings = await postJson('/api/settings', { provider, forget: true });
+      } catch (err) {
+        $('settingsResult').textContent = err.message;
+        return;
+      }
+    }
     renderSettings();
+    $('settingsResult').textContent = t('forgotOk');
     afterKeysChanged();
   }
 
@@ -5478,7 +5494,35 @@
     window.addEventListener('scroll', hide, true);
   }
 
+  /* ---------- Usage counter shared by the Dash Dash tools (api.dashdash.design) ---------- */
+
+  // Online version only: one visit per tab and one line per image, with its provider.
+  // No cookie, no identifier, no key, no prompt, no image. Copies on your own machine never count.
+  const STATS_URL = 'https://api.dashdash.design/e';
+
+  function trackUsage(kind, extra = {}) {
+    try {
+      if (location.hostname !== 'kara.dashdash.design') return;
+      const body = JSON.stringify({ ...extra, kind, lang, tool: 'kara' });
+      if (navigator.sendBeacon) navigator.sendBeacon(STATS_URL, new Blob([body], { type: 'text/plain' }));
+      else fetch(STATS_URL, { method: 'POST', body, keepalive: true, headers: { 'content-type': 'text/plain' } }).catch(() => {});
+    } catch (err) {
+      // Counting must never break the app.
+    }
+  }
+
+  function trackVisit() {
+    try {
+      if (sessionStorage.getItem('cd-visit-counted')) return;
+      sessionStorage.setItem('cd-visit-counted', '1');
+    } catch (err) {
+      // Private mode without storage: still count the visit.
+    }
+    trackUsage('visit');
+  }
+
   async function init() {
+    trackVisit();
     setupTips();
     applyTexts();
     try {

@@ -163,6 +163,14 @@ async function main() {
       assert.match(fs.readFileSync(ENV_FILE, 'utf8'), /COMFY_URL=http:\/\/127\.0\.0\.1:8199/);
     });
 
+    await check('settings: "forget my key" empties the key in .env', async () => {
+      const set = await (await post('/api/settings', { provider: 'magnific', key: 'to-forget' })).json();
+      assert.equal(set.hasKey.magnific, true);
+      const gone = await (await post('/api/settings', { provider: 'magnific', forget: true })).json();
+      assert.equal(gone.hasKey.magnific, false);
+      assert.equal(fs.readFileSync(ENV_FILE, 'utf8').includes('to-forget'), false);
+    });
+
     await check('age and gender: words for children, a typed age, origin, height and build', async () => {
       const kid = await (await post('/api/preview', { selection: { age: 'child', presentation: 'man', ethnicity: 'eastasian' } })).json();
       assert.match(kid.prompt, /The character is a little boy of East Asian descent\./);
