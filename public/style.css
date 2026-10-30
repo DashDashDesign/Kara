@@ -41,7 +41,9 @@ body{display:flex;flex-direction:column;overflow:hidden}
 /* Top bar: brand, tools, status, session */
 .top{flex:none;display:flex;align-items:center;gap:14px 18px;padding:10px clamp(14px,2vw,28px);border-bottom:1px solid var(--bord);position:relative;z-index:30}
 .top-left{display:flex;align-items:center;gap:14px;flex:none}
-.top-left .app-icon{display:block;width:30px;height:30px;border-radius:8px}
+/* Wordmark: the K of the logo stands in for the K of KARA, on the cap height of the letters (cap = .7em). */
+.wordmark{white-space:nowrap;font-size:30px}
+.wordmark-k{display:inline-block;height:.7064em;width:.56em;margin-right:.042em;vertical-align:baseline}
 h1{font:900 24px/1 var(--titres);text-transform:uppercase;margin:0;letter-spacing:.01em;white-space:nowrap}
 h1 em{font-style:normal;color:var(--accent)}
 h1 .tagline{margin-left:8px;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;vertical-align:4px}
