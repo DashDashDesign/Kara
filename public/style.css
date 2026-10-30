@@ -290,7 +290,7 @@ textarea:focus,input[type=number]:focus{border-color:rgba(62,207,96,.55);outline
 /* ---------- Narrow screens and phones: the page scrolls, the dock stays at the bottom ---------- */
 /* Tablets and small laptops: two rows in the bar (settings, then details, seed, Generate) so the image keeps its room. */
 @media (max-width:1180px){
-  h1{display:none}
+  h1 .tagline{display:none}
   /* the tools no longer fit beside the right-hand buttons: they get a row of their own */
   .top{flex-wrap:wrap}
   .toolbar{order:3;flex-basis:100%}
@@ -335,9 +335,12 @@ textarea:focus,input[type=number]:focus{border-color:rgba(62,207,96,.55);outline
   .pop-panel,.promptpop .pop-panel{left:0;right:0;width:auto}
 }
 @media (max-width:560px){
-  h1{display:none}
+  /* The wordmark stays (it is the logo); only the tagline goes. The button rows wrap instead of running off the screen. */
+  h1 .tagline{display:none}
+  .wordmark{font-size:26px}
   .top{gap:10px 8px}
-  .top-right{gap:6px}
+  .top-right{gap:6px;flex-wrap:wrap;justify-content:flex-end;flex:1 1 auto;max-width:100%}
+  .toolbar{flex-wrap:wrap}
   .top-right .ghost{padding:7px 12px}
   input[type=number]{width:120px}
   .primary{padding:12px 24px}
