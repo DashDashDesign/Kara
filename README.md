@@ -116,7 +116,7 @@ page (public/)  ->  server.js  ->  ComfyUI on your own machine, Comfy Router, KI
 npm test
 ```
 
-Starts a fake ComfyUI, a fake Comfy Cloud and fake API providers, then checks the menus, the prompt, the values written into each workflow, image uploads, the ControlNet guide, job tracking, error messages, key handling, the installer and the updater (61 checks).
+Starts a fake ComfyUI, a fake Comfy Cloud and fake API providers, then checks the menus, the prompt, the values written into each workflow, image uploads, the ControlNet guide, job tracking, error messages, key handling, the installer and the updater (63 checks).
 
 `npm run mock` starts only the fake ComfyUI, to try the interface without a GPU.
 
