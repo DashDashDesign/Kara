@@ -1,0 +1,2883 @@
+{
+  "sections": [
+    {
+      "id": "identity",
+      "en": "Identity",
+      "fr": "Identité"
+    },
+    {
+      "id": "body",
+      "en": "Body",
+      "fr": "Corps"
+    },
+    {
+      "id": "face",
+      "en": "Face",
+      "fr": "Visage"
+    },
+    {
+      "id": "hair",
+      "en": "Hair",
+      "fr": "Cheveux"
+    },
+    {
+      "id": "style",
+      "en": "Style",
+      "fr": "Style"
+    },
+    {
+      "id": "render",
+      "en": "Render",
+      "fr": "Rendu",
+      "dock": true
+    }
+  ],
+  "groups": [
+    {
+      "id": "presentation",
+      "icon": "person",
+      "section": "identity",
+      "type": "single",
+      "noCustom": true,
+      "en": "Gender",
+      "fr": "Genre",
+      "options": [
+        {
+          "id": "woman",
+          "en": "Woman",
+          "fr": "Femme",
+          "p": "woman",
+          "forms": {
+            "baby": "baby girl",
+            "child": "little girl",
+            "teen": "teenage girl"
+          }
+        },
+        {
+          "id": "man",
+          "en": "Man",
+          "fr": "Homme",
+          "p": "man",
+          "forms": {
+            "baby": "baby boy",
+            "child": "little boy",
+            "teen": "teenage boy"
+          }
+        },
+        {
+          "id": "nonbinary",
+          "en": "Non-binary",
+          "fr": "Non binaire",
+          "p": "non-binary person",
+          "forms": {
+            "baby": "baby",
+            "child": "child",
+            "teen": "non-binary teenager"
+          }
+        }
+      ],
+      "keywords": {
+        "en": "sex gender man woman",
+        "fr": "sexe genre homme femme"
+      }
+    },
+    {
+      "id": "age",
+      "icon": "clock",
+      "section": "identity",
+      "type": "single",
+      "customType": "number",
+      "min": 0,
+      "max": 120,
+      "en": "Age",
+      "fr": "Âge",
+      "options": [
+        {
+          "id": "baby",
+          "en": "Baby",
+          "fr": "Bébé",
+          "p": "",
+          "stage": "baby"
+        },
+        {
+          "id": "child",
+          "en": "Child",
+          "fr": "Enfant",
+          "p": "",
+          "stage": "child"
+        },
+        {
+          "id": "teen",
+          "en": "Teenager",
+          "fr": "Adolescent",
+          "p": "",
+          "stage": "teen"
+        },
+        {
+          "id": "young",
+          "en": "Young adult",
+          "fr": "Jeune adulte",
+          "p": "young adult"
+        },
+        {
+          "id": "adult",
+          "en": "Adult",
+          "fr": "Adulte",
+          "p": "adult"
+        },
+        {
+          "id": "senior",
+          "en": "Senior",
+          "fr": "Senior",
+          "p": "sixty-something"
+        },
+        {
+          "id": "elder",
+          "en": "Elderly",
+          "fr": "Grand âge",
+          "p": "elderly"
+        }
+      ],
+      "keywords": {
+        "en": "old young child years",
+        "fr": "vieux jeune enfant ans"
+      }
+    },
+    {
+      "id": "ethnicity",
+      "icon": "globe",
+      "section": "identity",
+      "type": "single",
+      "en": "Ethnicity",
+      "fr": "Origine",
+      "options": [
+        {
+          "id": "any",
+          "en": "Not specified",
+          "fr": "Non précisée",
+          "p": ""
+        },
+        {
+          "id": "african",
+          "en": "African",
+          "fr": "Afrique",
+          "p": "of African descent"
+        },
+        {
+          "id": "european",
+          "en": "European",
+          "fr": "Europe",
+          "p": "of European descent"
+        },
+        {
+          "id": "eastasian",
+          "en": "East Asian",
+          "fr": "Asie de l'Est",
+          "p": "of East Asian descent"
+        },
+        {
+          "id": "seasian",
+          "en": "Southeast Asian",
+          "fr": "Asie du Sud-Est",
+          "p": "of Southeast Asian descent"
+        },
+        {
+          "id": "southasian",
+          "en": "South Asian (Indian)",
+          "fr": "Asie du Sud (Inde)",
+          "p": "of South Asian descent"
+        },
+        {
+          "id": "mideast",
+          "en": "Middle Eastern",
+          "fr": "Moyen-Orient",
+          "p": "of Middle Eastern descent"
+        },
+        {
+          "id": "latin",
+          "en": "Latin American",
+          "fr": "Amérique latine",
+          "p": "of Latin American descent"
+        },
+        {
+          "id": "native",
+          "en": "Native American",
+          "fr": "Amérindien",
+          "p": "of Native American descent"
+        },
+        {
+          "id": "pacific",
+          "en": "Pacific Islander",
+          "fr": "Océanie",
+          "p": "of Pacific Islander descent"
+        },
+        {
+          "id": "mixed",
+          "en": "Mixed",
+          "fr": "Métissé",
+          "p": "of mixed heritage"
+        }
+      ],
+      "keywords": {
+        "en": "origin ethnicity race skin",
+        "fr": "origine ethnie pays"
+      }
+    },
+    {
+      "id": "height",
+      "icon": "ruler",
+      "section": "body",
+      "type": "single",
+      "customType": "height",
+      "en": "Height",
+      "fr": "Taille",
+      "options": [
+        {
+          "id": "short",
+          "en": "Short",
+          "fr": "Petit",
+          "p": "short stature"
+        },
+        {
+          "id": "average",
+          "en": "Average",
+          "fr": "Standard",
+          "p": ""
+        },
+        {
+          "id": "tall",
+          "en": "Tall",
+          "fr": "Grand",
+          "p": "tall"
+        }
+      ],
+      "ownTemplate": "{} tall",
+      "noTiles": true,
+      "keywords": {
+        "en": "tall short size",
+        "fr": "grand petit taille"
+      }
+    },
+    {
+      "id": "build",
+      "icon": "body",
+      "section": "body",
+      "type": "single",
+      "en": "Build",
+      "fr": "Constitution",
+      "options": [
+        {
+          "id": "skinny",
+          "en": "Skinny",
+          "fr": "Maigre",
+          "p": "very thin build"
+        },
+        {
+          "id": "slim",
+          "en": "Slim",
+          "fr": "Mince",
+          "p": "slim build"
+        },
+        {
+          "id": "average",
+          "en": "Average",
+          "fr": "Standard",
+          "p": "average build"
+        },
+        {
+          "id": "athletic",
+          "en": "Athletic",
+          "fr": "Athlétique",
+          "p": "athletic build"
+        },
+        {
+          "id": "muscular",
+          "en": "Muscular",
+          "fr": "Musclé",
+          "p": "muscular build"
+        },
+        {
+          "id": "stocky",
+          "en": "Stocky",
+          "fr": "Costaud",
+          "p": "stocky build"
+        },
+        {
+          "id": "heavy",
+          "en": "Heavy-set",
+          "fr": "Corpulent",
+          "p": "heavy-set, plus-size build"
+        },
+        {
+          "id": "curvy",
+          "en": "Curvy",
+          "fr": "Voluptueux",
+          "p": "curvy build"
+        }
+      ],
+      "keywords": {
+        "en": "body shape weight morphology silhouette",
+        "fr": "corps morphologie poids silhouette"
+      }
+    },
+    {
+      "id": "faceShape",
+      "icon": "face",
+      "section": "face",
+      "type": "single",
+      "en": "Face shape",
+      "fr": "Forme du visage",
+      "options": [
+        {
+          "id": "oval",
+          "en": "Oval",
+          "fr": "Ovale",
+          "p": "oval face"
+        },
+        {
+          "id": "round",
+          "en": "Round",
+          "fr": "Rond",
+          "p": "round face",
+          "at": {
+            "width": 75,
+            "length": 25,
+            "jaw": 25
+          }
+        },
+        {
+          "id": "square",
+          "en": "Square",
+          "fr": "Carré",
+          "p": "square jawline",
+          "at": {
+            "width": 65,
+            "jaw": 90
+          }
+        },
+        {
+          "id": "heart",
+          "en": "Heart",
+          "fr": "Cœur",
+          "p": "heart-shaped face",
+          "at": {
+            "width": 55,
+            "length": 55,
+            "jaw": 20
+          }
+        },
+        {
+          "id": "long",
+          "en": "Long",
+          "fr": "Allongé",
+          "p": "long narrow face",
+          "at": {
+            "width": 25,
+            "length": 85
+          }
+        }
+      ],
+      "noun": "face",
+      "neutral": "oval",
+      "sliders": [
+        {
+          "id": "width",
+          "en": "Width",
+          "fr": "Largeur",
+          "lo": {
+            "en": "Narrow",
+            "fr": "Étroit"
+          },
+          "hi": {
+            "en": "Wide",
+            "fr": "Large"
+          },
+          "words": [
+            "very narrow",
+            "narrow",
+            "",
+            "wide",
+            "very wide"
+          ]
+        },
+        {
+          "id": "length",
+          "en": "Length",
+          "fr": "Longueur",
+          "lo": {
+            "en": "Short",
+            "fr": "Court"
+          },
+          "hi": {
+            "en": "Long",
+            "fr": "Long"
+          },
+          "words": [
+            "short",
+            "rather short",
+            "",
+            "rather long",
+            "long"
+          ]
+        },
+        {
+          "id": "jaw",
+          "en": "Jaw",
+          "fr": "Mâchoire",
+          "lo": {
+            "en": "Soft",
+            "fr": "Douce"
+          },
+          "hi": {
+            "en": "Square",
+            "fr": "Carrée"
+          },
+          "words": [
+            "very soft rounded",
+            "soft",
+            "",
+            "defined",
+            "strong square"
+          ],
+          "noun": "jaw"
+        }
+      ],
+      "chips": true,
+      "facePanel": true,
+      "note": {
+        "en": "Without a reference image or the guide, the face shape stays approximate: the models read words, not measurements.",
+        "fr": "Sans image de référence ni guide, la forme du visage reste approximative : les modèles lisent des mots, pas des mesures."
+      },
+      "keywords": {
+        "en": "face head jaw",
+        "fr": "visage tête mâchoire"
+      }
+    },
+    {
+      "id": "forehead",
+      "icon": "forehead",
+      "section": "face",
+      "type": "single",
+      "en": "Forehead",
+      "fr": "Front",
+      "noun": "forehead",
+      "neutral": "average",
+      "editorLink": true,
+      "keywords": {
+        "en": "brow ridge hairline temple",
+        "fr": "arcade sourcilière racine des cheveux tempe"
+      },
+      "sliders": [
+        {
+          "id": "height",
+          "en": "Height",
+          "fr": "Hauteur",
+          "lo": {
+            "en": "Low",
+            "fr": "Bas"
+          },
+          "hi": {
+            "en": "High",
+            "fr": "Haut"
+          },
+          "words": [
+            "very low",
+            "low",
+            "",
+            "high",
+            "very high"
+          ]
+        },
+        {
+          "id": "slope",
+          "en": "Slope",
+          "fr": "Inclinaison",
+          "lo": {
+            "en": "Upright",
+            "fr": "Droit"
+          },
+          "hi": {
+            "en": "Sloping",
+            "fr": "Fuyant"
+          },
+          "words": [
+            "very upright, vertical",
+            "upright",
+            "",
+            "sloping",
+            "strongly sloping back"
+          ]
+        },
+        {
+          "id": "ridge",
+          "en": "Brow ridge",
+          "fr": "Arcade",
+          "lo": {
+            "en": "Smooth",
+            "fr": "Lisse"
+          },
+          "hi": {
+            "en": "Heavy",
+            "fr": "Marquée"
+          },
+          "words": [
+            "perfectly smooth, no visible brow ridge",
+            "smooth",
+            "",
+            "with a marked brow ridge",
+            "with a heavy, protruding brow ridge"
+          ]
+        }
+      ],
+      "options": [
+        {
+          "id": "average",
+          "en": "Average",
+          "fr": "Standard",
+          "p": ""
+        },
+        {
+          "id": "high",
+          "en": "High",
+          "fr": "Haut",
+          "p": "high forehead",
+          "at": {
+            "height": 85
+          }
+        },
+        {
+          "id": "low",
+          "en": "Low",
+          "fr": "Bas",
+          "p": "low forehead",
+          "at": {
+            "height": 18
+          }
+        },
+        {
+          "id": "sloping",
+          "en": "Sloping",
+          "fr": "Fuyant",
+          "p": "sloping forehead",
+          "at": {
+            "slope": 85
+          }
+        },
+        {
+          "id": "upright",
+          "en": "Upright",
+          "fr": "Droit",
+          "p": "upright, vertical forehead",
+          "at": {
+            "slope": 15
+          }
+        },
+        {
+          "id": "ridge",
+          "en": "Heavy brow ridge",
+          "fr": "Arcade marquée",
+          "p": "forehead with a heavy, protruding brow ridge",
+          "at": {
+            "ridge": 90
+          }
+        }
+      ]
+    },
+    {
+      "id": "brows",
+      "icon": "brow",
+      "section": "face",
+      "type": "single",
+      "en": "Eyebrows",
+      "fr": "Sourcils",
+      "noun": "eyebrows",
+      "neutral": "average",
+      "editorLink": true,
+      "keywords": {
+        "en": "brow eyebrow unibrow",
+        "fr": "sourcil monosourcil"
+      },
+      "sliders": [
+        {
+          "id": "thick",
+          "en": "Thickness",
+          "fr": "Épaisseur",
+          "lo": {
+            "en": "Thin",
+            "fr": "Fins"
+          },
+          "hi": {
+            "en": "Thick",
+            "fr": "Épais"
+          },
+          "words": [
+            "very thin",
+            "thin",
+            "",
+            "thick",
+            "very thick, bushy"
+          ]
+        },
+        {
+          "id": "arch",
+          "en": "Arch",
+          "fr": "Arc",
+          "lo": {
+            "en": "Straight",
+            "fr": "Droits"
+          },
+          "hi": {
+            "en": "Arched",
+            "fr": "Arqués"
+          },
+          "words": [
+            "perfectly straight",
+            "fairly straight",
+            "",
+            "arched",
+            "highly arched"
+          ]
+        },
+        {
+          "id": "angle",
+          "en": "Angle",
+          "fr": "Angle",
+          "lo": {
+            "en": "Raised inside",
+            "fr": "Relevés au centre"
+          },
+          "hi": {
+            "en": "Lowered inside",
+            "fr": "Froncés au centre"
+          },
+          "words": [
+            "strongly raised toward the centre",
+            "slightly raised toward the centre",
+            "",
+            "slanting down toward the nose",
+            "sharply slanting down toward the nose"
+          ]
+        }
+      ],
+      "options": [
+        {
+          "id": "average",
+          "en": "Average",
+          "fr": "Standard",
+          "p": ""
+        },
+        {
+          "id": "thin",
+          "en": "Thin",
+          "fr": "Fins",
+          "p": "thin eyebrows",
+          "at": {
+            "thick": 15
+          }
+        },
+        {
+          "id": "thick",
+          "en": "Thick",
+          "fr": "Épais",
+          "p": "thick eyebrows",
+          "at": {
+            "thick": 82
+          }
+        },
+        {
+          "id": "bushy",
+          "en": "Bushy",
+          "fr": "Broussailleux",
+          "p": "bushy, untamed eyebrows",
+          "at": {
+            "thick": 96
+          }
+        },
+        {
+          "id": "arched",
+          "en": "Arched",
+          "fr": "Arqués",
+          "p": "high arched eyebrows",
+          "at": {
+            "arch": 88
+          }
+        },
+        {
+          "id": "straight",
+          "en": "Straight",
+          "fr": "Droits",
+          "p": "straight eyebrows",
+          "at": {
+            "arch": 12
+          }
+        },
+        {
+          "id": "unibrow",
+          "en": "Unibrow",
+          "fr": "Monosourcil",
+          "p": "a unibrow, the eyebrows joined above the nose",
+          "at": {
+            "thick": 75
+          }
+        }
+      ]
+    },
+    {
+      "id": "browColor",
+      "icon": "palette",
+      "section": "face",
+      "type": "single",
+      "color": true,
+      "followHair": true,
+      "en": "Eyebrow colour",
+      "fr": "Couleur des sourcils",
+      "ownTemplate": "{} eyebrows",
+      "keywords": {
+        "en": "eyebrow brow colour color",
+        "fr": "sourcil couleur"
+      },
+      "options": [
+        {
+          "id": "hair",
+          "en": "Same as hair",
+          "fr": "Comme les cheveux",
+          "p": ""
+        },
+        {
+          "id": "black",
+          "en": "Black",
+          "fr": "Noirs",
+          "p": "jet black eyebrows",
+          "sw": "#111111"
+        },
+        {
+          "id": "darkbrown",
+          "en": "Dark brown",
+          "fr": "Brun foncé",
+          "p": "dark brown eyebrows",
+          "sw": "#3b2417"
+        },
+        {
+          "id": "brown",
+          "en": "Brown",
+          "fr": "Châtains",
+          "p": "brown eyebrows",
+          "sw": "#6b4428"
+        },
+        {
+          "id": "blonde",
+          "en": "Blonde",
+          "fr": "Blonds",
+          "p": "blonde eyebrows",
+          "sw": "#d6b26a"
+        },
+        {
+          "id": "ginger",
+          "en": "Ginger",
+          "fr": "Roux",
+          "p": "ginger eyebrows",
+          "sw": "#b5521c"
+        },
+        {
+          "id": "grey",
+          "en": "Grey",
+          "fr": "Gris",
+          "p": "grey eyebrows",
+          "sw": "#9a9a9a"
+        },
+        {
+          "id": "white",
+          "en": "White",
+          "fr": "Blancs",
+          "p": "white eyebrows",
+          "sw": "#eeeeee"
+        },
+        {
+          "id": "bleached",
+          "en": "Bleached",
+          "fr": "Décolorés",
+          "p": "bleached, almost invisible eyebrows",
+          "sw": "#e8dcc0"
+        }
+      ]
+    },
+    {
+      "id": "eyeShape",
+      "icon": "eye",
+      "section": "face",
+      "type": "single",
+      "en": "Eye shape",
+      "fr": "Forme des yeux",
+      "options": [
+        {
+          "id": "almond",
+          "en": "Almond",
+          "fr": "Amande",
+          "p": "almond-shaped"
+        },
+        {
+          "id": "round",
+          "en": "Round",
+          "fr": "Ronds",
+          "p": "round",
+          "at": {
+            "size": 80
+          }
+        },
+        {
+          "id": "hooded",
+          "en": "Hooded",
+          "fr": "Tombants",
+          "p": "hooded",
+          "at": {
+            "size": 35
+          }
+        },
+        {
+          "id": "upturned",
+          "en": "Upturned",
+          "fr": "Relevés",
+          "p": "upturned",
+          "at": {
+            "tilt": 85
+          }
+        },
+        {
+          "id": "downturned",
+          "en": "Downturned",
+          "fr": "Descendants",
+          "p": "downturned",
+          "at": {
+            "tilt": 15
+          }
+        },
+        {
+          "id": "narrow",
+          "en": "Narrow",
+          "fr": "Étroits",
+          "p": "narrow",
+          "at": {
+            "size": 15
+          }
+        }
+      ],
+      "noun": "",
+      "neutral": "almond",
+      "sliders": [
+        {
+          "id": "spacing",
+          "en": "Spacing",
+          "fr": "Écartement",
+          "lo": {
+            "en": "Close-set",
+            "fr": "Rapprochés"
+          },
+          "hi": {
+            "en": "Wide-set",
+            "fr": "Écartés"
+          },
+          "words": [
+            "close-set",
+            "slightly close-set",
+            "",
+            "slightly wide-set",
+            "wide-set"
+          ]
+        },
+        {
+          "id": "size",
+          "en": "Size",
+          "fr": "Taille",
+          "lo": {
+            "en": "Small",
+            "fr": "Petits"
+          },
+          "hi": {
+            "en": "Large",
+            "fr": "Grands"
+          },
+          "words": [
+            "small",
+            "smallish",
+            "",
+            "largish",
+            "large"
+          ]
+        },
+        {
+          "id": "tilt",
+          "en": "Tilt",
+          "fr": "Inclinaison",
+          "lo": {
+            "en": "Down",
+            "fr": "Tombants"
+          },
+          "hi": {
+            "en": "Up",
+            "fr": "Relevés"
+          },
+          "words": [
+            "downturned",
+            "slightly downturned",
+            "",
+            "slightly upturned",
+            "upturned"
+          ]
+        }
+      ],
+      "editorLink": true,
+      "keywords": {
+        "en": "eyes",
+        "fr": "yeux regard paupières"
+      }
+    },
+    {
+      "id": "eyeColor",
+      "icon": "iris",
+      "section": "face",
+      "type": "single",
+      "color": true,
+      "en": "Eye colour",
+      "fr": "Couleur des yeux",
+      "options": [
+        {
+          "id": "brown",
+          "en": "Brown",
+          "fr": "Marron",
+          "p": "dark brown",
+          "sw": "#5b3a29"
+        },
+        {
+          "id": "hazel",
+          "en": "Hazel",
+          "fr": "Noisette",
+          "p": "hazel",
+          "sw": "#8e6b3e"
+        },
+        {
+          "id": "green",
+          "en": "Green",
+          "fr": "Vert",
+          "p": "green",
+          "sw": "#4f7a4a"
+        },
+        {
+          "id": "blue",
+          "en": "Blue",
+          "fr": "Bleu",
+          "p": "blue",
+          "sw": "#4a7bb5"
+        },
+        {
+          "id": "ice",
+          "en": "Ice blue",
+          "fr": "Bleu glacier",
+          "p": "ice blue",
+          "sw": "#a8cce0"
+        },
+        {
+          "id": "amber",
+          "en": "Amber",
+          "fr": "Ambre",
+          "p": "amber",
+          "sw": "#c98a1b"
+        },
+        {
+          "id": "grey",
+          "en": "Grey",
+          "fr": "Gris",
+          "p": "grey",
+          "sw": "#8b9099"
+        },
+        {
+          "id": "black",
+          "en": "Near black",
+          "fr": "Presque noir",
+          "p": "near black",
+          "sw": "#1a1a1a"
+        }
+      ],
+      "facePanel": true,
+      "keywords": {
+        "en": "eyes iris",
+        "fr": "yeux iris"
+      }
+    },
+    {
+      "id": "nose",
+      "icon": "nose",
+      "section": "face",
+      "type": "single",
+      "en": "Nose",
+      "fr": "Nez",
+      "noun": "nose",
+      "neutral": "average",
+      "options": [
+        {
+          "id": "average",
+          "en": "Average",
+          "fr": "Standard",
+          "p": ""
+        },
+        {
+          "id": "button",
+          "en": "Button",
+          "fr": "Trompette",
+          "p": "a small, short button nose with a rounded tip",
+          "at": {
+            "length": 20,
+            "width": 40,
+            "tip": 70
+          }
+        },
+        {
+          "id": "aquiline",
+          "en": "Aquiline",
+          "fr": "Aquilin",
+          "p": "a distinctly aquiline nose with a high, curved Roman bridge",
+          "at": {
+            "bridge": 75
+          }
+        },
+        {
+          "id": "hooked",
+          "en": "Hooked",
+          "fr": "Busqué",
+          "p": "a large, prominent hooked nose with a strong bump on the bridge and a downward-curving tip",
+          "at": {
+            "bridge": 95,
+            "length": 70
+          }
+        },
+        {
+          "id": "wide",
+          "en": "Wide",
+          "fr": "Large",
+          "p": "a broad nose with a wide bridge and wide flared nostrils",
+          "at": {
+            "width": 85
+          }
+        },
+        {
+          "id": "narrow",
+          "en": "Narrow",
+          "fr": "Fin",
+          "p": "a very thin, narrow nose with a slim bridge and small nostrils",
+          "at": {
+            "width": 15
+          }
+        },
+        {
+          "id": "upturned",
+          "en": "Upturned",
+          "fr": "Retroussé",
+          "p": "a clearly upturned nose, the tip pointing up and the nostrils visible from the front",
+          "at": {
+            "tip": 90
+          }
+        }
+      ],
+      "sliders": [
+        {
+          "id": "width",
+          "en": "Width",
+          "fr": "Largeur",
+          "lo": {
+            "en": "Narrow",
+            "fr": "Fin"
+          },
+          "hi": {
+            "en": "Wide",
+            "fr": "Large"
+          },
+          "words": [
+            "very narrow, pinched",
+            "narrow",
+            "",
+            "broad",
+            "very broad, flat"
+          ]
+        },
+        {
+          "id": "length",
+          "en": "Length",
+          "fr": "Longueur",
+          "lo": {
+            "en": "Short",
+            "fr": "Court"
+          },
+          "hi": {
+            "en": "Long",
+            "fr": "Long"
+          },
+          "words": [
+            "very short",
+            "short",
+            "",
+            "long",
+            "very long"
+          ]
+        },
+        {
+          "id": "bridge",
+          "en": "Bridge",
+          "fr": "Arête",
+          "lo": {
+            "en": "Concave",
+            "fr": "Creuse"
+          },
+          "hi": {
+            "en": "Hooked",
+            "fr": "Busquée"
+          },
+          "words": [
+            "deeply scooped",
+            "slightly scooped",
+            "",
+            "Roman, aquiline",
+            "large, strongly hooked"
+          ]
+        },
+        {
+          "id": "tip",
+          "en": "Tip",
+          "fr": "Bout",
+          "lo": {
+            "en": "Drooping",
+            "fr": "Tombant"
+          },
+          "hi": {
+            "en": "Upturned",
+            "fr": "Relevé"
+          },
+          "words": [
+            "drooping, downturned",
+            "slightly drooping",
+            "",
+            "slightly upturned",
+            "sharply upturned"
+          ]
+        }
+      ],
+      "editorLink": true,
+      "keywords": {
+        "en": "nostrils",
+        "fr": "narines"
+      }
+    },
+    {
+      "id": "ears",
+      "icon": "ear",
+      "section": "face",
+      "type": "single",
+      "en": "Ears",
+      "fr": "Oreilles",
+      "noun": "ears",
+      "neutral": "average",
+      "editorLink": true,
+      "keywords": {
+        "en": "ear lobe elf",
+        "fr": "oreille lobe elfe"
+      },
+      "sliders": [
+        {
+          "id": "size",
+          "en": "Size",
+          "fr": "Taille",
+          "lo": {
+            "en": "Small",
+            "fr": "Petites"
+          },
+          "hi": {
+            "en": "Large",
+            "fr": "Grandes"
+          },
+          "words": [
+            "very small",
+            "small",
+            "",
+            "large",
+            "very large"
+          ]
+        },
+        {
+          "id": "out",
+          "en": "Angle",
+          "fr": "Écart",
+          "lo": {
+            "en": "Flat",
+            "fr": "Plaquées"
+          },
+          "hi": {
+            "en": "Sticking out",
+            "fr": "Décollées"
+          },
+          "words": [
+            "very flat, close to the head",
+            "flat",
+            "",
+            "protruding",
+            "strongly protruding"
+          ]
+        },
+        {
+          "id": "tip",
+          "en": "Tip",
+          "fr": "Pointe",
+          "lo": {
+            "en": "Round",
+            "fr": "Rondes"
+          },
+          "hi": {
+            "en": "Pointed",
+            "fr": "Pointues"
+          },
+          "words": [
+            "very round",
+            "round",
+            "",
+            "slightly pointed",
+            "pointed, elf-like"
+          ]
+        }
+      ],
+      "options": [
+        {
+          "id": "average",
+          "en": "Average",
+          "fr": "Standard",
+          "p": ""
+        },
+        {
+          "id": "small",
+          "en": "Small",
+          "fr": "Petites",
+          "p": "small ears",
+          "at": {
+            "size": 20
+          }
+        },
+        {
+          "id": "large",
+          "en": "Large",
+          "fr": "Grandes",
+          "p": "large ears",
+          "at": {
+            "size": 85
+          }
+        },
+        {
+          "id": "protruding",
+          "en": "Sticking out",
+          "fr": "Décollées",
+          "p": "ears that stick out",
+          "at": {
+            "out": 88
+          }
+        },
+        {
+          "id": "flat",
+          "en": "Flat",
+          "fr": "Plaquées",
+          "p": "ears close to the head",
+          "at": {
+            "out": 15
+          }
+        },
+        {
+          "id": "pointed",
+          "en": "Pointed",
+          "fr": "Pointues",
+          "p": "pointed elf-like ears",
+          "at": {
+            "tip": 92
+          }
+        }
+      ]
+    },
+    {
+      "id": "chin",
+      "icon": "chin",
+      "section": "face",
+      "type": "single",
+      "en": "Chin",
+      "fr": "Menton",
+      "noun": "chin",
+      "neutral": "average",
+      "editorLink": true,
+      "keywords": {
+        "en": "jaw",
+        "fr": "mâchoire"
+      },
+      "sliders": [
+        {
+          "id": "jut",
+          "en": "Projection",
+          "fr": "Avancée",
+          "lo": {
+            "en": "Receding",
+            "fr": "Fuyant"
+          },
+          "hi": {
+            "en": "Prominent",
+            "fr": "Prononcé"
+          },
+          "words": [
+            "strongly receding",
+            "slightly receding",
+            "",
+            "prominent",
+            "strongly jutting"
+          ]
+        },
+        {
+          "id": "width",
+          "en": "Width",
+          "fr": "Largeur",
+          "lo": {
+            "en": "Pointed",
+            "fr": "Pointu"
+          },
+          "hi": {
+            "en": "Broad",
+            "fr": "Large"
+          },
+          "words": [
+            "very pointed",
+            "pointed",
+            "",
+            "broad",
+            "very broad, square"
+          ]
+        }
+      ],
+      "options": [
+        {
+          "id": "average",
+          "en": "Average",
+          "fr": "Standard",
+          "p": ""
+        },
+        {
+          "id": "receding",
+          "en": "Receding",
+          "fr": "Fuyant",
+          "p": "a receding chin",
+          "at": {
+            "jut": 15
+          }
+        },
+        {
+          "id": "prominent",
+          "en": "Prominent",
+          "fr": "Prononcé",
+          "p": "a prominent chin",
+          "at": {
+            "jut": 85
+          }
+        },
+        {
+          "id": "pointed",
+          "en": "Pointed",
+          "fr": "Pointu",
+          "p": "a pointed chin",
+          "at": {
+            "width": 15
+          }
+        },
+        {
+          "id": "broad",
+          "en": "Broad",
+          "fr": "Large",
+          "p": "a broad square chin",
+          "at": {
+            "width": 85
+          }
+        }
+      ]
+    },
+    {
+      "id": "chinCleft",
+      "icon": "chin",
+      "section": "face",
+      "type": "single",
+      "toggleIn": "chin",
+      "noCustom": true,
+      "en": "Cleft chin",
+      "fr": "Fossette au menton",
+      "options": [
+        {
+          "id": "no",
+          "en": "No",
+          "fr": "Non",
+          "p": ""
+        },
+        {
+          "id": "yes",
+          "en": "Cleft chin",
+          "fr": "Fossette au menton",
+          "p": "a cleft chin"
+        }
+      ]
+    },
+    {
+      "id": "mouth",
+      "icon": "mouth",
+      "section": "face",
+      "type": "single",
+      "en": "Mouth",
+      "fr": "Bouche",
+      "noun": "",
+      "neutral": "average",
+      "options": [
+        {
+          "id": "average",
+          "en": "Average",
+          "fr": "Standard",
+          "p": ""
+        },
+        {
+          "id": "thin",
+          "en": "Thin lips",
+          "fr": "Lèvres fines",
+          "p": "thin lips",
+          "at": {
+            "fullness": 15
+          }
+        },
+        {
+          "id": "full",
+          "en": "Full lips",
+          "fr": "Lèvres pulpeuses",
+          "p": "full lips",
+          "at": {
+            "fullness": 85
+          }
+        },
+        {
+          "id": "wide",
+          "en": "Wide",
+          "fr": "Large",
+          "p": "wide mouth",
+          "at": {
+            "width": 85
+          }
+        },
+        {
+          "id": "small",
+          "en": "Small",
+          "fr": "Petite",
+          "p": "small mouth",
+          "at": {
+            "width": 15
+          }
+        },
+        {
+          "id": "cupid",
+          "en": "Cupid's bow",
+          "fr": "Arc de Cupidon",
+          "p": "lips with a pronounced Cupid's bow",
+          "at": {
+            "fullness": 65
+          }
+        }
+      ],
+      "sliders": [
+        {
+          "id": "fullness",
+          "en": "Lips",
+          "fr": "Lèvres",
+          "lo": {
+            "en": "Thin",
+            "fr": "Fines"
+          },
+          "hi": {
+            "en": "Full",
+            "fr": "Pulpeuses"
+          },
+          "words": [
+            "very thin",
+            "thin",
+            "",
+            "full",
+            "very full"
+          ],
+          "noun": "lips"
+        },
+        {
+          "id": "width",
+          "en": "Width",
+          "fr": "Largeur",
+          "lo": {
+            "en": "Small",
+            "fr": "Petite"
+          },
+          "hi": {
+            "en": "Wide",
+            "fr": "Large"
+          },
+          "words": [
+            "very small",
+            "small",
+            "",
+            "wide",
+            "very wide"
+          ],
+          "noun": "mouth"
+        }
+      ],
+      "editorLink": true,
+      "keywords": {
+        "en": "lips",
+        "fr": "lèvres"
+      }
+    },
+    {
+      "id": "lipColor",
+      "icon": "mouth",
+      "section": "face",
+      "type": "single",
+      "color": true,
+      "ownTemplate": "{} lips",
+      "en": "Lip colour",
+      "fr": "Couleur des lèvres",
+      "options": [
+        {
+          "id": "natural",
+          "en": "Natural",
+          "fr": "Naturelle",
+          "p": "",
+          "sw": "#b97a6a"
+        },
+        {
+          "id": "nude",
+          "en": "Nude",
+          "fr": "Nude",
+          "p": "nude lips",
+          "sw": "#c99583"
+        },
+        {
+          "id": "pink",
+          "en": "Pink",
+          "fr": "Rose",
+          "p": "pink lips",
+          "sw": "#d9768f"
+        },
+        {
+          "id": "coral",
+          "en": "Coral",
+          "fr": "Corail",
+          "p": "coral lips",
+          "sw": "#e0705a"
+        },
+        {
+          "id": "red",
+          "en": "Red",
+          "fr": "Rouge",
+          "p": "red lipstick",
+          "sw": "#b5172b"
+        },
+        {
+          "id": "berry",
+          "en": "Berry",
+          "fr": "Framboise",
+          "p": "berry-coloured lips",
+          "sw": "#8a1f4a"
+        },
+        {
+          "id": "plum",
+          "en": "Plum",
+          "fr": "Prune",
+          "p": "dark plum lips",
+          "sw": "#5a2340"
+        },
+        {
+          "id": "black",
+          "en": "Black",
+          "fr": "Noire",
+          "p": "black lipstick",
+          "sw": "#1d1a1c"
+        }
+      ],
+      "keywords": {
+        "en": "lipstick makeup",
+        "fr": "rouge à lèvres maquillage"
+      }
+    },
+    {
+      "id": "teeth",
+      "icon": "tooth",
+      "section": "face",
+      "type": "single",
+      "en": "Teeth",
+      "fr": "Dents",
+      "neutral": "average",
+      "options": [
+        {
+          "id": "average",
+          "en": "Average",
+          "fr": "Standard",
+          "p": ""
+        },
+        {
+          "id": "straight",
+          "en": "Straight, white",
+          "fr": "Droites et blanches",
+          "p": "perfectly straight white teeth"
+        },
+        {
+          "id": "gap",
+          "en": "Gap",
+          "fr": "Écartées",
+          "p": "a small gap between the front teeth"
+        },
+        {
+          "id": "crooked",
+          "en": "Crooked",
+          "fr": "De travers",
+          "p": "slightly crooked teeth"
+        },
+        {
+          "id": "braces",
+          "en": "Braces",
+          "fr": "Appareil dentaire",
+          "p": "dental braces"
+        },
+        {
+          "id": "gold",
+          "en": "Gold tooth",
+          "fr": "Dent en or",
+          "p": "a gold tooth"
+        },
+        {
+          "id": "missing",
+          "en": "Missing tooth",
+          "fr": "Dent manquante",
+          "p": "a missing front tooth"
+        },
+        {
+          "id": "fangs",
+          "en": "Fangs",
+          "fr": "Canines pointues",
+          "p": "pointed canine fangs"
+        }
+      ],
+      "editorLink": true,
+      "keywords": {
+        "en": "smile",
+        "fr": "sourire"
+      }
+    },
+    {
+      "id": "skin",
+      "icon": "drop",
+      "section": "face",
+      "type": "single",
+      "color": true,
+      "ownTemplate": "{} skin",
+      "en": "Skin tone",
+      "fr": "Teint",
+      "options": [
+        {
+          "id": "porcelain",
+          "en": "Porcelain",
+          "fr": "Porcelaine",
+          "p": "porcelain skin",
+          "sw": "#f3dccd"
+        },
+        {
+          "id": "fair",
+          "en": "Fair",
+          "fr": "Clair",
+          "p": "fair skin",
+          "sw": "#ecc8a7"
+        },
+        {
+          "id": "olive",
+          "en": "Light olive",
+          "fr": "Olive clair",
+          "p": "light olive skin",
+          "sw": "#d9a97c"
+        },
+        {
+          "id": "tan",
+          "en": "Tan",
+          "fr": "Hâlé",
+          "p": "tan skin",
+          "sw": "#c08a5b"
+        },
+        {
+          "id": "brown",
+          "en": "Brown",
+          "fr": "Brun",
+          "p": "brown skin",
+          "sw": "#8d5a3a"
+        },
+        {
+          "id": "deep",
+          "en": "Deep brown",
+          "fr": "Brun profond",
+          "p": "deep brown skin",
+          "sw": "#5e3a26"
+        },
+        {
+          "id": "ebony",
+          "en": "Ebony",
+          "fr": "Ébène",
+          "p": "ebony skin",
+          "sw": "#3a241a"
+        },
+        {
+          "id": "green",
+          "en": "Green",
+          "fr": "Vert",
+          "p": "green skin",
+          "sw": "#6e9a5a"
+        },
+        {
+          "id": "ash",
+          "en": "Ash grey",
+          "fr": "Gris cendré",
+          "p": "ash grey skin",
+          "sw": "#8c8f94"
+        }
+      ],
+      "keywords": {
+        "en": "skin tone colour complexion",
+        "fr": "peau couleur carnation"
+      }
+    },
+    {
+      "id": "features",
+      "icon": "freckles",
+      "section": "face",
+      "type": "multi",
+      "en": "Features",
+      "fr": "Particularités",
+      "options": [
+        {
+          "id": "freckles",
+          "en": "Freckles",
+          "fr": "Taches de rousseur",
+          "p": "freckles"
+        },
+        {
+          "id": "dimples",
+          "en": "Dimples",
+          "fr": "Fossettes",
+          "p": "dimples"
+        },
+        {
+          "id": "scar",
+          "en": "Eyebrow scar",
+          "fr": "Cicatrice au sourcil",
+          "p": "a small scar through one eyebrow"
+        },
+        {
+          "id": "mole",
+          "en": "Beauty mark",
+          "fr": "Grain de beauté",
+          "p": "a beauty mark on the cheek"
+        },
+        {
+          "id": "brows",
+          "en": "Thick brows",
+          "fr": "Sourcils épais",
+          "p": "thick eyebrows"
+        },
+        {
+          "id": "tattoo",
+          "en": "Face tattoo",
+          "fr": "Tatouage au visage",
+          "p": "a small geometric face tattoo"
+        },
+        {
+          "id": "piercings",
+          "en": "Piercings",
+          "fr": "Piercings",
+          "p": "ear and nose piercings"
+        },
+        {
+          "id": "cheekbones",
+          "en": "High cheekbones",
+          "fr": "Pommettes hautes",
+          "p": "high cheekbones"
+        },
+        {
+          "id": "eyebags",
+          "en": "Eye bags",
+          "fr": "Cernes marqués",
+          "p": "heavy eye bags"
+        }
+      ],
+      "keywords": {
+        "en": "freckles scar tattoo mole piercing",
+        "fr": "taches cicatrice tatouage piercing"
+      }
+    },
+    {
+      "id": "expression",
+      "icon": "smile",
+      "section": "face",
+      "type": "single",
+      "en": "Expression",
+      "fr": "Expression",
+      "options": [
+        {
+          "id": "neutral",
+          "en": "Neutral",
+          "fr": "Neutre",
+          "p": "blank neutral expression"
+        },
+        {
+          "id": "joy-1",
+          "en": "Serenity",
+          "fr": "Sérénité",
+          "p": "serene, calmly content expression with a faint relaxed smile",
+          "petal": "joy",
+          "level": 1
+        },
+        {
+          "id": "joy-2",
+          "en": "Joy",
+          "fr": "Joie",
+          "p": "joyful expression with a bright genuine smile",
+          "petal": "joy",
+          "level": 2
+        },
+        {
+          "id": "joy-3",
+          "en": "Ecstasy",
+          "fr": "Extase",
+          "p": "ecstatic expression, wide open-mouthed laugh, eyes crinkled with overwhelming joy",
+          "petal": "joy",
+          "level": 3
+        },
+        {
+          "id": "trust-1",
+          "en": "Acceptance",
+          "fr": "Acceptation",
+          "p": "open, accepting and calm expression",
+          "petal": "trust",
+          "level": 1
+        },
+        {
+          "id": "trust-2",
+          "en": "Trust",
+          "fr": "Confiance",
+          "p": "warm trusting expression, soft eyes and a gentle smile",
+          "petal": "trust",
+          "level": 2
+        },
+        {
+          "id": "trust-3",
+          "en": "Admiration",
+          "fr": "Admiration",
+          "p": "admiring expression, eyes wide with awe and warm respect",
+          "petal": "trust",
+          "level": 3
+        },
+        {
+          "id": "fear-1",
+          "en": "Apprehension",
+          "fr": "Appréhension",
+          "p": "apprehensive expression, slightly furrowed brow and tense lips",
+          "petal": "fear",
+          "level": 1
+        },
+        {
+          "id": "fear-2",
+          "en": "Fear",
+          "fr": "Peur",
+          "p": "fearful expression, raised eyebrows, wide eyes and a tense mouth",
+          "petal": "fear",
+          "level": 2
+        },
+        {
+          "id": "fear-3",
+          "en": "Terror",
+          "fr": "Terreur",
+          "p": "terrified expression, eyes wide open, mouth agape, face frozen in terror",
+          "petal": "fear",
+          "level": 3
+        },
+        {
+          "id": "surprise-1",
+          "en": "Distraction",
+          "fr": "Distraction",
+          "p": "distracted expression, gaze drifting slightly away",
+          "petal": "surprise",
+          "level": 1
+        },
+        {
+          "id": "surprise-2",
+          "en": "Surprise",
+          "fr": "Surprise",
+          "p": "surprised expression, raised eyebrows and parted lips",
+          "petal": "surprise",
+          "level": 2
+        },
+        {
+          "id": "surprise-3",
+          "en": "Amazement",
+          "fr": "Stupéfaction",
+          "p": "amazed expression, jaw dropped, eyes wide open in astonishment",
+          "petal": "surprise",
+          "level": 3
+        },
+        {
+          "id": "sadness-1",
+          "en": "Pensiveness",
+          "fr": "Songerie",
+          "p": "pensive expression, downcast eyes, lost in thought",
+          "petal": "sadness",
+          "level": 1
+        },
+        {
+          "id": "sadness-2",
+          "en": "Sadness",
+          "fr": "Tristesse",
+          "p": "sad expression, drooping eyelids and a downturned mouth",
+          "petal": "sadness",
+          "level": 2
+        },
+        {
+          "id": "sadness-3",
+          "en": "Grief",
+          "fr": "Chagrin",
+          "p": "grief-stricken expression, tearful eyes, face crumpled in sorrow",
+          "petal": "sadness",
+          "level": 3
+        },
+        {
+          "id": "disgust-1",
+          "en": "Boredom",
+          "fr": "Ennui",
+          "p": "bored expression, heavy eyelids and a flat mouth",
+          "petal": "disgust",
+          "level": 1
+        },
+        {
+          "id": "disgust-2",
+          "en": "Disgust",
+          "fr": "Dégoût",
+          "p": "disgusted expression, wrinkled nose and raised upper lip",
+          "petal": "disgust",
+          "level": 2
+        },
+        {
+          "id": "disgust-3",
+          "en": "Loathing",
+          "fr": "Aversion",
+          "p": "loathing expression, sneering with deep revulsion",
+          "petal": "disgust",
+          "level": 3
+        },
+        {
+          "id": "anger-1",
+          "en": "Annoyance",
+          "fr": "Agacement",
+          "p": "annoyed expression, slightly narrowed eyes and pressed lips",
+          "petal": "anger",
+          "level": 1
+        },
+        {
+          "id": "anger-2",
+          "en": "Anger",
+          "fr": "Colère",
+          "p": "angry expression, furrowed brows, glaring eyes and a clenched jaw",
+          "petal": "anger",
+          "level": 2
+        },
+        {
+          "id": "anger-3",
+          "en": "Rage",
+          "fr": "Rage",
+          "p": "enraged expression, teeth bared, brows deeply knotted, face contorted with rage",
+          "petal": "anger",
+          "level": 3
+        },
+        {
+          "id": "anticipation-1",
+          "en": "Interest",
+          "fr": "Intérêt",
+          "p": "interested expression, attentive eyes, head slightly tilted",
+          "petal": "anticipation",
+          "level": 1
+        },
+        {
+          "id": "anticipation-2",
+          "en": "Anticipation",
+          "fr": "Anticipation",
+          "p": "eager anticipating expression, focused eyes, lips slightly parted",
+          "petal": "anticipation",
+          "level": 2
+        },
+        {
+          "id": "anticipation-3",
+          "en": "Vigilance",
+          "fr": "Vigilance",
+          "p": "vigilant expression, intensely alert, eyes sharply focused",
+          "petal": "anticipation",
+          "level": 3
+        }
+      ],
+      "wheel": [
+        {
+          "id": "joy",
+          "en": "Joy",
+          "fr": "Joie",
+          "color": "#F2D04B"
+        },
+        {
+          "id": "trust",
+          "en": "Trust",
+          "fr": "Confiance",
+          "color": "#9BCB5B"
+        },
+        {
+          "id": "fear",
+          "en": "Fear",
+          "fr": "Peur",
+          "color": "#3F9D5C"
+        },
+        {
+          "id": "surprise",
+          "en": "Surprise",
+          "fr": "Surprise",
+          "color": "#4BA6C6"
+        },
+        {
+          "id": "sadness",
+          "en": "Sadness",
+          "fr": "Tristesse",
+          "color": "#5470C2"
+        },
+        {
+          "id": "disgust",
+          "en": "Disgust",
+          "fr": "Dégoût",
+          "color": "#9468B6"
+        },
+        {
+          "id": "anger",
+          "en": "Anger",
+          "fr": "Colère",
+          "color": "#D6453F"
+        },
+        {
+          "id": "anticipation",
+          "en": "Anticipation",
+          "fr": "Anticipation",
+          "color": "#EC8E3A"
+        }
+      ],
+      "keywords": {
+        "en": "emotion mood face feeling",
+        "fr": "émotion humeur sentiment"
+      }
+    },
+    {
+      "id": "hairStyle",
+      "icon": "scissors",
+      "section": "hair",
+      "type": "single",
+      "en": "Hairstyle",
+      "fr": "Coiffure",
+      "options": [
+        {
+          "id": "bald",
+          "en": "Bald",
+          "fr": "Chauve",
+          "p": "bald head",
+          "noColor": true
+        },
+        {
+          "id": "buzz",
+          "en": "Buzz cut",
+          "fr": "Rasé court",
+          "p": "buzz cut"
+        },
+        {
+          "id": "crop",
+          "en": "Short crop",
+          "fr": "Coupe courte",
+          "p": "short cropped hair"
+        },
+        {
+          "id": "bob",
+          "en": "Bob",
+          "fr": "Carré",
+          "p": "chin-length bob"
+        },
+        {
+          "id": "straight",
+          "en": "Long straight",
+          "fr": "Long lisse",
+          "p": "long straight hair"
+        },
+        {
+          "id": "wavy",
+          "en": "Wavy",
+          "fr": "Ondulé",
+          "p": "wavy shoulder-length hair"
+        },
+        {
+          "id": "curls",
+          "en": "Curls",
+          "fr": "Bouclé",
+          "p": "tight curls"
+        },
+        {
+          "id": "afro",
+          "en": "Afro",
+          "fr": "Afro",
+          "p": "rounded afro"
+        },
+        {
+          "id": "braids",
+          "en": "Braids",
+          "fr": "Tresses",
+          "p": "long braids"
+        },
+        {
+          "id": "ponytail",
+          "en": "Ponytail",
+          "fr": "Queue de cheval",
+          "p": "high ponytail"
+        },
+        {
+          "id": "bun",
+          "en": "Bun",
+          "fr": "Chignon",
+          "p": "messy top bun"
+        },
+        {
+          "id": "mohawk",
+          "en": "Mohawk",
+          "fr": "Crête",
+          "p": "tall mohawk"
+        },
+        {
+          "id": "pixie",
+          "en": "Pixie cut",
+          "fr": "Coupe pixie",
+          "p": "short pixie cut"
+        },
+        {
+          "id": "undercut",
+          "en": "Undercut",
+          "fr": "Undercut",
+          "p": "undercut, shaved sides with longer hair on top"
+        },
+        {
+          "id": "slicked",
+          "en": "Slicked back",
+          "fr": "Plaqués en arrière",
+          "p": "slicked-back hair"
+        },
+        {
+          "id": "sidepart",
+          "en": "Side part",
+          "fr": "Raie sur le côté",
+          "p": "short hair with a neat side part"
+        },
+        {
+          "id": "mullet",
+          "en": "Mullet",
+          "fr": "Mulet",
+          "p": "mullet, short at the front and sides, long at the back"
+        },
+        {
+          "id": "wolf",
+          "en": "Wolf cut",
+          "fr": "Wolf cut",
+          "p": "shaggy layered wolf cut"
+        },
+        {
+          "id": "bangs",
+          "en": "Long with bangs",
+          "fr": "Long avec frange",
+          "p": "long straight hair with blunt bangs"
+        },
+        {
+          "id": "curtain",
+          "en": "Curtain bangs",
+          "fr": "Frange rideau",
+          "p": "shoulder-length hair with curtain bangs"
+        },
+        {
+          "id": "longcurly",
+          "en": "Long curly",
+          "fr": "Longs bouclés",
+          "p": "long voluminous curly hair"
+        },
+        {
+          "id": "locs",
+          "en": "Locs",
+          "fr": "Dreadlocks",
+          "p": "long locs (dreadlocks)"
+        },
+        {
+          "id": "cornrows",
+          "en": "Cornrows",
+          "fr": "Tresses collées",
+          "p": "cornrows braided close to the scalp"
+        },
+        {
+          "id": "halfup",
+          "en": "Half up",
+          "fr": "Demi-queue",
+          "p": "long hair in a half-up, half-down style"
+        },
+        {
+          "id": "lowbun",
+          "en": "Low bun",
+          "fr": "Chignon bas",
+          "p": "sleek low bun"
+        },
+        {
+          "id": "spacebuns",
+          "en": "Space buns",
+          "fr": "Deux chignons",
+          "p": "two space buns on top of the head"
+        },
+        {
+          "id": "pigtails",
+          "en": "Pigtails",
+          "fr": "Couettes",
+          "p": "two pigtails"
+        },
+        {
+          "id": "manbun",
+          "en": "Top knot",
+          "fr": "Chignon haut",
+          "p": "short top knot, sides kept short"
+        }
+      ],
+      "keywords": {
+        "en": "haircut hair cut",
+        "fr": "coupe cheveux coupe de cheveux coiffure"
+      }
+    },
+    {
+      "id": "hairColor",
+      "icon": "palette",
+      "section": "hair",
+      "type": "single",
+      "color": true,
+      "en": "Hair colour",
+      "fr": "Couleur des cheveux",
+      "options": [
+        {
+          "id": "black",
+          "en": "Jet black",
+          "fr": "Noir",
+          "p": "jet black",
+          "sw": "#111111"
+        },
+        {
+          "id": "darkbrown",
+          "en": "Dark brown",
+          "fr": "Brun foncé",
+          "p": "dark brown",
+          "sw": "#3b2417"
+        },
+        {
+          "id": "auburn",
+          "en": "Auburn",
+          "fr": "Auburn",
+          "p": "auburn",
+          "sw": "#7a3a1e"
+        },
+        {
+          "id": "ginger",
+          "en": "Ginger",
+          "fr": "Roux",
+          "p": "ginger",
+          "sw": "#b5521c"
+        },
+        {
+          "id": "blonde",
+          "en": "Blonde",
+          "fr": "Blond",
+          "p": "blonde",
+          "sw": "#d6b26a"
+        },
+        {
+          "id": "platinum",
+          "en": "Platinum",
+          "fr": "Platine",
+          "p": "platinum blonde",
+          "sw": "#e9e4d2"
+        },
+        {
+          "id": "silver",
+          "en": "Silver grey",
+          "fr": "Gris argent",
+          "p": "silver grey",
+          "sw": "#aaaaaa"
+        },
+        {
+          "id": "white",
+          "en": "White",
+          "fr": "Blanc",
+          "p": "white",
+          "sw": "#f0f0f0"
+        },
+        {
+          "id": "pink",
+          "en": "Pastel pink",
+          "fr": "Rose pastel",
+          "p": "pastel pink",
+          "sw": "#e8a6c0"
+        },
+        {
+          "id": "blue",
+          "en": "Blue",
+          "fr": "Bleu",
+          "p": "electric blue",
+          "sw": "#3b6fd1"
+        },
+        {
+          "id": "green",
+          "en": "Green",
+          "fr": "Vert",
+          "p": "forest green",
+          "sw": "#3fa068"
+        },
+        {
+          "id": "lilac",
+          "en": "Lilac",
+          "fr": "Lilas",
+          "p": "lilac",
+          "sw": "#b49be0"
+        }
+      ],
+      "keywords": {
+        "en": "hair dye",
+        "fr": "cheveux teinture"
+      }
+    },
+    {
+      "id": "facialHair",
+      "icon": "moustache",
+      "section": "hair",
+      "type": "single",
+      "en": "Facial hair",
+      "fr": "Pilosité",
+      "options": [
+        {
+          "id": "none",
+          "en": "Clean",
+          "fr": "Glabre",
+          "p": ""
+        },
+        {
+          "id": "stubble",
+          "en": "Stubble",
+          "fr": "Barbe de 3 jours",
+          "p": "light stubble"
+        },
+        {
+          "id": "beard",
+          "en": "Full beard",
+          "fr": "Barbe fournie",
+          "p": "full beard"
+        },
+        {
+          "id": "moustache",
+          "en": "Moustache",
+          "fr": "Moustache",
+          "p": "a moustache"
+        },
+        {
+          "id": "goatee",
+          "en": "Goatee",
+          "fr": "Bouc",
+          "p": "a goatee"
+        }
+      ],
+      "keywords": {
+        "en": "beard moustache shave",
+        "fr": "barbe moustache rasé"
+      }
+    },
+    {
+      "id": "outfit",
+      "icon": "shirt",
+      "section": "style",
+      "type": "single",
+      "en": "Outfit",
+      "fr": "Tenue",
+      "options": [
+        {
+          "id": "casual",
+          "en": "Casual",
+          "fr": "Décontracté",
+          "p": "casual everyday clothes: plain t-shirt, overshirt, jeans and sneakers"
+        },
+        {
+          "id": "street",
+          "en": "Streetwear",
+          "fr": "Streetwear",
+          "p": "contemporary streetwear: oversized hoodie, cargo trousers and chunky sneakers"
+        },
+        {
+          "id": "suit",
+          "en": "Formal suit",
+          "fr": "Costume",
+          "p": "a tailored formal suit with a crisp shirt and leather shoes"
+        },
+        {
+          "id": "sporty",
+          "en": "Sporty",
+          "fr": "Sportif",
+          "p": "a sporty outfit: technical jacket, track trousers and running shoes"
+        },
+        {
+          "id": "goth",
+          "en": "Goth",
+          "fr": "Goth",
+          "p": "dark goth styling: black layered clothing, boots and silver details"
+        },
+        {
+          "id": "retro",
+          "en": "Retro 70s",
+          "fr": "Rétro 70s",
+          "p": "a retro 1970s outfit: flared trousers, patterned shirt and a suede jacket"
+        },
+        {
+          "id": "work",
+          "en": "Workwear",
+          "fr": "Tenue de travail",
+          "p": "rugged workwear: canvas overalls, rolled sleeves and heavy boots"
+        },
+        {
+          "id": "fantasy",
+          "en": "Fantasy tunic",
+          "fr": "Tunique fantasy",
+          "p": "a fantasy tunic with a leather belt, linen sleeves and worn boots"
+        },
+        {
+          "id": "scifi",
+          "en": "Sci-fi suit",
+          "fr": "Combinaison sci-fi",
+          "p": "a sci-fi flight suit with panel seams, a utility belt and boots"
+        },
+        {
+          "id": "armour",
+          "en": "Armour",
+          "fr": "Armure",
+          "p": "worn medieval plate and leather armour"
+        }
+      ],
+      "refs": true,
+      "keywords": {
+        "en": "clothes clothing wear",
+        "fr": "vêtements habits"
+      }
+    },
+    {
+      "id": "accessories",
+      "icon": "glasses",
+      "section": "style",
+      "type": "multi",
+      "en": "Accessories",
+      "fr": "Accessoires",
+      "options": [
+        {
+          "id": "glasses",
+          "en": "Glasses",
+          "fr": "Lunettes",
+          "p": "glasses"
+        },
+        {
+          "id": "hat",
+          "en": "Hat",
+          "fr": "Chapeau",
+          "p": "a hat"
+        },
+        {
+          "id": "headphones",
+          "en": "Headphones",
+          "fr": "Casque audio",
+          "p": "over-ear headphones"
+        },
+        {
+          "id": "scarf",
+          "en": "Scarf",
+          "fr": "Écharpe",
+          "p": "a scarf"
+        },
+        {
+          "id": "jewelry",
+          "en": "Jewelry",
+          "fr": "Bijoux",
+          "p": "rings and a necklace"
+        },
+        {
+          "id": "backpack",
+          "en": "Backpack",
+          "fr": "Sac à dos",
+          "p": "a backpack"
+        }
+      ],
+      "refs": true,
+      "keywords": {
+        "en": "glasses hat jewelry",
+        "fr": "lunettes chapeau bijoux"
+      }
+    },
+    {
+      "id": "layout",
+      "icon": "layout",
+      "section": "render",
+      "type": "single",
+      "en": "Sheet layout",
+      "fr": "Mise en page",
+      "options": [
+        {
+          "id": "sheet",
+          "en": "Front, back + face",
+          "fr": "Face, dos + visage",
+          "size": [
+            1792,
+            1024
+          ],
+          "p": "Three-panel character sheet on a single wide image, split into three equal vertical panels of the same person with the same outfit. Left panel: full-body standing front view, arms relaxed at the sides, head to feet in frame. Middle panel: full-body standing back view, head to feet in frame. Right panel: a tight close-up of the face, front facing, the entire head and hair in frame."
+        },
+        {
+          "id": "threequarter",
+          "en": "Three-quarter: portrait + full body",
+          "fr": "Trois quarts : portrait + plein pied",
+          "size": [
+            1792,
+            1024
+          ],
+          "p": "Two-panel character sheet on a single image, both panels in the same three-quarter view (turned about 45 degrees to the character's right, so the face looks toward the right side of the image). Left panel: a tight close-up portrait with the entire head and hair in frame. Right panel: a full-body standing shot, head to feet in frame, arms relaxed."
+        },
+        {
+          "id": "turnaround",
+          "en": "Turnaround (3 views)",
+          "fr": "Turnaround (3 vues)",
+          "size": [
+            1792,
+            1024
+          ],
+          "p": "Character turnaround sheet with three full-body standing views of the same person side by side: front view, three-quarter view and back view. In the three-quarter view the character looks toward the right side of the image. Identical outfit and proportions in every view."
+        },
+        {
+          "id": "faces",
+          "en": "Face turnaround (3 close-ups)",
+          "fr": "Visage sous 3 angles",
+          "size": [
+            1792,
+            1024
+          ],
+          "p": "Face turnaround sheet with three tight close-ups of the same head side by side, same framing and size: front view, three-quarter view and side profile view, the three-quarter and profile views both looking toward the right side of the image. The entire head and hair in frame in each view."
+        },
+        {
+          "id": "portrait",
+          "en": "Portrait only",
+          "fr": "Portrait seul",
+          "size": [
+            1024,
+            1280
+          ],
+          "p": "Close-up head and shoulders portrait, front facing, with the entire head and hair in frame."
+        },
+        {
+          "id": "fullbody",
+          "en": "Full body only",
+          "fr": "Plein pied seul",
+          "size": [
+            896,
+            1536
+          ],
+          "p": "Full-body standing shot, front facing, arms relaxed, entire figure from head to feet in frame."
+        },
+        {
+          "id": "threequarteronly",
+          "en": "Three-quarter portrait only",
+          "fr": "Portrait trois quarts seul",
+          "size": [
+            1024,
+            1280
+          ],
+          "p": "Close-up head and shoulders portrait in a three-quarter view (turned about 45 degrees to the character's right, so the face looks toward the right side of the image), with the entire head and hair in frame."
+        },
+        {
+          "id": "threequarterfull",
+          "en": "Three-quarter full body only",
+          "fr": "Plein pied trois quarts seul",
+          "size": [
+            896,
+            1536
+          ],
+          "p": "Full-body standing shot in a three-quarter view (turned about 45 degrees to the character's right, so the face looks toward the right side of the image), arms relaxed, entire figure from head to feet in frame."
+        },
+        {
+          "id": "profileportrait",
+          "en": "Profile portrait only",
+          "fr": "Portrait de profil seul",
+          "size": [
+            1024,
+            1280
+          ],
+          "p": "Close-up head and shoulders portrait in a side profile view (turned 90 degrees, facing the right side of the image), with the entire head and hair in frame."
+        },
+        {
+          "id": "profilefull",
+          "en": "Profile full body only",
+          "fr": "Plein pied de profil seul",
+          "size": [
+            896,
+            1536
+          ],
+          "p": "Full-body standing shot in a side profile view (turned 90 degrees, facing the right side of the image), arms relaxed, entire figure from head to feet in frame."
+        }
+      ],
+      "keywords": {
+        "en": "sheet framing views",
+        "fr": "planche cadrage vues"
+      }
+    },
+    {
+      "id": "look",
+      "icon": "camera",
+      "section": "render",
+      "type": "single",
+      "en": "Look",
+      "fr": "Look",
+      "options": [
+        {
+          "id": "photo",
+          "en": "Photoreal",
+          "fr": "Photoréaliste",
+          "p": "Hyper-realistic fashion editorial photograph, natural skin texture, crisp detail, sharp focus, 85mm lens."
+        },
+        {
+          "id": "cinema",
+          "en": "Cinematic",
+          "fr": "Cinéma",
+          "p": "Cinematic film still from a feature film, dramatic low-key lighting with a strong side key light and deep shadows, teal and orange colour grade, anamorphic lens, shallow depth of field, subtle film grain."
+        },
+        {
+          "id": "illustration",
+          "en": "Illustration",
+          "fr": "Illustration",
+          "p": "Clean digital character illustration, painterly shading, crisp linework."
+        },
+        {
+          "id": "render3d",
+          "en": "Stylized 3D",
+          "fr": "3D stylisée",
+          "p": "Stylized 3D character render, soft studio lighting, subsurface skin shading."
+        },
+        {
+          "id": "anime",
+          "en": "Anime",
+          "fr": "Anime",
+          "p": "Anime style character art, clean cel shading, crisp line art, vibrant flat colours, expressive eyes, like a high-quality Japanese animated film."
+        },
+        {
+          "id": "comic",
+          "en": "Comic book",
+          "fr": "BD / comics",
+          "p": "Comic book art, bold black ink outlines, flat colours with hatching shadows, graphic and punchy, like a modern comic book page."
+        },
+        {
+          "id": "oil",
+          "en": "Oil painting",
+          "fr": "Peinture à l'huile",
+          "p": "Classical oil painting on canvas, visible brushstrokes, rich glazes and chiaroscuro lighting, like a Renaissance portrait."
+        },
+        {
+          "id": "watercolor",
+          "en": "Watercolour",
+          "fr": "Aquarelle",
+          "p": "Delicate watercolour painting on textured paper, soft washes of transparent colour, loose edges and gentle bleeding pigment."
+        }
+      ],
+      "refs": true,
+      "keywords": {
+        "en": "style render",
+        "fr": "style rendu"
+      }
+    },
+    {
+      "id": "background",
+      "icon": "image",
+      "section": "render",
+      "type": "single",
+      "color": true,
+      "ownTemplate": "{} seamless studio background, soft even light.",
+      "en": "Background",
+      "fr": "Fond",
+      "options": [
+        {
+          "id": "white",
+          "en": "White",
+          "fr": "Blanc",
+          "p": "Pure white seamless studio background, bright soft even light.",
+          "sw": "#f5f5f5"
+        },
+        {
+          "id": "lightgrey",
+          "en": "Light grey",
+          "fr": "Gris clair",
+          "p": "Light grey seamless studio background, soft even light.",
+          "sw": "#c9c9c9"
+        },
+        {
+          "id": "grey",
+          "en": "Mid grey",
+          "fr": "Gris moyen",
+          "p": "Neutral mid grey seamless studio background, soft even light.",
+          "sw": "#7d7d7d"
+        },
+        {
+          "id": "darkgrey",
+          "en": "Dark grey",
+          "fr": "Gris foncé",
+          "p": "Dark charcoal grey seamless studio background, soft even light.",
+          "sw": "#3a3a3a"
+        }
+      ],
+      "keywords": {
+        "en": "backdrop colour",
+        "fr": "fond décor"
+      }
+    }
+  ],
+  "defaults": {
+    "presentation": "woman",
+    "age": "adult",
+    "build": "athletic",
+    "faceShape": "oval",
+    "eyeShape": "almond",
+    "eyeColor": "brown",
+    "skin": "olive",
+    "features": [],
+    "expression": "neutral",
+    "hairStyle": "wavy",
+    "hairColor": "darkbrown",
+    "facialHair": "none",
+    "outfit": "casual",
+    "accessories": [],
+    "layout": "sheet",
+    "look": "photo",
+    "background": "lightgrey",
+    "ethnicity": "any",
+    "height": "average",
+    "nose": "average",
+    "mouth": "average",
+    "teeth": "average",
+    "lipColor": "natural",
+    "ears": "average",
+    "chin": "average",
+    "forehead": "average",
+    "brows": "average",
+    "browColor": "hair",
+    "chinCleft": "no"
+  },
+  "randomExtras": [
+    {
+      "en": "a red scarf",
+      "fr": "une écharpe rouge"
+    },
+    {
+      "en": "a small scar across the eyebrow",
+      "fr": "une petite cicatrice sur le sourcil"
+    },
+    {
+      "en": "round wire-rimmed glasses",
+      "fr": "des lunettes rondes cerclées de métal"
+    },
+    {
+      "en": "freckles across the nose",
+      "fr": "des taches de rousseur sur le nez"
+    },
+    {
+      "en": "a leather satchel",
+      "fr": "une sacoche en cuir"
+    },
+    {
+      "en": "paint stains on the hands",
+      "fr": "des taches de peinture sur les mains"
+    },
+    {
+      "en": "a silver pendant",
+      "fr": "un pendentif en argent"
+    },
+    {
+      "en": "rolled-up sleeves",
+      "fr": "des manches retroussées"
+    },
+    {
+      "en": "a vintage wristwatch",
+      "fr": "une montre ancienne"
+    },
+    {
+      "en": "a flower tucked behind one ear",
+      "fr": "une fleur glissée derrière l'oreille"
+    },
+    {
+      "en": "a tired look, dark circles",
+      "fr": "un air fatigué, des cernes"
+    },
+    {
+      "en": "a bright yellow raincoat",
+      "fr": "un ciré jaune vif"
+    },
+    {
+      "en": "a tattoo of a swallow on the neck",
+      "fr": "une hirondelle tatouée dans le cou"
+    },
+    {
+      "en": "a knitted beanie",
+      "fr": "un bonnet en laine"
+    },
+    {
+      "en": "a camera on a strap",
+      "fr": "un appareil photo en bandoulière"
+    },
+    {
+      "en": "mismatched socks",
+      "fr": "des chaussettes dépareillées"
+    },
+    {
+      "en": "elf ears",
+      "fr": "des oreilles d'elfe"
+    },
+    {
+      "en": "a mechanical prosthetic arm",
+      "fr": "un bras prothétique mécanique"
+    },
+    {
+      "en": "glowing blue tattoos",
+      "fr": "des tatouages bleus lumineux"
+    },
+    {
+      "en": "a cape lined with fur",
+      "fr": "une cape doublée de fourrure"
+    },
+    {
+      "en": "a patched denim jacket",
+      "fr": "une veste en jean rapiécée"
+    },
+    {
+      "en": "headphones around the neck",
+      "fr": "un casque autour du cou"
+    },
+    {
+      "en": "a gold tooth",
+      "fr": "une dent en or"
+    },
+    {
+      "en": "a bandage on one cheek",
+      "fr": "un pansement sur la joue"
+    }
+  ]
+}

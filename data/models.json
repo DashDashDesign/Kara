@@ -1,0 +1,2141 @@
+{
+  "ratios": [
+    {
+      "id": "1:1",
+      "w": 1,
+      "h": 1
+    },
+    {
+      "id": "4:5",
+      "w": 4,
+      "h": 5
+    },
+    {
+      "id": "3:4",
+      "w": 3,
+      "h": 4
+    },
+    {
+      "id": "2:3",
+      "w": 2,
+      "h": 3
+    },
+    {
+      "id": "9:16",
+      "w": 9,
+      "h": 16
+    },
+    {
+      "id": "1:2",
+      "w": 1,
+      "h": 2
+    },
+    {
+      "id": "9:21",
+      "w": 9,
+      "h": 21
+    },
+    {
+      "id": "5:4",
+      "w": 5,
+      "h": 4
+    },
+    {
+      "id": "4:3",
+      "w": 4,
+      "h": 3
+    },
+    {
+      "id": "3:2",
+      "w": 3,
+      "h": 2
+    },
+    {
+      "id": "16:9",
+      "w": 16,
+      "h": 9
+    },
+    {
+      "id": "7:4",
+      "w": 7,
+      "h": 4
+    },
+    {
+      "id": "21:9",
+      "w": 21,
+      "h": 9
+    },
+    {
+      "id": "2:1",
+      "w": 2,
+      "h": 1
+    }
+  ],
+  "models": [
+    {
+      "id": "z-image-turbo",
+      "name": "Z-Image Turbo",
+      "open": true,
+      "license": "Apache 2.0",
+      "refs": false,
+      "en": "Fast, open weights. Text only.",
+      "fr": "Rapide, poids libres. Texte seulement.",
+      "engines": {
+        "local": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "1.5mp",
+              "en": "1.5 MP",
+              "fr": "1,5 MP",
+              "mp": 1.5
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": "free",
+          "guideWorkflow": "zimage_turbo_guide.api.json"
+        },
+        "cloud": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "1.5mp",
+              "en": "1.5 MP",
+              "fr": "1,5 MP",
+              "mp": 1.5
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ]
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "9:16",
+            "4:3",
+            "16:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ],
+          "price": {
+            "1k": 5
+          }
+        },
+        "kie": {
+          "ratios": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ]
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "1.5mp",
+              "en": "1.5 MP",
+              "fr": "1,5 MP",
+              "mp": 1.5
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": {
+            "usdPerMp": 0.005
+          }
+        }
+      },
+      "family": "ZI"
+    },
+    {
+      "id": "moss-image",
+      "name": "MOSS-Image",
+      "open": true,
+      "license": "Apache 2.0",
+      "refs": false,
+      "en": "Open 5B model by OpenMOSS, strong on detail and text in the image. On your own machine through ComfyUI, or through fal. Text only.",
+      "fr": "Modèle libre de 5 milliards de paramètres (OpenMOSS), fort sur le détail et le texte dans l'image. Sur votre machine via ComfyUI, ou via fal. Texte seulement.",
+      "engines": {
+        "local": {
+          "workflow": "moss_image_t2i.api.json",
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "0.5mp",
+              "en": "0.5 MP",
+              "fr": "0,5 MP",
+              "mp": 0.5
+            },
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "1.5mp",
+              "en": "1.5 MP",
+              "fr": "1,5 MP",
+              "mp": 1.5
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": "free"
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "0.5mp",
+              "en": "0.5 MP",
+              "fr": "0,5 MP",
+              "mp": 0.5
+            },
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": {
+            "usdPerMp": 0.05
+          }
+        }
+      },
+      "family": "MO"
+    },
+    {
+      "id": "qwen-2-1",
+      "name": "Qwen-Image 2.1",
+      "open": true,
+      "refs": true,
+      "maxRefs": 10,
+      "en": "Text, or up to 10 reference images. Through KIE, or on your own machine through ComfyUI.",
+      "fr": "Texte, ou jusqu'à 10 images de référence. Via KIE, ou sur votre machine via ComfyUI.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "9:21",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ]
+        },
+        "local": {
+          "workflow": "qwen_image_2_1_t2i.api.json",
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            },
+            {
+              "id": "4mp",
+              "en": "4 MP",
+              "fr": "4 MP",
+              "mp": 4
+            }
+          ],
+          "price": "free",
+          "editWorkflow": "qwen_image_2_1_edit.api.json"
+        }
+      },
+      "family": "QW"
+    },
+    {
+      "id": "flux-3",
+      "name": "FLUX 3",
+      "open": false,
+      "refs": true,
+      "maxRefs": 10,
+      "en": "Black Forest Labs' full FLUX 3: more detail than Klein, up to 10 reference images. Through fal.",
+      "fr": "Le FLUX 3 complet de Black Forest Labs : plus de détail que Klein, jusqu'à 10 images de référence. Via fal.",
+      "engines": {
+        "fal": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "1.5k",
+              "en": "1.5K",
+              "fr": "1,5K",
+              "mp": 2.25
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "usdPerMp": 0.048
+          }
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "1.5k",
+              "en": "1.5K",
+              "fr": "1,5K",
+              "mp": 2.25
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        }
+      },
+      "family": "FX"
+    },
+    {
+      "id": "flux-3-klein",
+      "name": "FLUX 3 Klein",
+      "open": true,
+      "refs": true,
+      "maxRefs": 10,
+      "en": "Black Forest Labs, fast and cheap. Up to 10 reference images. Weights published under the FLUX Community License (free for non-commercial use, commercial use only for qualifying users). Through KIE or fal, or on your own machine through ComfyUI.",
+      "fr": "Black Forest Labs, rapide et pas cher. Jusqu'à 10 images de référence. Poids publiés sous FLUX Community License (gratuit hors usage commercial, usage commercial réservé à certains utilisateurs). Via KIE ou fal, ou sur votre machine via ComfyUI.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "9:21",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1k": 0.009,
+              "2k": 0.014,
+              "4k": 0.036
+            }
+          }
+        },
+        "local": {
+          "workflow": "flux3_klein_t2i.api.json",
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "1.5mp",
+              "en": "1.5 MP",
+              "fr": "1,5 MP",
+              "mp": 1.5
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": "free",
+          "editWorkflow": "flux3_klein_edit.api.json"
+        }
+      },
+      "license": "FLUX Community License",
+      "family": "FX"
+    },
+    {
+      "id": "qwen-3",
+      "name": "Qwen-Image 3",
+      "open": false,
+      "refs": true,
+      "maxRefs": 3,
+      "en": "Alibaba's Qwen image model, third generation. Text, or up to 3 reference images. Through KIE.",
+      "fr": "Le modèle d'image Qwen d'Alibaba, troisième génération. Texte, ou jusqu'à 3 images de référence. Via KIE.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ]
+        }
+      },
+      "family": "QW"
+    },
+    {
+      "id": "qwen-3-pro",
+      "name": "Qwen-Image 3 Pro",
+      "open": false,
+      "refs": true,
+      "maxRefs": 3,
+      "en": "The Pro version of Qwen-Image 3. Text, or up to 3 reference images. Through KIE.",
+      "fr": "La version Pro de Qwen-Image 3. Texte, ou jusqu'à 3 images de référence. Via KIE.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ]
+        }
+      },
+      "family": "QW"
+    },
+    {
+      "id": "nano-banana-pro",
+      "name": "Nano Banana Pro",
+      "open": false,
+      "refs": true,
+      "maxRefs": 8,
+      "en": "Google's top image model: very faithful to the prompt and to up to 8 reference images.",
+      "fr": "Le meilleur modèle d'image de Google : très fidèle au prompt et jusqu'à 8 images de référence.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        },
+        "fal": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1k": 0.15,
+              "2k": 0.15,
+              "4k": 0.3
+            }
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "2:3",
+            "3:2",
+            "3:4",
+            "4:3",
+            "4:5",
+            "5:4",
+            "9:16",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "1k": 75
+          }
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        }
+      },
+      "family": "NB"
+    },
+    {
+      "id": "nano-banana-2-1",
+      "name": "Nano Banana 2.1",
+      "open": false,
+      "refs": true,
+      "maxRefs": 10,
+      "en": "Latest Nano Banana: strong on characters and consistency, up to 10 reference images.",
+      "fr": "Le dernier Nano Banana : solide sur les personnages et la cohérence, jusqu'à 10 images de référence.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        },
+        "fal": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1k": 0.04,
+              "2k": 0.059,
+              "4k": 0.134
+            }
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "2:3",
+            "3:2",
+            "3:4",
+            "4:3",
+            "4:5",
+            "5:4",
+            "9:16",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "1k": 50
+          }
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        }
+      },
+      "family": "NB"
+    },
+    {
+      "id": "nano-banana-2",
+      "name": "Nano Banana 2",
+      "open": false,
+      "refs": true,
+      "maxRefs": 10,
+      "en": "Fast and good value, up to 10 reference images.",
+      "fr": "Rapide et bon rapport qualité-prix, jusqu'à 10 images de référence.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        },
+        "fal": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1k": 0.08,
+              "2k": 0.12,
+              "4k": 0.16
+            }
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "2:3",
+            "3:2",
+            "3:4",
+            "4:3",
+            "4:5",
+            "5:4",
+            "9:16",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "1k": 75
+          }
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        }
+      },
+      "family": "NB"
+    },
+    {
+      "id": "nano-banana-2-lite",
+      "name": "Nano Banana 2 Lite",
+      "open": false,
+      "refs": true,
+      "maxRefs": 10,
+      "en": "The light, cheaper Nano Banana 2.",
+      "fr": "Le Nano Banana 2 léger, moins cher.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ]
+        },
+        "fal": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ],
+          "maxRefs": 0
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ]
+        }
+      },
+      "family": "NB"
+    },
+    {
+      "id": "nano-banana",
+      "name": "Nano Banana",
+      "open": false,
+      "refs": true,
+      "maxRefs": 10,
+      "en": "The first Nano Banana (Gemini 2.5 Flash Image).",
+      "fr": "Le premier Nano Banana (Gemini 2.5 Flash Image).",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ]
+        },
+        "fal": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ],
+          "price": {
+            "usd": 0.0398
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ],
+          "price": {
+            "1k": 50
+          },
+          "maxRefs": 3
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ],
+          "maxRefs": 3
+        }
+      },
+      "family": "NB"
+    },
+    {
+      "id": "gpt-image-2",
+      "name": "GPT Image 2",
+      "open": false,
+      "refs": true,
+      "maxRefs": 16,
+      "en": "OpenAI's image model: follows long prompts closely, up to 16 reference images.",
+      "fr": "Le modèle d'image d'OpenAI : suit de près les prompts longs, jusqu'à 16 images de référence.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "1:2",
+            "9:21",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9",
+            "2:1"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            },
+            {
+              "id": "4mp",
+              "en": "4 MP",
+              "fr": "4 MP",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1mp": 0.21,
+              "2mp": 0.22,
+              "4mp": 0.22
+            }
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "21:9",
+            "3:2",
+            "2:3",
+            "2:1"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "1k": 85
+          }
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "3:4",
+            "2:3",
+            "9:16",
+            "1:2",
+            "9:21",
+            "5:4",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9",
+            "2:1"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ]
+        }
+      },
+      "family": "GPT"
+    },
+    {
+      "id": "gpt-image-2-5-flare",
+      "name": "GPT Image 2.5 Flare",
+      "open": false,
+      "refs": true,
+      "maxRefs": 16,
+      "en": "GPT Image 2.5, Flare version. Up to 16 reference images.",
+      "fr": "GPT Image 2.5, version Flare. Jusqu'à 16 images de référence.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            },
+            {
+              "id": "4mp",
+              "en": "4 MP",
+              "fr": "4 MP",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1mp": 0.053,
+              "2mp": 0.055,
+              "4mp": 0.055
+            }
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "21:9",
+            "3:2",
+            "2:3",
+            "2:1"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "1k": 40
+          }
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ]
+        }
+      },
+      "family": "GPT"
+    },
+    {
+      "id": "gpt-image-2-5-sunburst",
+      "name": "GPT Image 2.5 Sunburst",
+      "open": false,
+      "refs": true,
+      "maxRefs": 16,
+      "en": "GPT Image 2.5, Sunburst version. Up to 16 reference images.",
+      "fr": "GPT Image 2.5, version Sunburst. Jusqu'à 16 images de référence.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            },
+            {
+              "id": "4mp",
+              "en": "4 MP",
+              "fr": "4 MP",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1mp": 0.053,
+              "2mp": 0.055,
+              "4mp": 0.055
+            }
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "21:9",
+            "3:2",
+            "2:3",
+            "2:1"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ],
+          "price": {
+            "1k": 40
+          }
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ]
+        }
+      },
+      "family": "GPT"
+    },
+    {
+      "id": "seedream-5-pro",
+      "name": "Seedream 5 Pro",
+      "open": false,
+      "refs": true,
+      "maxRefs": 10,
+      "en": "ByteDance's photoreal model, up to 10 reference images.",
+      "fr": "Le modèle photoréaliste de ByteDance, jusqu'à 10 images de référence.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ]
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            },
+            {
+              "id": "4mp",
+              "en": "4 MP",
+              "fr": "4 MP",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1mp": 0.0675,
+              "2mp": 0.0675,
+              "4mp": 0.135
+            }
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "16:9",
+            "9:16",
+            "2:3",
+            "3:4",
+            "3:2",
+            "4:3",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1.5k",
+              "en": "1.5K",
+              "fr": "1.5K",
+              "mp": 2.25
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "1.5k": 75
+          }
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ]
+        }
+      },
+      "family": "SD"
+    },
+    {
+      "id": "seedream-5-lite",
+      "name": "Seedream 5 Lite",
+      "open": false,
+      "refs": true,
+      "maxRefs": 14,
+      "en": "Seedream 5, lighter. Large images (2K to 4K), up to 14 reference images.",
+      "fr": "Seedream 5 en plus léger. Grandes images (2K à 4K), jusqu'à 14 images de référence.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "3k",
+              "en": "3K",
+              "fr": "3K",
+              "mp": 9
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            },
+            {
+              "id": "4mp",
+              "en": "4 MP",
+              "fr": "4 MP",
+              "mp": 4
+            },
+            {
+              "id": "9mp",
+              "en": "9 MP",
+              "fr": "9 MP",
+              "mp": 9
+            }
+          ],
+          "maxRefs": 10,
+          "price": {
+            "usd": 0.035
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "16:9",
+            "9:16",
+            "2:3",
+            "3:4",
+            "3:2",
+            "4:3",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "2k": 50
+          },
+          "maxRefs": 5
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            },
+            {
+              "id": "3k",
+              "en": "3K",
+              "fr": "3K",
+              "mp": 9
+            },
+            {
+              "id": "4k",
+              "en": "4K",
+              "fr": "4K",
+              "mp": 16
+            }
+          ]
+        }
+      },
+      "family": "SD"
+    },
+    {
+      "id": "seedream-5-flash",
+      "name": "Seedream 5 Flash",
+      "open": false,
+      "refs": true,
+      "maxRefs": 10,
+      "en": "The fastest Seedream 5, up to 10 reference images.",
+      "fr": "Le Seedream 5 le plus rapide, jusqu'à 10 images de référence.",
+      "engines": {
+        "kie": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "1.5k",
+              "en": "1.5K",
+              "fr": "1,5K",
+              "mp": 2.25
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ]
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            },
+            {
+              "id": "4mp",
+              "en": "4 MP",
+              "fr": "4 MP",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "usd": 0.027
+          }
+        },
+        "router": {
+          "ratios": [
+            "1:1",
+            "3:4",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9",
+            "21:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "1.5k",
+              "en": "1.5K",
+              "fr": "1,5K",
+              "mp": 2.25
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ]
+        }
+      },
+      "family": "SD"
+    },
+    {
+      "id": "krea-3",
+      "name": "Krea 3",
+      "open": false,
+      "refs": true,
+      "maxRefs": 8,
+      "en": "Krea's aesthetic model, up to 8 reference images.",
+      "fr": "Le modèle esthétique de Krea, jusqu'à 8 images de référence.",
+      "engines": {
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            },
+            {
+              "id": "4mp",
+              "en": "4 MP",
+              "fr": "4 MP",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "usdPerMp": 0.025
+          }
+        },
+        "router": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "maxRefs": 0
+        }
+      },
+      "family": "KR"
+    },
+    {
+      "id": "ideogram-4-5",
+      "name": "Ideogram 4.5",
+      "open": false,
+      "refs": false,
+      "en": "Ideogram: strong on graphic styles and text in the image. Text only.",
+      "fr": "Ideogram : fort sur les styles graphiques et le texte dans l'image. Texte seulement.",
+      "engines": {
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": {
+            "usd": 0.06
+          }
+        },
+        "magnific": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "5:4",
+            "3:4",
+            "4:3",
+            "2:3",
+            "3:2",
+            "9:16",
+            "16:9",
+            "1:2",
+            "2:1"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ],
+          "price": {
+            "1k": 80
+          }
+        },
+        "router": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ]
+        }
+      },
+      "family": "ID"
+    }
+  ],
+  "default": "z-image-turbo",
+  "priceNote": {
+    "magnific": "Credits per image, from Magnific's cost estimate (27 Oct 2026, app prices; API assumed the same).",
+    "kie": "Measured on the KIE balance after each image.",
+    "local": "Runs on your own graphics card.",
+    "fal": "Price per image from fal's model pages (28 and 29 Oct 2026; GPT Image in high quality, by size)."
+  }
+}

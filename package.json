@@ -1,0 +1,17 @@
+{
+  "name": "kara",
+  "version": "0.1.0",
+  "description": "A local, open source character designer that runs on your own ComfyUI.",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "mock": "node test/mock-comfy.js",
+    "test": "node test/run-tests.js",
+    "cf:dev": "npx wrangler dev",
+    "cf:deploy": "npx wrangler deploy"
+  }
+}

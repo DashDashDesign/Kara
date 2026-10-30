@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="utf-8">
+  <!-- The page has its own FR/EN switch: browsers must not offer to translate it -->
+  <meta name="google" content="notranslate">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kara</title>
+  <meta name="description" content="Kara: an open source character designer, on your own ComfyUI or with your own API key.">
+  <link rel="icon" href="icons/kara.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Kara">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="top-left">
+      <img class="brand app-icon" src="icons/kara.svg" alt="" width="30" height="30">
+      <h1>Kara <em class="tagline">// character designer</em></h1>
+    </div>
+    <div class="toolbar">
+      <details class="drop" id="inspirations">
+        <summary class="ghost" id="presetsLabel"></summary>
+        <div class="drop-panel">
+          <p class="lede" id="lede"></p>
+          <div class="preset-row" id="presetList"></div>
+        </div>
+      </details>
+      <button class="ghost" id="randomBtn" type="button"></button>
+      <div class="history-tools">
+        <button class="ghost icon" id="undo" type="button" disabled>&#8630;</button>
+        <button class="ghost icon" id="redo" type="button" disabled>&#8631;</button>
+        <button class="ghost" id="galleryBtn" type="button"></button>
+        <details class="drop" id="historyMenu">
+          <summary class="ghost" id="historyLabel"></summary>
+          <div class="drop-panel steps" id="stepList"></div>
+        </details>
+      </div>
+    </div>
+    <div class="top-right">
+      <details class="drop end prov-menu" id="provMenu">
+        <summary class="status" id="status" role="status" aria-live="polite"><span class="dot" id="dot"></span><span id="statusText" class="mono-plain"></span></summary>
+        <div class="drop-panel menu" id="provList"></div>
+      </details>
+      <details class="drop end" id="sessionMenu">
+        <summary class="ghost" id="sessionLabel"></summary>
+        <div class="drop-panel menu">
+          <button type="button" id="exportBtn"></button>
+          <button type="button" id="importBtn"></button>
+          <button type="button" id="clearBtn"></button>
+          <p class="menu-note" id="sessionNote"></p>
+        </div>
+      </details>
+      <input type="file" id="importFile" accept=".html,text/html" hidden>
+      <details class="drop end" id="settingsMenu">
+        <summary class="ghost" id="settingsLabel"></summary>
+        <div class="drop-panel settings">
+          <p class="mono" id="providerTitle"></p>
+          <div class="providers" id="providerList"></div>
+          <p class="menu-note" id="providerDesc"></p>
+          <label class="field-row" id="comfyUrlRow"><span id="comfyUrlLabel"></span><input type="text" id="comfyUrl" spellcheck="false" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other"></label>
+          <div class="localbox" id="localBox" hidden>
+            <ol class="local-steps" id="localSteps"></ol>
+            <p class="menu-note" id="localState"></p>
+            <ul class="local-files" id="localFiles"></ul>
+            <label class="field-row" id="comfyDirRow" hidden><span id="comfyDirLabel"></span><input type="text" id="comfyDir" spellcheck="false" autocomplete="off"></label>
+            <div class="local-progress" id="localProgress" hidden><div class="bar"><i></i></div><p class="menu-note" id="localProgressText"></p></div>
+            <button class="ghost small" id="installModel" type="button" hidden></button>
+          </div>
+          <label class="field-row" id="keyRow"><span id="keyLabel"></span><input type="text" class="secret" id="apiKey" spellcheck="false" autocomplete="off" autocapitalize="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other"></label>
+          <a class="key-link" id="keyLink" target="_blank" rel="noopener"></a>
+          <label class="check" id="rememberRow"><input type="checkbox" id="rememberKey" checked><span id="rememberLabel"></span></label>
+          <p class="menu-note" id="settingsNote"></p>
+          <p class="menu-note" id="settingsResult" role="status"></p>
+          <div class="settings-actions">
+            <button class="ghost small" id="forgetKey" type="button"></button>
+            <button class="primary small" id="saveSettings" type="button"></button>
+          </div>
+        </div>
+      </details>
+      <button class="ghost icon guide-btn" id="guideBtn" type="button" aria-label="Guide">?</button>
+      <button class="ghost" id="aboutBtn" type="button"></button>
+      <button class="ghost" id="langBtn" type="button" aria-label="Language">FR</button>
+    </div>
+  </header>
+
+  <main class="app" id="app">
+    <section class="stage" id="stage">
+      <div class="window" id="window">
+        <div class="titlebar">
+          <label class="filename"><input id="charName" type="text" maxlength="60" spellcheck="false" autocomplete="off"><span class="suffix" id="layoutSuffix"></span><span class="ext">.png</span></label>
+        </div>
+        <div class="screen" id="screen">
+          <div class="placeholder" id="placeholder"><div class="ph-msg"><p class="mono" id="waiting"></p><p class="ph-hint" id="waitingHint"></p></div></div>
+          <img id="result" alt="" hidden>
+          <img id="guideOverlay" class="guide-overlay" alt="" hidden>
+          <button class="nav prev" id="prev" type="button" hidden>&#8249;</button>
+          <button class="nav next" id="next" type="button" hidden>&#8250;</button>
+          <div class="progress" id="progress" hidden><p class="mono" id="progressText"></p><div class="bar"><i></i></div></div>
+        </div>
+        <div class="card-info" id="cardInfo" hidden></div>
+        <div class="deck" id="deck">
+          <span class="mono-plain" id="counter"></span>
+          <span class="meta" id="meta"></span>
+          <button class="ghost small icon-btn" id="infoCard" type="button" aria-expanded="false" aria-controls="cardInfo"></button>
+          <button class="ghost small icon-btn" id="favCard" type="button" aria-pressed="false"></button>
+          <button class="ghost small icon-btn" id="compareGuide" type="button" aria-pressed="false" hidden></button>
+          <button class="ghost small icon-btn" id="reuse" type="button"></button>
+          <button class="ghost small icon-btn" id="deleteCard" type="button"></button>
+          <a class="ghost small link icon-btn" id="download"></a>
+        </div>
+      </div>
+    </section>
+
+    <aside class="side" aria-label="Character options">
+      <section class="refs" id="refs">
+        <div class="refs-head">
+          <p class="mono" id="refsTitle"></p>
+        </div>
+        <label class="dropzone" id="dropzone">
+          <input type="file" id="refFile" accept="image/png,image/jpeg,image/webp" multiple hidden>
+          <span id="dropText"></span>
+        </label>
+        <div class="ref-list" id="refList"></div>
+        <div class="ref-mode" id="refModeRow" hidden>
+          <button type="button" class="ghost small" data-mode="sheet"></button>
+          <button type="button" class="ghost small" data-mode="inspire"></button>
+        </div>
+        <p class="menu-note" id="refNote"></p>
+      </section>
+      <div class="controls" id="controls"></div>
+    </aside>
+
+    <div class="dock" id="dock">
+      <p class="error" id="error" role="alert" hidden></p>
+      <div class="dock-row">
+        <div class="dock-block">
+        <span class="mono" id="dockTitle"></span>
+        <div class="dock-groups">
+          <details class="pop" id="modelPop">
+            <summary class="chipbtn"><span class="g-name" id="modelLabel"></span><span class="g-value" id="modelValue"></span></summary>
+            <div class="pop-panel models" id="modelList"></div>
+          </details>
+          <details class="pop more-pop" id="morePop" hidden>
+            <summary class="chipbtn"><span class="g-value" id="moreLabel"></span></summary>
+            <div class="pop-panel more-panel" id="moreBody"></div>
+          </details>
+          <div class="dock-more" id="dockMore">
+          <div class="dock-groups" id="dockGroups"></div>
+          <details class="pop guide-pop" id="guidePop" hidden>
+            <summary class="chipbtn"><span class="g-name" id="guideLabel"></span><span class="g-value" id="guideValue"></span></summary>
+            <div class="pop-panel guide-panel" id="guideBody"></div>
+          </details>
+          <details class="pop extra-pop" id="extraPop">
+            <summary class="chipbtn"><span class="g-name" id="extraName"></span><span class="g-value" id="extraValue"></span></summary>
+            <div class="pop-panel extra-panel">
+              <label class="extra">
+                <span class="mono" id="extraLabel"></span>
+                <textarea id="extra" rows="1" maxlength="400"></textarea>
+              </label>
+            </div>
+          </details>
+          <div class="advanced" id="advancedGroups" hidden>
+            <details class="pop" id="ratioPop">
+              <summary class="chipbtn"><span class="g-name" id="ratioLabel"></span><span class="g-value" id="ratioValue"></span></summary>
+              <div class="pop-panel"><div class="tiles small" id="ratioList"></div></div>
+            </details>
+            <details class="pop" id="resPop">
+              <summary class="chipbtn"><span class="g-name" id="resLabel"></span><span class="g-value" id="resValue"></span></summary>
+              <div class="pop-panel"><div class="tiles small" id="resList"></div></div>
+            </details>
+            <details class="pop seed-pop" id="seedPop">
+              <summary class="chipbtn"><span class="g-name" id="seedName"></span><span class="g-value" id="seedValue"></span></summary>
+              <div class="pop-panel seed-panel">
+                <span class="mono" id="seedLabel"></span>
+                <div class="seedrow">
+            <button class="sq" id="seedDown" type="button">-</button>
+            <input id="seed" type="number" min="0" step="1" inputmode="numeric">
+            <button class="sq" id="seedUp" type="button">+</button>
+            <button class="sq" id="seedDice" type="button">&#9858;</button>
+            <select id="seedMode"></select>
+          </div>
+              </div>
+            </details>
+          </div>
+          </div>
+          <button class="ghost small toggle" id="advancedBtn" type="button" aria-pressed="false"></button>
+        </div>
+        </div>
+        <details class="pop promptpop">
+          <summary class="ghost small" id="promptSummary"></summary>
+          <div class="pop-panel"><div class="prompt-head"><span class="mono" id="promptTitle"></span><button class="ghost small" id="copyPrompt" type="button"></button></div><pre id="promptText"></pre></div>
+        </details>
+        <div class="buttons">
+          <select id="batch" class="batchsel"><option value="1">×1</option><option value="2">×2</option><option value="3">×3</option><option value="4">×4</option></select>
+          <span class="gen-wrap">
+            <button class="primary" id="generate" type="button"><span class="gen-label"></span><small class="gen-cost" hidden></small></button>
+          </span>
+          <button class="ghost" id="cancel" type="button" hidden></button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="gallery" id="gallery" hidden>
+    <div class="gallery-head">
+      <p class="mono" id="galleryTitle"></p>
+      <div class="seg" id="galleryFilter" role="group">
+        <button type="button" data-filter="all"></button>
+        <button type="button" data-filter="fav"></button>
+      </div>
+      <button class="ghost small" id="galleryGroup" type="button" aria-pressed="false"></button>
+      <button class="ghost small" id="galleryClose" type="button"></button>
+      <p class="menu-note" id="galleryHint"></p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+    <p class="gallery-empty mono" id="galleryEmpty" hidden></p>
+  </div>
+
+  <dialog class="about" id="about">
+    <div class="about-body" id="aboutBody"></div>
+  </dialog>
+
+  <div class="viewer" id="viewer" hidden>
+    <img id="viewerImg" alt="" draggable="false">
+    <div class="viewer-map" id="viewerMap" hidden><img id="viewerMapImg" alt="" draggable="false"><i id="viewerMapBox"></i></div>
+    <div class="viewer-bar">
+      <span class="mono-plain" id="viewerZoom"></span>
+      <span class="menu-note" id="viewerHint"></span>
+      <button class="ghost small" id="viewerFit" type="button"></button>
+      <button class="ghost small" id="viewerOne" type="button">1:1</button>
+      <button class="ghost small" id="viewerClose" type="button"></button>
+    </div>
+  </div>
+
+  <script src="session.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

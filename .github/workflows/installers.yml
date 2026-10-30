@@ -1,0 +1,70 @@
+# Builds the one-file installers: Kara-Setup.exe on Windows and Kara.dmg on macOS.
+# Run by hand (Actions, Installers, Run workflow) or by pushing a tag like v1.0.0.
+# With "publish", both files go to a GitHub Release, so they can be downloaded from the repository page.
+name: Installers
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version number shown by the installers
+        default: 1.0.0
+      publish:
+        description: Publish a GitHub Release with both files
+        type: boolean
+        default: false
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inno Setup
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) { choco install innosetup -y --no-progress }
+      - name: Build Kara-Setup.exe
+        shell: pwsh
+        run: |
+          $v = '${{ inputs.version }}'; if (-not $v) { $v = '${{ github.ref_name }}'.TrimStart('v') }
+          powershell -NoProfile -ExecutionPolicy Bypass -File installer/build.ps1 -Version $v
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Kara-Setup
+          path: dist/Kara-Setup.exe
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Kara.dmg
+        run: |
+          v='${{ inputs.version }}'; [ -n "$v" ] || v='${{ github.ref_name }}'; v="${v#v}"
+          sh installer/build-mac.sh "$v"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Kara-dmg
+          path: dist/Kara.dmg
+
+  release:
+    needs: [windows, macos]
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          v='${{ inputs.version }}'; [ -n "$v" ] || v='${{ github.ref_name }}'; tag="v${v#v}"
+          notes="Kara $tag. Windows: run Kara-Setup.exe (not signed: SmartScreen shows a warning, click More info, then Run anyway). macOS: open Kara.dmg and drag Kara to Applications (not signed: the first time, right-click Kara and choose Open, or allow it in System Settings, Privacy & Security). Kara needs nothing else; ComfyUI or an API key is chosen inside the app."
+          gh release create "$tag" dist/Kara-Setup.exe dist/Kara.dmg --repo "${{ github.repository }}" --title "Kara $tag" --notes "$notes" --target "${{ github.sha }}" \
+            || gh release upload "$tag" dist/Kara-Setup.exe dist/Kara.dmg --repo "${{ github.repository }}" --clobber
