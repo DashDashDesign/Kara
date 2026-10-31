@@ -87,10 +87,11 @@
       viewerHint: 'Scroll or pinch to zoom, drag to move, double-click for actual size.',
       fit: 'Fit',
       about: 'About',
-      aboutText: 'Kara is an open-source character designer. Build a character from simple menus, add reference images if you like, and get a clean character sheet from the image model of your choice: on your own computer through ComfyUI, or online through Magnific, KIE or fal with your own key.',
+      versionWord: 'version',
+      aboutText: 'Kara is an open-source character designer. Build a character from simple menus, add reference images if you like, and get a clean character sheet from the image model of your choice: on your own computer through ComfyUI, or online through Comfy Router, KIE, fal or Magnific with your own key.',
       aboutBy: 'Made by',
       aboutLicense: 'MIT license: free to use, change and share.',
-      aboutRepo: 'Source code on GitHub',
+      aboutRepo: 'Code on GitHub',
       aboutFeedback: 'Send feedback',
       aboutFeedbackNote: 'Opens a new issue on GitHub (a free GitHub account is needed).',
       updTitle: 'Updates',
@@ -400,6 +401,7 @@
       viewerHint: 'Molette ou pincement pour zoomer, glisser pour se déplacer, double clic pour la taille réelle.',
       fit: 'Ajuster',
       about: 'À propos',
+      versionWord: 'version',
       aboutText: "Kara est un créateur de personnages open source. Composez un personnage avec des menus simples, ajoutez des images de référence si vous voulez, et obtenez une planche de personnage propre avec le modèle d'image de votre choix : sur votre machine via ComfyUI, ou en ligne via Comfy Router, KIE, fal ou Magnific avec votre propre clé.",
       aboutBy: 'Conçu par',
       aboutLicense: "Licence MIT : libre d'utiliser, de modifier et de partager.",
@@ -4517,7 +4519,7 @@
     const close = el('button', 'ghost small about-close', t('close'));
     close.type = 'button';
     close.addEventListener('click', () => $('about').close());
-    body.append(el('p', 'mono', '// Kara'), el('p', 'about-text', t('aboutText')), by, el('p', 'menu-note', t('aboutLicense')), row, el('p', 'menu-note', t('aboutFeedbackNote')));
+    body.append(el('p', 'mono', `// Kara${state.cfg.version ? ` · ${t('versionWord')} ${state.cfg.version}` : ''}`), el('p', 'about-text', t('aboutText')), by, el('p', 'menu-note', t('aboutLicense')), row, el('p', 'menu-note', t('aboutFeedbackNote')));
     // The app installed on a computer can update itself from GitHub; the online version is always up to date.
     if (state.cfg.settings && state.cfg.settings.editable) body.append(updateBox(el));
     body.append(close);

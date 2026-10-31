@@ -8,6 +8,7 @@ import { buildPrompt } from '../lib/prompt.js';
 import options from '../data/options.json';
 import presets from '../data/presets.json';
 import models from '../data/models.json';
+import pkg from '../package.json';
 import { resolveSize, refModeOf, packRefs } from '../lib/models.js';
 import api from '../lib/magnific-api.js';
 import kie from '../lib/kie.js';
@@ -165,7 +166,7 @@ async function handleApi(request, env, url) {
 
   if (method === 'GET' && route === '/api/config') {
     const settings = { editable: false, byok: true, provider, providers: ['router', 'kie', 'fal', 'magnific'], hasServerKey: { router: false, magnific: !!(env.MAGNIFIC_API_KEY || '').trim(), kie: !!(env.KIE_API_KEY || '').trim(), fal: !!(env.FAL_KEY || '').trim() } };
-    return json(200, { options, presets, models, settings, workflows: [DEFAULT_WORKFLOW], defaultWorkflow: DEFAULT_WORKFLOW, comfyUrl: base(env), mode: provider });
+    return json(200, { options, presets, models, settings, workflows: [DEFAULT_WORKFLOW], defaultWorkflow: DEFAULT_WORKFLOW, comfyUrl: base(env), mode: provider, version: pkg.version });
   }
   // Balance of the provider named in x-user-provider, with the visitor's key or the site key. Magnific's API has none.
   if (method === 'GET' && route === '/api/balance') {

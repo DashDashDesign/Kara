@@ -691,7 +691,7 @@ body.viewer-open #result{visibility:hidden}
 .about-update p{margin:0}
 #aboutBtn.has-update{position:relative}
 #aboutBtn.has-update::after{content:"";position:absolute;top:4px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
-.about{max-width:min(520px,calc(100vw - 32px));width:100%;background:#141416;color:var(--txt);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:0;box-shadow:0 24px 80px rgba(0,0,0,.7)}
+.about{max-width:min(620px,calc(100vw - 32px));width:100%;background:#141416;color:var(--txt);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:0;box-shadow:0 24px 80px rgba(0,0,0,.7)}
 .about::backdrop{background:rgba(0,0,0,.6)}
 .about-body{display:grid;gap:12px;padding:22px 24px}
 .about-body > p{margin:0}
@@ -701,6 +701,8 @@ body.viewer-open #result{visibility:hidden}
 .about-studio:hover{opacity:1}
 .about-studio img{display:block;height:22px;width:auto}
 .about-links{display:flex;flex-wrap:wrap;gap:8px}
+/* The three buttons on one line whenever the window is wide enough (in English too) */
+@media (min-width:680px){.about-links{flex-wrap:nowrap}.about-links a{white-space:nowrap}}
 .about-links a{text-decoration:none}
 .about-close{justify-self:end}
 .hexrow .hex-reset{flex:none;width:32px;height:32px;padding:0;display:grid;place-items:center;font-size:16px;line-height:1}

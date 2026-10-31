@@ -158,7 +158,9 @@ async function handleApi(req, res, url) {
       readJson(path.join(ROOT, 'data', 'models.json')),
       listWorkflows(),
     ]);
-    return send(res, 200, { options, presets, models, settings: settingsInfo(), workflows, defaultWorkflow: DEFAULT_WORKFLOW, comfyUrl: comfy.base(), mode: comfy.mode() });
+    // The version number of package.json, shown in About (read each time: an update changes it).
+    const pkg = await readJson(path.join(ROOT, 'package.json')).catch(() => ({}));
+    return send(res, 200, { options, presets, models, settings: settingsInfo(), workflows, defaultWorkflow: DEFAULT_WORKFLOW, comfyUrl: comfy.base(), mode: comfy.mode(), version: pkg.version || '' });
   }
 
   if (req.method === 'GET' && route === '/api/status') {
