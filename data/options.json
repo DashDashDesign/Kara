@@ -594,8 +594,8 @@
       "neutral": "average",
       "editorLink": true,
       "keywords": {
-        "en": "brow eyebrow unibrow",
-        "fr": "sourcil monosourcil"
+        "en": "brow eyebrow length height spacing tail",
+        "fr": "sourcil longueur hauteur écartement queue"
       },
       "sliders": [
         {
@@ -657,6 +657,86 @@
             "slanting down toward the nose",
             "sharply slanting down toward the nose"
           ]
+        },
+        {
+          "id": "length",
+          "en": "Length",
+          "fr": "Longueur",
+          "lo": {
+            "en": "Short",
+            "fr": "Courts"
+          },
+          "hi": {
+            "en": "Long",
+            "fr": "Longs"
+          },
+          "words": [
+            "very short",
+            "short",
+            "",
+            "long",
+            "very long, extending far out"
+          ]
+        },
+        {
+          "id": "height",
+          "en": "Height",
+          "fr": "Hauteur",
+          "lo": {
+            "en": "Low, close to the eyes",
+            "fr": "Bas, près des yeux"
+          },
+          "hi": {
+            "en": "High on the forehead",
+            "fr": "Hauts sur le front"
+          },
+          "words": [
+            "set very low, close to the eyes",
+            "set low",
+            "",
+            "set high",
+            "set very high above the eyes"
+          ]
+        },
+        {
+          "id": "gap",
+          "en": "Spacing",
+          "fr": "Écartement",
+          "lo": {
+            "en": "Close together",
+            "fr": "Rapprochés"
+          },
+          "hi": {
+            "en": "Wide apart",
+            "fr": "Espacés"
+          },
+          "words": [
+            "very close together, nearly meeting",
+            "fairly close together",
+            "",
+            "fairly wide apart",
+            "set very wide apart"
+          ]
+        },
+        {
+          "id": "tail",
+          "en": "Tail",
+          "fr": "Queue",
+          "lo": {
+            "en": "Drooping",
+            "fr": "Tombante"
+          },
+          "hi": {
+            "en": "Upswept",
+            "fr": "Relevée"
+          },
+          "words": [
+            "sharply drooping outer ends",
+            "slightly drooping outer ends",
+            "",
+            "outer ends tilting up",
+            "sharply upswept outer ends"
+          ]
         }
       ],
       "options": [
@@ -710,15 +790,30 @@
           "at": {
             "arch": 12
           }
+        }
+      ]
+    },
+    {
+      "id": "browJoin",
+      "icon": "brow",
+      "section": "face",
+      "type": "single",
+      "toggleIn": "brows",
+      "noCustom": true,
+      "en": "Unibrow",
+      "fr": "Monosourcil",
+      "options": [
+        {
+          "id": "no",
+          "en": "No",
+          "fr": "Non",
+          "p": ""
         },
         {
-          "id": "unibrow",
+          "id": "yes",
           "en": "Unibrow",
           "fr": "Monosourcil",
-          "p": "a unibrow, the eyebrows joined above the nose",
-          "at": {
-            "thick": 75
-          }
+          "p": "a unibrow, the eyebrows joined above the nose"
         }
       ]
     },
@@ -2780,7 +2875,8 @@
     "forehead": "average",
     "brows": "average",
     "browColor": "hair",
-    "chinCleft": "no"
+    "chinCleft": "no",
+    "browJoin": "no"
   },
   "randomExtras": [
     {

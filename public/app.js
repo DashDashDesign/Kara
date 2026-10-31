@@ -1294,6 +1294,7 @@
     const ea = g('ears');
     const fo = g('forehead');
     const br = g('brows');
+    const browYp = browY - (br.height - 50) * 0.08;
     const earK = 0.75 + ea.size / 200;
     // Forehead: higher, sloping back, with a brow ridge that juts out.
     const foreH = (fo.height - 50) * 0.12;
@@ -1359,7 +1360,9 @@
       [fx + depth * 0.6 + 6 * earK, eyeY + 8 - h * 0.12, 'ears', 'ears.size:y:-9 ears.tip:x:10'],
       [fx + 10 + slope, cy - h * 0.82 - foreH * 0.8, 'forehead', 'forehead.slope:x:6 forehead.height:y:-8'],
       [fx - 1 - ridge, browY + 1, 'forehead', 'forehead.ridge:x:-12'],
-      [fx + 10, browY - 2 - br.arch * 0.04, 'brows', 'brows.arch:y:-14 brows.thick:x:10'],
+      [fx + 10, browYp - 2 - br.arch * 0.04, 'brows', 'brows.arch:y:-14 brows.thick:x:10'],
+      [fx + 20 + (br.length - 50) * 0.1, browYp - 1 - (br.tail - 50) * 0.04, 'brows', 'brows.length:x:10 brows.tail:y:-14'],
+      [fx + 2 - ridge * 0.5, browYp - 1 + (br.angle - 50) * 0.05 + 4, 'brows', 'brows.height:y:-10'],
       [jawPt[0], jawPt[1], 'faceShape', 'faceShape.jaw:y:8'],
       [fx + depth * 1.02, cy - h * 0.45, 'faceShape', 'faceShape.width:x:8'],
       [ex + ew * 0.75, eyeY, 'eyeShape', 'eyeShape.size:x:9 eyeShape.tilt:y:-9'],
@@ -1372,7 +1375,7 @@
       ${earFront(fx + depth * 0.6, eyeY + 8, 6 * earK, h * 0.17 * earK, 1, ea.tip, `fill="${c(shade(skin, -0.1), paper)}"${line || ` stroke="${shade(skin, -0.3)}" stroke-width=".8"`}`)}
       <path d="M${fx + depth * 0.62 - 1.5} ${eyeY + 3}q3 5 0 10" fill="none" stroke="${c(shade(skin, -0.35), ink)}" stroke-width=".8" opacity=".7"/>
       ${guides}
-      <path d="M${fx + 1 - ridge * 0.5} ${browY - 1 + (br.angle - 50) * 0.05}Q${fx + 10} ${browY - 1.5 - br.arch * 0.04} ${fx + 20} ${browY - 1}" fill="none" stroke="${c(browC, ink)}" stroke-width="${(0.9 + br.thick * 0.035).toFixed(2)}" stroke-linecap="round" opacity="${c('.9', '.75')}"/>
+      <path d="M${fx + 1 - ridge * 0.5} ${browYp - 1 + (br.angle - 50) * 0.05}Q${fx + 10} ${browYp - 1.5 - br.arch * 0.04} ${fx + 20 + (br.length - 50) * 0.1} ${browYp - 1 - (br.tail - 50) * 0.04}" fill="none" stroke="${c(browC, ink)}" stroke-width="${(0.9 + br.thick * 0.035).toFixed(2)}" stroke-linecap="round" opacity="${c('.9', '.75')}"/>
       <path d="${eyeShape}" fill="${c('#f4f1ea', '#fbf8f1')}"${plate ? ` stroke="${ink}" stroke-width=".7"` : ''}/>
       <ellipse cx="${ex + ew * 0.12}" cy="${eyeY}" rx="${eh * 0.35}" ry="${eh * 0.8}" fill="${c1}"${plate ? ' opacity=".75"' : ''}/>
       <path d="M${ex - ew * 0.15} ${eyeY - eh * 0.2}Q${ex + ew * 0.5} ${eyeY - eh * 1.1} ${ex + ew * 0.75} ${eyeY - eh * 0.1 - (e.tilt - 50) * 0.04}" fill="none" stroke="${c(shade(skin, -0.75), ink)}" stroke-width="1.2" stroke-linecap="round"/>
@@ -1453,14 +1456,19 @@
     const bTh = 0.5 + br.thick * 0.026;
     const bArch = 0.4 + br.arch * 0.045;
     const bAng = (br.angle - 50) * 0.07;
-    const unibrow = state.selection.brows === 'unibrow' && !(state.custom.brows || '').trim();
+    const unibrow = state.selection.browJoin === 'yes';
+    // Length (the outer end), height above the eye, spacing (the whole brow moves sideways) and tail (the outer end goes up or down).
+    const kLen = 1 + (br.length - 50) * 0.008;
+    const by = browY - (br.height - 50) * 0.08;
+    const dB = Math.max(ew * 1.05 + 0.4, d + (br.gap - 50) * 0.12);
+    const tailY = -(br.tail - 50) * 0.05;
     const brow = (x, side) => smoothPath([
-      [x - ew * 1.05 * side, browY + 2.4 + bAng - bTh * 0.6],
-      [x - ew * 0.2 * side, browY - bArch - bTh * 0.5],
-      [x + ew * 1.15 * side, browY + 1.1 - bAng * 0.3],
-      [x + ew * 1.1 * side, browY + 1.1 - bAng * 0.3 + bTh * 0.4],
-      [x - ew * 0.2 * side, browY - bArch + bTh * 0.6],
-      [x - ew * 1.05 * side, browY + 2.4 + bAng + bTh * 0.7],
+      [x - ew * 1.05 * side, by + 2.4 + bAng - bTh * 0.6],
+      [x - ew * 0.2 * side, by - bArch - bTh * 0.5],
+      [x + ew * 1.15 * kLen * side, by + 1.1 - bAng * 0.3 + tailY],
+      [x + ew * 1.1 * kLen * side, by + 1.1 - bAng * 0.3 + tailY + bTh * 0.4],
+      [x - ew * 0.2 * side, by - bArch + bTh * 0.6],
+      [x - ew * 1.05 * side, by + 2.4 + bAng + bTh * 0.7],
     ]);
     const noseTop = eyeY + 2;
     const noseBot = eyeY + 26 + (n.length - 50) * 0.18;
@@ -1522,8 +1530,10 @@
       [cx + w * 0.98 + earOut + w * 0.13, eyeY + 7 - h * 0.12, 'ears', `ears.out:x:12 ears.size:y:-9`],
       [cx + w * (0.16 + 0.22 * j + chinW), cy + h * 0.96 + chinDrop, 'chin', `chin.width:x:14 chin.jut:y:10`],
       [cx, cy - h - foreH, 'forehead', `forehead.height:y:-8`],
-      [cx + d - ew * 0.2, browY - bArch - bTh * 0.5, 'brows', `brows.arch:y:-12 brows.thick:x:10`],
-      [cx + d - ew * 1.05, browY + 2.4 + bAng, 'brows', `brows.angle:y:12`],
+      [cx + dB - ew * 0.2, by - bArch - bTh * 0.5, 'brows', `brows.arch:y:-12 brows.thick:x:10`],
+      [cx + dB - ew * 1.05, by + 2.4 + bAng, 'brows', `brows.angle:y:12 brows.gap:x:8`],
+      [cx + dB + ew * 1.15 * kLen, by + 1.1 - bAng * 0.3 + tailY, 'brows', `brows.length:x:8 brows.tail:y:-14`],
+      [cx - dB + ew * 0.2, by - bArch - bTh * 0.5, 'brows', `brows.height:y:-10`],
     ].map(([x, y, g2, map]) => `<g class="fp-h${focus === g2 ? ' on' : ''}" data-h="${map}" data-g="${g2}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" class="fp-hit"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" class="fp-dot"/></g>`).join('');
     return `<svg viewBox="0 0 200 230" aria-hidden="true">
       <defs>
@@ -1537,7 +1547,7 @@
       ${out === 'control' ? `<path d="${faceLow}" fill="#fff"${line}/>` : `<path d="${head}" fill="${c(`url(#${uid}s)`, paper)}"${line}${glow('faceShape')}/>`}
       ${guides}
       ${fo.ridge > 58 ? `<path d="M${cx - d - ew} ${browY - bArch - 3.5}Q${cx} ${browY - bArch - 1.5 - (fo.ridge - 58) * 0.04} ${cx + d + ew} ${browY - bArch - 3.5}" fill="none" stroke="${c(shade(skin, -0.3), ink)}" stroke-width=".8" opacity="${(0.25 + (fo.ridge - 58) * 0.012).toFixed(2)}"/>` : ''}
-      <g fill="${c(browC, ink)}" opacity="${c('.9', '.75')}"${glow('brows')}>${'<path d="' + brow(cx - d, -1) + '"/>'}${'<path d="' + brow(cx + d, 1) + '"/>'}${unibrow ? `<path d="M${cx - d + ew * 1.05} ${browY + 2.2 + bAng}Q${cx} ${browY + 1.4 + bAng} ${cx + d - ew * 1.05} ${browY + 2.2 + bAng}" fill="none" stroke="${c(browC, ink)}" stroke-width="${(bTh * 0.9).toFixed(2)}" stroke-linecap="round"/>` : ''}</g>
+      <g fill="${c(browC, ink)}" opacity="${c('.9', '.75')}"${glow('brows')}>${'<path d="' + brow(cx - dB, -1) + '"/>'}${'<path d="' + brow(cx + dB, 1) + '"/>'}${unibrow ? `<path d="M${cx - dB + ew * 1.05} ${by + 2.2 + bAng}Q${cx} ${by + 1.4 + bAng} ${cx + dB - ew * 1.05} ${by + 2.2 + bAng}" fill="none" stroke="${c(browC, ink)}" stroke-width="${(bTh * 0.9).toFixed(2)}" stroke-linecap="round"/>` : ''}</g>
       <g${glow(focus === 'eyeColor' ? 'eyeColor' : 'eyeShape')}>${eye(cx - d, -1, c1, 1)}${eye(cx + d, 1, c2, 2)}</g>
       <g${glow('nose')}>${nose}</g>
       <g${glow('mouth')}><path d="${upper}" fill="${lipColour}"${plate ? ` fill-opacity=".45"${line}` : ''}/><path d="${lower}" fill="${shade(lipColour, 0.12)}"${plate ? ` fill-opacity=".35"${line}` : ''}/><path d="M${cx - mw} ${mouthY}Q${cx} ${mouthY + 1.4} ${cx + mw} ${mouthY}" fill="none" stroke="${c(shade(lipColour, -0.45), ink)}" stroke-width="1" stroke-linecap="round"/></g>
@@ -2684,6 +2694,7 @@
     // Eyebrows mostly the colour of the hair.
     if (Math.random() < 0.85) sel.browColor = 'hair';
     sel.chinCleft = Math.random() < 0.15 ? 'yes' : 'no';
+    sel.browJoin = Math.random() < 0.08 ? 'yes' : 'no';
     state.selection = sel;
     state.custom = {};
     state.parked = {};
