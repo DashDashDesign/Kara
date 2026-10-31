@@ -1,10 +1,8 @@
 # Kara: a visual character designer
 
-
 https://github.com/user-attachments/assets/e732a8ad-7a76-491e-ba98-7c062a5a6c11
-**▶ [Watch the 74 second demo on YouTube](https://youtu.be/sbWnhC0Yd08)**
 
-
+**▶ [Watch the 74 second demo on YouTube](https://youtu.be/sbWnhC0Yd08)** (full quality)
 
 **Design a character with pictures and menus.** Kara is an open source visual character designer: pick a gender, an age, a face, a hairstyle, an outfit, an expression, and it writes the prompt, sends it to the image model you choose, and gives you a clean character sheet (front and back full body plus a face close-up, or nine other layouts) ready for a game, a comic, a film or a pitch.
 
