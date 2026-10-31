@@ -1,6 +1,6 @@
-# Kara // character designer
+# Kara: a visual character designer
 
-**Design a character with menus, not prompts.** Kara is an open source character designer: pick a gender, an age, a face, a hairstyle, an outfit, an expression, and it writes the prompt, sends it to the image model you choose, and gives you a clean character sheet (front and back full body plus a face close-up, or nine other layouts) ready for a game, a comic, a film or a pitch.
+**Design a character with pictures and menus.** Kara is an open source visual character designer: pick a gender, an age, a face, a hairstyle, an outfit, an expression, and it writes the prompt, sends it to the image model you choose, and gives you a clean character sheet (front and back full body plus a face close-up, or nine other layouts) ready for a game, a comic, a film or a pitch.
 
 It runs on **your own ComfyUI** for free, on **Comfy Router** with your Comfy key, or through another API provider with your own key. No account, no subscription, nothing stored on a server.
 
@@ -87,15 +87,6 @@ Bring your own key (Magnific, KIE or fal): it is kept in your browser, sent with
 
 To deploy your own copy: `npx wrangler deploy` (see `wrangler.jsonc`). Nothing is installed in this folder; `npx` fetches Wrangler on demand.
 
-## What has been tested for real
-
-Honest status on October 29, 2026:
-
-- **Tested for real:** a full character sheet generated from the app with Z-Image Turbo on a local ComfyUI (ComfyUI Desktop, NVIDIA GPU with 24 GB); the online version with a Magnific key; reading a KIE balance from the app; the face drawing as a ControlNet guide on a local ComfyUI, with the ControlNet installed by the app. The screenshot at the top is that local generation.
-- **Not tested for real yet:** Comfy Router (written from its documentation and tested against a fake Router; no Comfy key was at hand), the FLUX 3 Klein, Qwen-Image 2.1 and MOSS-Image workflows started from the app, the one-line installers and the updater (they need this repository to be public).
-
-Everything else is covered by the test suite below, against fake servers.
-
 ## How it works
 
 ```
@@ -110,15 +101,13 @@ page (public/)  ->  server.js  ->  ComfyUI on your own machine, Comfy Router, KI
 - `worker/index.js`: the same API for Cloudflare.
 - `public/`: the interface. The thumbnails were made once with image models, so the menus show a picture of each choice (grey mannequins, so the pictures never suggest a gender or a face).
 
-## Tests
+## For developers
 
 ```
 npm test
 ```
 
-Starts a fake ComfyUI, a fake Comfy Cloud and fake API providers, then checks the menus, the prompt, the values written into each workflow, image uploads, the ControlNet guide, job tracking, error messages, key handling, the installer and the updater (63 checks).
-
-`npm run mock` starts only the fake ComfyUI, to try the interface without a GPU.
+Runs the whole app against fake ComfyUI and API servers (63 checks): no key and no GPU needed. `npm run mock` starts only the fake ComfyUI, to try the interface without a GPU.
 
 ## License
 
