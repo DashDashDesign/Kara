@@ -231,10 +231,10 @@
       keyLabel: 'API key',
       keySaved: 'A key is saved. Type a new one to replace it.',
       keyNone: 'Paste your key here',
-      keyOwn: 'Your own {p} key (optional)',
+      keyOwn: 'Your {p} key',
       getKey: 'No key yet? Create one here',
       remember: 'Remember on this device',
-      byokNote: 'Your key is sent with each generation over an encrypted connection, used for that call only, never stored on the server. Without a key, the app uses the site key.',
+      byokNote: 'Your key is sent with each generation over an encrypted connection, used for that call only, never stored on the server.',
       localNote: 'Saved in the .env file on your own machine. The key is never shown again.',
       save: 'Save',
       forget: 'Forget my key',
@@ -506,10 +506,10 @@
       keyLabel: 'Clé API',
       keySaved: 'Une clé est enregistrée. Tapez-en une nouvelle pour la remplacer.',
       keyNone: 'Collez votre clé ici',
-      keyOwn: 'Votre propre clé {p} (facultatif)',
+      keyOwn: 'Votre clé {p}',
       getKey: 'Pas encore de clé ? Créez-la ici',
       remember: 'Retenir sur cet appareil',
-      byokNote: "Votre clé part avec chaque génération sur une connexion chiffrée, sert pour cet appel seulement et n'est jamais stockée sur le serveur. Sans clé, l'app utilise celle du site.",
+      byokNote: "Votre clé part avec chaque génération sur une connexion chiffrée, sert pour cet appel seulement et n'est jamais stockée sur le serveur.",
       localNote: "Enregistrée dans le fichier .env de votre machine. La clé n'est plus jamais affichée.",
       save: 'Enregistrer',
       forget: 'Oublier ma clé',
@@ -786,6 +786,9 @@
     if (state.steps.length > 120) state.steps.shift();
     state.pos = state.steps.length - 1;
     syncSteps();
+    // A setting changed while an image is on screen: nothing visible happens until the next generation,
+    // so Generate glows again to say so (showCard removes it once a card is shown).
+    if (state.history.length) $('generate').classList.add('hint');
   }
 
   // Typing records one step once the user pauses, not one per letter.
