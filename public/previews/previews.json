@@ -194,5 +194,11 @@
   "layout/threequarteronly": "previews/layout-threequarteronly.jpg",
   "layout/threequarterfull": "previews/layout-threequarterfull.jpg",
   "layout/profileportrait": "previews/layout-profileportrait.jpg",
-  "layout/profilefull": "previews/layout-profilefull.jpg"
+  "layout/profilefull": "previews/layout-profilefull.jpg",
+  "model/flux-2-pro": "previews/model-flux-2-pro.jpg",
+  "model/flux-2-max": "previews/model-flux-2-max.jpg",
+  "model/krea-2-turbo": "previews/model-krea-2-turbo.jpg",
+  "model/z-image-base": "previews/model-z-image-base.webp",
+  "model/hidream-i1": "previews/model-hidream-i1.jpg",
+  "model/flux-2-dev": "previews/model-flux-2-dev.webp"
 }

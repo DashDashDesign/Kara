@@ -672,6 +672,47 @@ async function main() {
         const other = await fetch(APP + '/api/local/install', { method: 'POST', headers: { 'content-type': 'application/json', origin: 'https://evil.example' }, body: '{}' });
         assert.equal(other.status, 403, 'another website cannot start a download');
       });
+      await check('local: MOSS, Qwen 2.1, Z-Image Base and HiDream list their files with sizes; FLUX 3 Klein is gated and cannot be downloaded by the app', async () => {
+        for (const [model, n] of [['moss-image', 3], ['qwen-2-1', 3], ['z-image-base', 3], ['hidream-i1', 6]]) {
+          const st = await (await fetch(APP + '/api/local/models?model=' + model)).json();
+          assert.equal(st.supported, true);
+          assert.equal(st.files.length, n);
+          // Z-Image Base shares its text encoder and VAE with Turbo, installed a few checks earlier: only some files are missing.
+          assert.ok(st.files.every((f) => f.gb > 0), model);
+          assert.ok(st.files.some((f) => !f.present), model);
+          assert.equal(st.canInstall, true);
+        }
+        const moss = await post('/api/local/install', { model: 'moss-image' });
+        assert.equal(moss.status, 200, await moss.clone().text());
+        let st = await (await fetch(APP + '/api/local/models?model=moss-image')).json();
+        for (let i = 0; i < 40 && st.progress.state !== 'done'; i++) {
+          await sleep(100);
+          st = await (await fetch(APP + '/api/local/models?model=moss-image')).json();
+        }
+        assert.equal(st.progress.state, 'done', JSON.stringify(st.progress));
+        assert.deepEqual(st.files.map((f) => f.present), [true, true, true]);
+        const klein = await (await fetch(APP + '/api/local/models?model=flux-3-klein')).json();
+        assert.match(klein.gated, /huggingface\.co\/black-forest-labs/);
+        assert.equal(klein.needsToken, true, 'without a Hugging Face token the gated model cannot be downloaded');
+        assert.equal(klein.canInstall, false);
+        assert.ok(klein.files.every((f) => f.gb > 0), 'sizes are known');
+        // Deleting an installed model frees its files (and only those), an unknown name is refused.
+        const gone = await post('/api/local/delete', { model: 'moss-image' });
+        assert.equal(gone.status, 200, await gone.clone().text());
+        const goneBody = await gone.json();
+        assert.equal(goneBody.deleted.length, 3);
+        assert.deepEqual(goneBody.status.files.map((x) => x.present), [false, false, false]);
+        assert.equal(fs.existsSync(path.join(dir, 'models', 'vae', 'flux2-vae_small.safetensors')), false);
+        assert.equal(fs.existsSync(path.join(dir, 'models', 'vae', 'ae.safetensors')), true, 'a file of another model stays');
+        assert.equal((await post('/api/local/delete', { model: '../../etc' })).status, 400);
+        // Stopping when nothing runs is harmless, and a stopped download is paused, not an error.
+        const idle = await post('/api/local/install/cancel', { model: 'moss-image' });
+        assert.equal(idle.status, 200);
+        assert.notEqual((await idle.json()).progress.state, 'error');
+        const refused = await post('/api/local/install', { model: 'flux-3-klein' });
+        assert.equal(refused.status, 400);
+        assert.match((await refused.json()).error, /token/i);
+      });
     } finally {
       mock.kill();
       app.kill();
@@ -874,6 +915,33 @@ async function main() {
       assert.equal(seen.path, '/v2/models/openai/gpt-image-2.5-flare/requests');
       assert.equal(seen.last.quality, 'high');
       assert.match(seen.last.size, /^\d+x\d+$/);
+      r = await routerWait(job.promptId);
+      assert.equal(r.status, 'done');
+      assert.equal((await fetch(APP + r.images[0].url)).status, 200);
+    });
+    await check('comfy router: Qwen-Image 3, FLUX 2 and Krea 2 Turbo get their own bodies and their images come back', async () => {
+      let job = await (await post('/api/generate', { selection: { layout: 'portrait' }, model: 'qwen-3-pro', seed: 5 })).json();
+      let seen = await (await fetch(MOCK + '/__router')).json();
+      assert.equal(seen.path, '/v2/models/qwen/qwen-image-3.0-pro/requests');
+      assert.equal(seen.last.input.messages[0].role, 'user');
+      assert.ok(seen.last.input.messages[0].content.at(-1).text);
+      assert.match(seen.last.parameters.size, /^\d+\*\d+$/);
+      assert.equal(seen.last.parameters.prompt_extend, false);
+      let r = await routerWait(job.promptId);
+      assert.equal(r.status, 'done');
+      assert.equal((await fetch(APP + r.images[0].url)).status, 200);
+      job = await (await post('/api/generate', { selection: { layout: 'portrait' }, model: 'flux-2-pro', seed: 6 })).json();
+      seen = await (await fetch(MOCK + '/__router')).json();
+      assert.equal(seen.path, '/v2/models/bfl/flux-2-pro/requests');
+      assert.ok(seen.last.width >= 256 && seen.last.width <= 2048 && seen.last.width % 16 === 0);
+      assert.ok(seen.last.height >= 256 && seen.last.height <= 2048);
+      assert.equal(seen.last.output_format, 'png');
+      r = await routerWait(job.promptId);
+      assert.equal(r.status, 'done');
+      job = await (await post('/api/generate', { selection: { layout: 'portrait' }, model: 'krea-2-turbo', seed: 7 })).json();
+      seen = await (await fetch(MOCK + '/__router')).json();
+      assert.equal(seen.path, '/v2/models/krea/krea-2-medium-turbo/requests');
+      assert.equal(seen.last.resolution, '1K');
       r = await routerWait(job.promptId);
       assert.equal(r.status, 'done');
       assert.equal((await fetch(APP + r.images[0].url)).status, 200);

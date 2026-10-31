@@ -1,5 +1,9 @@
 # Kara: a visual character designer
 
+[![Watch the Kara demo on YouTube (1 min 14 s)](docs/kara-video.jpg)](https://youtu.be/sbWnhC0Yd08)
+
+**▶ [Watch the 74 second demo on YouTube](https://youtu.be/sbWnhC0Yd08)**
+
 **Design a character with pictures and menus.** Kara is an open source visual character designer: pick a gender, an age, a face, a hairstyle, an outfit, an expression, and it writes the prompt, sends it to the image model you choose, and gives you a clean character sheet (front and back full body plus a face close-up, or nine other layouts) ready for a game, a comic, a film or a pitch.
 
 It runs on **your own ComfyUI** for free, on **Comfy Router** with your Comfy key, or through another API provider with your own key. No account, no subscription, nothing stored on a server.
@@ -10,7 +14,7 @@ It runs on **your own ComfyUI** for free, on **Comfy Router** with your Comfy ke
 - **A real face editor.** A live drawing of the face, front or profile, as an anatomy plate or a flat avatar. Drag the points (face width and length, jaw, forehead, brows, eye spacing, size and tilt, nose, mouth and lips, ears, chin): the sliders and the prompt follow, and the sentences sent to the model are shown under the drawing.
 - **10 sheet layouts, 8 looks.** Front, back and face; three-quarter portrait plus full body; turnaround; face from three angles; portrait or full body alone, front, three-quarter or profile. Photoreal, cinematic, illustration, stylized 3D, anime, comics, oil painting or watercolor.
 - **Your references.** Drop one or several pictures of a character to get its sheet, or use pictures only for the outfit, the accessories or the visual style. Kara counts every image it will send and greys out the ones a model cannot take.
-- **20 models, 5 providers, prices up front.** The model window shows each provider in turn (your own machine, Comfy Router, KIE, fal, Magnific), greys out the models it does not offer and gives the price under each one. The menu at the top right shows the balance of each provider you have a key for.
+- **26 models, 5 providers, prices and times up front.** The model window shows each provider in turn (your own machine, Comfy Router, KIE, fal, Magnific) with the price and the usual render time of each model, sorts by price or time, filters open weights or API only, and finds a model by name. On your own machine, a model's files install with one click (its size shown first, pausable), and delete just as easily. The menu at the top right shows the balance of each provider you have a key for.
 - **Made for iteration.** Named history with undo and redo, batches of up to 4 images, seed control, a gallery with favourites and batches, a full screen viewer with zoom and minimap, and a one-file export of the whole session (images included).
 - **Bilingual** (English and French), works on desktop, tablet and phone.
 

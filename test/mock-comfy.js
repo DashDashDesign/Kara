@@ -183,6 +183,10 @@ const server = http.createServer((req, res) => {
     if (m[3] || status !== 'COMPLETED') return json(res, m[3] ? 200 : 202, { request_id: m[2], status, queue_position: 0 });
     if (job.model.startsWith('vertexai/')) return json(res, 200, { candidates: [{ content: { parts: [{ inlineData: { mimeType: 'image/png', data: PNG.toString('base64') } }] } }] });
     if (job.model.startsWith('openai/')) return json(res, 200, { created: 1, output_format: 'png', data: [{ b64_json: PNG.toString('base64') }] });
+    const link = `http://127.0.0.1:${PORT}/signed/router_1.png`;
+    if (job.model.startsWith('qwen/')) return json(res, 200, { output: { choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: [{ image: link }] } }] } });
+    if (job.model.startsWith('bfl/')) return json(res, 200, { status: 'Ready', result: { sample: link } });
+    if (job.model.startsWith('krea/')) return json(res, 200, { status: 'completed', result: { urls: [link] } });
     return json(res, 200, { data: [{ url: `http://127.0.0.1:${PORT}/signed/router_1.png`, size: '64x64' }] });
   }
   if (req.method === 'GET' && url.pathname === '/__router') return json(res, 200, { last: routerLast, path: routerPath, idem: routerIdem });

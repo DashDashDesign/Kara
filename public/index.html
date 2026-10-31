@@ -86,6 +86,11 @@
             <p class="menu-note" id="localState"></p>
             <ul class="local-files" id="localFiles"></ul>
             <label class="field-row" id="comfyDirRow" hidden><span id="comfyDirLabel"></span><input type="text" id="comfyDir" spellcheck="false" autocomplete="off"></label>
+            <div class="hfbox" id="hfBox" hidden>
+              <label class="field-row"><span id="hfLabel"></span><input type="text" class="secret" id="hfToken" spellcheck="false" autocomplete="off" autocapitalize="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other"></label>
+              <p class="menu-note" id="hfHelp"></p>
+              <a class="key-link" id="hfLink" href="https://huggingface.co/settings/tokens/new?tokenType=read" target="_blank" rel="noopener"></a>
+            </div>
             <div class="local-progress" id="localProgress" hidden><div class="bar"><i></i></div><p class="menu-note" id="localProgressText"></p></div>
             <button class="ghost small" id="installModel" type="button" hidden></button>
           </div>

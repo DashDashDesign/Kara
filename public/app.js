@@ -42,6 +42,7 @@
       generate: 'Generate',
       generating: 'Generating',
       cancel: 'Cancel',
+      deleteWord: 'Delete',
       download: 'Download',
       prompt: '// Prompt sent to the model',
       promptBtn: 'Prompt',
@@ -75,7 +76,7 @@
       customPlaceholder: 'Or describe it yourself',
       pickColor: 'Pick a colour',
       resetColor: 'Back to the choice above (no custom colour)',
-      agePlaceholder: 'Or type an age',
+      agePlaceholder: 'Or an age',
       years: 'years',
       heightPick: 'Or slide to set a height',
       addOutfitRefs: 'Add outfit images (top, bottom, shoes...)',
@@ -111,6 +112,7 @@
       infoFormat: 'Format',
       infoSeed: 'Seed',
       infoMade: 'Made',
+      infoTime: 'Render time',
       infoRefs: 'Reference images',
       infoNoRefs: 'None',
       infoRefsOld: 'Not kept (image made before this was recorded)',
@@ -119,17 +121,21 @@
       refModes: { sheet: 'sheet of this character', inspire: 'inspired by it' },
       payeeTip: 'These images are made and billed by {p}.',
       payeeFree: 'These images are made on your own machine, for free.',
-      localSteps: ['Install ComfyUI Desktop (free) from {link}, then start it.', 'Leave it open in the background: the dot at the top turns green.', 'Click "Install the model" below: about {gb} GB, once only.'],
+      localSteps: ['Install ComfyUI Desktop (free) from {link}, then start it.', 'Leave it open in the background: the dot at the top turns green.', 'Open the Model window, choose "Your machine" and click "Install" on the model you want: its size is shown, once only. Z-Image Turbo can also be installed below ({gb} GB).'],
       localNoComfy: 'ComfyUI does not answer at this address. Start it, then reopen this panel.',
       localReady: 'Z-Image Turbo is installed in ComfyUI. You can generate for free.',
       localMissing: 'Files missing for Z-Image Turbo:',
-      installModel: 'Install the model ({gb} GB)',
+      installModel: 'Install Z-Image Turbo ({gb} GB)',
       installing: 'Downloading',
       installDone: 'Installation finished.',
       installError: 'Installation failed: ',
       comfyDirLabel: 'ComfyUI folder (only if asked)',
+      hfLabel: 'Hugging Face token (only for models that ask you to accept a licence)',
+      hfHelp: '1. Create a free account on huggingface.co. 2. Open the model page and accept its licence (one click). 3. Create a "read" token with the link below, paste it here, then Save. Kara then downloads the model for you.',
+      hfLink: 'Create a Hugging Face token',
+      hfSaved: 'A token is saved. Type a new one to replace it.',
       comfyDirAsk: 'ComfyUI does not say where its folders are: give the ComfyUI folder below, then Save.',
-      noModelLocal: 'The model is not installed in ComfyUI. Open Keys, choose "ComfyUI on your own machine", then "Install the model".',
+      noModelLocal: 'This model is not installed in ComfyUI. Open the Model window, choose "Your machine", then click "Install" on its card.',
       batch: 'Images per click',
       groupBatches: 'Group by batch',
       batchOf: 'Batch of',
@@ -171,7 +177,7 @@
       guideShort: 'Face drawing',
       layoutGuided: 'Portrait (locked)',
       layoutGuidedTip: 'The face drawing guides the image, so the layout is a portrait. Turn the face drawing off (bottom bar) to choose another layout.',
-      layoutLockNote: 'Locked: the face drawing makes a portrait. Turn it off with “Face drawing”, in this bar.',
+      layoutLockNote: 'Locked: the face drawing forces a portrait. To change the layout, turn off “Face drawing” in the bottom bar (the button that is blinking).',
       guideStateOn: 'On',
       guideStateOff: 'Off',
       guideStrength: 'Strength',
@@ -202,8 +208,40 @@
       modelTiles_small: 'Small tiles',
       modelTiles_medium: 'Medium tiles',
       modelTiles_big: 'Large tiles',
+      moneyTip: "Show prices in dollars (an estimate) or in the provider's credits",
+      searchModel: 'Search a model...',
+      installBtn: '↓ {gb} GB',
+      installTipSize: 'Install: downloads {gb} GB into your ComfyUI. A download you stop continues where it stopped.',
+      installStop: 'Click to pause the download (it continues where it stopped).',
+      notLocal: 'not local',
+      hfNeeded: 'This model asks you to accept its licence on Hugging Face: follow the three steps under "Hugging Face token" below.',
+      installGatedTip: 'This model asks you to accept its licence on Hugging Face (free account). One click on the button, and Kara explains the three steps.',
+      installTip: 'Downloads the missing files into your ComfyUI',
+      noModelFound: 'No model matches.',
+      weightsAll: 'All',
+      weightsOpen: 'Open weights',
+      weightsClosed: 'API only',
+      weightsTip: "Open weights: you can download them. API only: they run on the provider's servers.",
+      showAll: 'Show all',
+      showAllTip: 'Also show the models this provider does not have',
+      installedWord: 'installed',
+      installedTip: 'Its files are already in your ComfyUI',
+      removeTip: 'Delete this model from your ComfyUI (frees disk space)',
+      removeConfirm: 'Delete {name} from your ComfyUI? This frees up to {gb} GB and cannot be undone (you can download it again). Files that another installed model needs are kept.',
+      removedMsg: '{name} deleted: {gb} GB freed. Files shared with another model kept: {kept}.',
+      sortBy: 'Sort by',
+      sortDefault: 'Default',
+      sortPrice: 'Price',
+      sortTime: 'Time',
       pricePerImage: 'Price of one image with this provider',
       priceLater: 'price after 1 image',
+      priceBy_token: 'Billed by the token: an estimate for one 1K image.',
+      priceBy_gpu: 'Billed by compute time: an estimate from the usual render time.',
+      priceBy_list: "From the provider's price list: the real price can differ a little.",
+      timeLater: 'to measure',
+      timeLaterTip: 'Depends on your machine: the time shows after your first image.',
+      timeMeasured: 'Measured on your images',
+      timeEstimate: 'Estimate',
       notWith: 'not at {p}',
       keyMissing: 'add a key',
       balanceShort: 'no balance shown',
@@ -317,6 +355,7 @@
       generate: 'Générer',
       generating: 'Génération',
       cancel: 'Annuler',
+      deleteWord: 'Supprimer',
       download: 'Télécharger',
       prompt: '// Prompt envoyé au modèle',
       promptBtn: 'Prompt',
@@ -350,7 +389,7 @@
       customPlaceholder: 'Ou décrivez-le vous-même',
       pickColor: 'Choisir une couleur',
       resetColor: 'Revenir au choix au-dessus (sans couleur perso)',
-      agePlaceholder: 'Ou tapez un âge',
+      agePlaceholder: 'Ou un âge',
       years: 'ans',
       heightPick: 'Ou faites glisser pour choisir une taille',
       addOutfitRefs: 'Ajouter des images de tenue (haut, bas, chaussures...)',
@@ -386,6 +425,7 @@
       infoFormat: 'Format',
       infoSeed: 'Seed',
       infoMade: 'Faite le',
+      infoTime: 'Temps de rendu',
       infoRefs: 'Images de référence',
       infoNoRefs: 'Aucune',
       infoRefsOld: 'Non gardées (image plus ancienne que cette fonction)',
@@ -394,17 +434,21 @@
       refModes: { sheet: 'planche de ce perso', inspire: "s'en inspirer" },
       payeeTip: 'Ces images sont faites et facturées par {p}.',
       payeeFree: 'Ces images sont faites sur votre machine, gratuitement.',
-      localSteps: ['Installez ComfyUI Desktop (gratuit) depuis {link}, puis lancez-le.', 'Laissez-le ouvert en arrière-plan : le point en haut passe au vert.', 'Cliquez sur « Installer le modèle » ci-dessous : environ {gb} Go, une seule fois.'],
+      localSteps: ['Installez ComfyUI Desktop (gratuit) depuis {link}, puis lancez-le.', 'Laissez-le ouvert en arrière-plan : le point en haut passe au vert.', 'Ouvrez la fenêtre Modèle, choisissez « Votre machine » et cliquez sur « Installer » sur le modèle voulu : sa taille est indiquée, une seule fois. Z-Image Turbo peut aussi être installé ci-dessous ({gb} Go).'],
       localNoComfy: 'ComfyUI ne répond pas à cette adresse. Lancez-le, puis rouvrez ce panneau.',
       localReady: 'Z-Image Turbo est installé dans ComfyUI. Vous pouvez générer gratuitement.',
       localMissing: 'Fichiers manquants pour Z-Image Turbo :',
-      installModel: 'Installer le modèle ({gb} Go)',
+      installModel: 'Installer Z-Image Turbo ({gb} Go)',
       installing: 'Téléchargement',
       installDone: 'Installation terminée.',
       installError: "L'installation a échoué : ",
       comfyDirLabel: 'Dossier ComfyUI (seulement si demandé)',
+      hfLabel: "Jeton Hugging Face (seulement pour les modèles qui demandent d'accepter une licence)",
+      hfHelp: '1. Créez un compte gratuit sur huggingface.co. 2. Ouvrez la page du modèle et acceptez sa licence (un clic). 3. Créez un jeton « read » avec le lien ci-dessous, collez-le ici, puis Enregistrer. Kara télécharge ensuite le modèle pour vous.',
+      hfLink: 'Créer un jeton Hugging Face',
+      hfSaved: 'Un jeton est enregistré. Tapez-en un nouveau pour le remplacer.',
       comfyDirAsk: "ComfyUI ne dit pas où sont ses dossiers : indiquez le dossier ComfyUI ci-dessous, puis Enregistrer.",
-      noModelLocal: "Le modèle n'est pas installé dans ComfyUI. Ouvrez Clés, choisissez « ComfyUI sur votre machine », puis « Installer le modèle ».",
+      noModelLocal: "Ce modèle n'est pas installé dans ComfyUI. Ouvrez la fenêtre Modèle, choisissez « Votre machine », puis cliquez sur « Installer » sur sa carte.",
       batch: 'Images par clic',
       groupBatches: 'Grouper par lot',
       batchOf: 'Lot de',
@@ -446,7 +490,7 @@
       guideShort: 'Dessin du visage',
       layoutGuided: 'Portrait (verrouillé)',
       layoutGuidedTip: 'Le dessin du visage guide l’image, la mise en page est donc un portrait. Coupez le dessin du visage (barre du bas) pour choisir une autre mise en page.',
-      layoutLockNote: 'Verrouillé : le dessin du visage impose un portrait. Coupez-le avec « Dessin du visage », dans cette barre.',
+      layoutLockNote: 'Verrouillé : le dessin du visage impose un portrait. Pour changer de mise en page, coupez « Dessin du visage » dans la barre du bas (le bouton qui clignote).',
       guideStateOn: 'Oui',
       guideStateOff: 'Non',
       guideStrength: 'Force',
@@ -477,8 +521,40 @@
       modelTiles_small: 'Petites cases',
       modelTiles_medium: 'Cases moyennes',
       modelTiles_big: 'Grandes cases',
+      moneyTip: "Afficher les prix en dollars (estimation) ou en crédits du fournisseur",
+      searchModel: 'Rechercher un modèle...',
+      installBtn: '↓ {gb} Go',
+      installTipSize: "Installer : télécharge {gb} Go dans votre ComfyUI. Un téléchargement arrêté reprend là où il s'était arrêté.",
+      installStop: "Cliquez pour mettre le téléchargement en pause (il reprend là où il s'était arrêté).",
+      notLocal: 'pas en local',
+      hfNeeded: "Ce modèle demande d'accepter sa licence sur Hugging Face : suivez les trois étapes sous « Jeton Hugging Face » ci-dessous.",
+      installGatedTip: "Ce modèle demande d'accepter sa licence sur Hugging Face (compte gratuit). Un clic sur le bouton, et Kara explique les trois étapes.",
+      installTip: 'Télécharge les fichiers manquants dans votre ComfyUI',
+      noModelFound: 'Aucun modèle ne correspond.',
+      weightsAll: 'Tous',
+      weightsOpen: 'Poids libres',
+      weightsClosed: 'API seulement',
+      weightsTip: "Poids libres : on peut les télécharger. API seulement : ils tournent sur les serveurs du fournisseur.",
+      showAll: 'Voir tout',
+      showAllTip: "Affiche aussi les modèles que ce fournisseur n'a pas",
+      installedWord: 'installé',
+      installedTip: 'Ses fichiers sont déjà dans votre ComfyUI',
+      removeTip: 'Supprimer ce modèle de votre ComfyUI (libère de la place)',
+      removeConfirm: "Supprimer {name} de votre ComfyUI ? Cela libère jusqu'à {gb} Go et ne peut pas s'annuler (vous pourrez le retélécharger). Les fichiers dont un autre modèle installé a besoin sont gardés.",
+      removedMsg: '{name} supprimé : {gb} Go libérés. Fichiers partagés avec un autre modèle et gardés : {kept}.',
+      sortBy: 'Trier par',
+      sortDefault: 'Défaut',
+      sortPrice: 'Prix',
+      sortTime: 'Durée',
       pricePerImage: 'Prix d\'une image avec ce fournisseur',
       priceLater: 'prix après 1 image',
+      priceBy_token: 'Facturé au jeton : estimation pour une image en 1K.',
+      priceBy_gpu: "Facturé au temps de calcul : estimation d'après le temps de rendu habituel.",
+      priceBy_list: "D'après la grille de prix du fournisseur : le prix réel peut varier un peu.",
+      timeLater: 'à mesurer',
+      timeLaterTip: "Dépend de votre machine : il s'affichera après votre première image.",
+      timeMeasured: 'Mesuré sur vos images',
+      timeEstimate: 'Estimation',
       notWith: 'pas chez {p}',
       keyMissing: 'ajouter une clé',
       balanceShort: 'solde non fourni',
@@ -704,7 +780,7 @@
   // (nothing is copied into this repository). Offline, or when only a generic icon comes back, initials show instead.
   const LOGO_DOMAINS = {
     kie: 'kie.ai', fal: 'fal.ai', magnific: 'magnific.com', cloud: 'comfy.org', router: 'comfy.org', local: 'comfy.org',
-    ZI: 'tongyi.aliyun.com', QW: 'qwen.ai', FX: 'bfl.ai', NB: 'gemini.google.com', GPT: 'openai.com', SD: 'seed.bytedance.com', KR: 'krea.ai', ID: 'ideogram.ai',
+    ZI: 'tongyi.aliyun.com', QW: 'qwen.ai', FX: 'bfl.ai', NB: 'gemini.google.com', GPT: 'openai.com', SD: 'seed.bytedance.com', KR: 'krea.ai', ID: 'ideogram.ai', HD: 'hidream.ai',
   };
   function logo(id, text, cls = '') {
     const box = document.createElement('span');
@@ -999,6 +1075,16 @@
     if (group.chips) tiles.classList.add('chips');
     if (!group.wheel && !group.noTiles) body.appendChild(tiles);
     for (const inner of state.cfg.options.groups.filter((g) => g.toggleIn === group.id)) body.appendChild(toggleRow(inner));
+    // A small menu that lives inside this one (eyebrow colour in Eyebrows): its choices under a title of their own.
+    for (const inner of state.cfg.options.groups.filter((g) => g.mergeIn === group.id)) {
+      const part = document.createElement('div');
+      part.className = 'merged';
+      const title = document.createElement('span');
+      title.className = 'mono merged-title';
+      title.textContent = label(inner);
+      part.append(title, renderGroup(inner, false, 'merged').querySelector('.g-body'));
+      body.appendChild(part);
+    }
     if (group.wheel) body.appendChild(emotionWheel(group));
     if (group.facePanel) body.appendChild(facePanel(group));
     else if (group.editorLink) body.appendChild(faceEditorButton(group.id));
@@ -1530,10 +1616,13 @@
       [cx + w * 0.98 + earOut + w * 0.13, eyeY + 7 - h * 0.12, 'ears', `ears.out:x:12 ears.size:y:-9`],
       [cx + w * (0.16 + 0.22 * j + chinW), cy + h * 0.96 + chinDrop, 'chin', `chin.width:x:14 chin.jut:y:10`],
       [cx, cy - h - foreH, 'forehead', `forehead.height:y:-8`],
-      [cx + dB - ew * 0.2, by - bArch - bTh * 0.5, 'brows', `brows.arch:y:-12 brows.thick:x:10`],
-      [cx + dB - ew * 1.05, by + 2.4 + bAng, 'brows', `brows.angle:y:12 brows.gap:x:8`],
-      [cx + dB + ew * 1.15 * kLen, by + 1.1 - bAng * 0.3 + tailY, 'brows', `brows.length:x:8 brows.tail:y:-14`],
-      [cx - dB + ew * 0.2, by - bArch - bTh * 0.5, 'brows', `brows.height:y:-10`],
+      // Both brows get the same four points, like the eyes (the sideways gains flip on the left one).
+      ...[-1, 1].flatMap((sd) => [
+        [cx + sd * (dB - ew * 0.2), by - bArch - bTh * 0.5, 'brows', `brows.arch:y:-12 brows.thick:x:${10 * sd}`],
+        [cx + sd * (dB - ew * 1.05), by + 2.4 + bAng, 'brows', `brows.angle:y:12 brows.gap:x:${8 * sd}`],
+        [cx + sd * (dB + ew * 1.15 * kLen), by + 1.1 - bAng * 0.3 + tailY, 'brows', `brows.length:x:${8 * sd} brows.tail:y:-14`],
+        [cx + sd * (dB + ew * 0.5), by - bArch * 0.5 - bTh * 0.5 - 2.5, 'brows', `brows.height:y:-10`],
+      ]),
     ].map(([x, y, g2, map]) => `<g class="fp-h${focus === g2 ? ' on' : ''}" data-h="${map}" data-g="${g2}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" class="fp-hit"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" class="fp-dot"/></g>`).join('');
     return `<svg viewBox="0 0 200 230" aria-hidden="true">
       <defs>
@@ -1547,7 +1636,7 @@
       ${out === 'control' ? `<path d="${faceLow}" fill="#fff"${line}/>` : `<path d="${head}" fill="${c(`url(#${uid}s)`, paper)}"${line}${glow('faceShape')}/>`}
       ${guides}
       ${fo.ridge > 58 ? `<path d="M${cx - d - ew} ${browY - bArch - 3.5}Q${cx} ${browY - bArch - 1.5 - (fo.ridge - 58) * 0.04} ${cx + d + ew} ${browY - bArch - 3.5}" fill="none" stroke="${c(shade(skin, -0.3), ink)}" stroke-width=".8" opacity="${(0.25 + (fo.ridge - 58) * 0.012).toFixed(2)}"/>` : ''}
-      <g fill="${c(browC, ink)}" opacity="${c('.9', '.75')}"${glow('brows')}>${'<path d="' + brow(cx - dB, -1) + '"/>'}${'<path d="' + brow(cx + dB, 1) + '"/>'}${unibrow ? `<path d="M${cx - dB + ew * 1.05} ${by + 2.2 + bAng}Q${cx} ${by + 1.4 + bAng} ${cx + dB - ew * 1.05} ${by + 2.2 + bAng}" fill="none" stroke="${c(browC, ink)}" stroke-width="${(bTh * 0.9).toFixed(2)}" stroke-linecap="round"/>` : ''}</g>
+      <g fill="${c(browC, ink)}" opacity="${c('.9', '.75')}"${glow('brows')}>${'<path d="' + brow(cx - dB, -1) + '"/>'}${'<path d="' + brow(cx + dB, 1) + '"/>'}${unibrow ? `<path d="M${cx - dB + ew * 1.05} ${by + 2.2 + bAng}Q${cx} ${by + 2.2 + bAng} ${cx + dB - ew * 1.05} ${by + 2.2 + bAng}" fill="none" stroke="${c(browC, ink)}" stroke-width="${(bTh * 1.15 + 0.6).toFixed(2)}" stroke-linecap="round"/>` : ''}</g>
       <g${glow(focus === 'eyeColor' ? 'eyeColor' : 'eyeShape')}>${eye(cx - d, -1, c1, 1)}${eye(cx + d, 1, c2, 2)}</g>
       <g${glow('nose')}>${nose}</g>
       <g${glow('mouth')}><path d="${upper}" fill="${lipColour}"${plate ? ` fill-opacity=".45"${line}` : ''}/><path d="${lower}" fill="${shade(lipColour, 0.12)}"${plate ? ` fill-opacity=".35"${line}` : ''}/><path d="M${cx - mw} ${mouthY}Q${cx} ${mouthY + 1.4} ${cx + mw} ${mouthY}" fill="none" stroke="${c(shade(lipColour, -0.45), ink)}" stroke-width="1" stroke-linecap="round"/></g>
@@ -2058,8 +2147,8 @@
   /* ---------- Height slider (metres or feet) ---------- */
 
   let heightUnit = read('cd-height-unit');
-  // Metres in French, feet in English, until the user picks a unit.
-  const hUnit = () => heightUnit || (lang === 'fr' ? 'm' : 'ft');
+  // Metres, in every language, until the user picks feet.
+  const hUnit = () => heightUnit || 'm';
 
   // The prompt always gets both units: "1.78 m (5 ft 10 in)".
   function heightValue(cm) {
@@ -2373,8 +2462,8 @@
     const out = [];
     for (const group of state.cfg.options.groups) {
       // A box inside another menu: found under that menu.
-      if (group.toggleIn) {
-        out.push({ group: groupById(group.toggleIn), option: null, text: fold([group.en, group.fr].join(' ')) });
+      if (group.toggleIn || group.mergeIn) {
+        out.push({ group: groupById(group.toggleIn || group.mergeIn), option: null, text: fold([group.en, group.fr].join(' ')) });
         continue;
       }
       const section = state.cfg.options.sections.find((x) => x.id === group.section) || {};
@@ -2506,7 +2595,7 @@
     dock.textContent = '';
     for (const section of state.cfg.options.sections) {
       // A yes/no group shown as a box inside another menu (cleft chin in Chin) gets no menu of its own.
-      const groups = state.cfg.options.groups.filter((g) => g.section === section.id && !g.toggleIn);
+      const groups = state.cfg.options.groups.filter((g) => g.section === section.id && !g.toggleIn && !g.mergeIn);
       if (section.dock) {
         for (const group of groups) dock.appendChild(renderGroup(group, true, 'dock-pop'));
         continue;
@@ -2602,6 +2691,13 @@
           note.textContent = t('layoutLockNote');
           note.hidden = !guided;
         }
+        // While the note is on screen, the button it talks about blinks.
+        const blink = () => $('guidePop').classList.toggle('blink', guideMode() === 'control' && d.open);
+        if (!d.dataset.lockWatch) {
+          d.dataset.lockWatch = '1';
+          d.addEventListener('toggle', blink);
+        }
+        blink();
       }
     }
     syncGuideDock();
@@ -2718,7 +2814,7 @@
     const size = tileSize();
     document.body.classList.toggle('tiles-big', size === 'big');
     document.body.classList.toggle('tiles-none', size === 'none');
-    for (const b of document.querySelectorAll('.tile-size button')) b.setAttribute('aria-pressed', b.dataset.size === size ? 'true' : 'false');
+    for (const b of document.querySelectorAll('.tile-size:not(.model-size):not(.model-sort) button')) b.setAttribute('aria-pressed', b.dataset.size === size ? 'true' : 'false');
   }
   function tileSizeButton() {
     const row = document.createElement('span');
@@ -3017,6 +3113,8 @@
               batch: batchId,
               batchIndex: j.index,
               refThumbs,
+              // Time from queueing to the image, only for a single image (a batch shares its waiting).
+              seconds: count === 1 ? Math.round((Date.now() - started) / 100) / 10 : undefined,
               guide: guideKept,
               refMode: refThumbs.some((r) => r.kind === 'main') ? state.refMode : null,
               settings,
@@ -3025,6 +3123,7 @@
             state.history.unshift(item);
             saveOrder();
             made += 1;
+            if (item.seconds) recordTime(prov, state.model, item.seconds);
             trackUsage('image', { provider: prov });
             showCard(0, true);
           }
@@ -3095,9 +3194,50 @@
     else syncDeck();
   }
 
+  // A question in the app's own style (instead of the browser's grey box): resolves true on the action, false otherwise.
+  function askConfirm(text, action = t('deleteWord')) {
+    return new Promise((resolve) => {
+      const dlg = document.createElement('dialog');
+      dlg.className = 'ask';
+      const p = document.createElement('p');
+      p.textContent = text;
+      const row = document.createElement('div');
+      row.className = 'ask-actions';
+      const no = document.createElement('button');
+      no.type = 'button';
+      no.className = 'ghost small';
+      no.textContent = t('cancel');
+      const yes = document.createElement('button');
+      yes.type = 'button';
+      yes.className = 'primary small danger';
+      yes.textContent = action;
+      row.append(no, yes);
+      dlg.append(p, row);
+      document.body.appendChild(dlg);
+      const done = (answer) => {
+        dlg.close();
+        dlg.remove();
+        resolve(answer);
+      };
+      no.addEventListener('click', () => done(false));
+      yes.addEventListener('click', () => done(true));
+      dlg.addEventListener('cancel', (e) => {
+        e.preventDefault();
+        done(false);
+      });
+      // A click on the dimmed page around it says no.
+      dlg.addEventListener('click', (e) => {
+        if (e.target === dlg) done(false);
+      });
+      dlg.addEventListener('keydown', (e) => e.stopPropagation());
+      dlg.showModal();
+      no.focus();
+    });
+  }
+
   async function deleteCard() {
     const item = state.history[state.view];
-    if (!item || !window.confirm(t('confirmDelete'))) return;
+    if (!item || !(await askConfirm(t('confirmDelete')))) return;
     await removeItem(item);
   }
 
@@ -3120,7 +3260,7 @@
 
   async function clearSession() {
     $('sessionMenu').open = false;
-    if (!state.history.length || !window.confirm(t('confirmClear'))) return;
+    if (!state.history.length || !(await askConfirm(t('confirmClear')))) return;
     try {
       await window.CDSession.clear();
     } catch (err) {
@@ -3305,7 +3445,31 @@
     return engine && engine.resolutions && engine.resolutions[0] ? engine.resolutions[0].id : '';
   }
 
+  // What one credit is worth, to show credits as dollars. KIE: its pricing page (200 credits = 1 $). Magnific: an estimate from the
+  // Premium plan (about 16 $ for 20,000 credits a month, read on third-party sites), so the figures are approximate.
+  const CREDIT_USD = { kie: 0.005, magnific: 0.0008 };
+  // Shown as dollars (default) or as the provider's credits; kept on this device.
+  const moneyMode = () => (read('cd-money') === 'credits' ? 'credits' : 'usd');
   const money = (usd) => new Intl.NumberFormat(lang === 'fr' ? 'fr-FR' : 'en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 3 }).format(usd);
+
+  // Render time: the last five single images of a model with a provider, kept in this browser.
+  const timeKey = (provider, model) => `cd-time-${provider}-${model}`;
+  function recordTime(provider, model, seconds) {
+    let list = [];
+    try { list = JSON.parse(read(timeKey(provider, model)) || '[]'); } catch (err) { list = []; }
+    list.push(Math.round(seconds * 10) / 10);
+    store(timeKey(provider, model), JSON.stringify(list.slice(-5)));
+  }
+  // { seconds, measured }: the middle of the measured times, else the figure in models.json, else null.
+  function timeOf(m, provider) {
+    let list = [];
+    try { list = JSON.parse(read(timeKey(provider, m.id)) || '[]'); } catch (err) { list = []; }
+    list = list.filter((n) => Number.isFinite(n) && n > 0).sort((a, b) => a - b);
+    if (list.length) return { seconds: list[Math.floor(list.length / 2)], measured: true };
+    const engine = m.engines && m.engines[provider];
+    return engine && engine.secs ? { seconds: engine.secs, measured: false } : null;
+  }
+  const fmtTime = (s) => (s < 60 ? `${Math.max(1, Math.round(s))} s` : `${Math.floor(s / 60)}m ${String(Math.round(s % 60)).padStart(2, '0')}s`);
 
   const costKey = (engine, provider = userProvider, model = state.model) => `cd-cost-${provider}-${model}-${resolutionId(engine)}`;
 
@@ -3319,10 +3483,13 @@
     if (price && price.usdByRes && price.usdByRes[resolutionId(engine)] != null) return `≈ ${money(price.usdByRes[resolutionId(engine)])}`;
     if (price && price.usdPerMp != null && state.size) return `≈ ${money((price.usdPerMp * state.size[0] * state.size[1]) / 1e6)}`;
     if (price && price.usdPerMp != null) return `${money(price.usdPerMp)}/MP`;
-    if (price && price[resolutionId(engine)] != null) return `≈ ${price[resolutionId(engine)]} ${t('credits')}`;
+    // Credits (KIE, Magnific): as dollars unless the switch says credits; the tooltip gives the other figure.
+    const rate = CREDIT_USD[provider];
+    const show = (credits) => (rate && moneyMode() === 'usd' ? `≈ ${money(credits * rate)}` : `≈ ${credits} ${t('credits')}`);
+    if (price && price[resolutionId(engine)] != null) return show(price[resolutionId(engine)]);
     if (provider === 'kie' && engine) {
       const seen = Number(read(costKey(engine, 'kie', m.id)));
-      return seen > 0 ? `≈ ${seen} ${t('credits')}` : '';
+      return seen > 0 ? show(seen) : '';
     }
     return '';
   }
@@ -3424,6 +3591,234 @@
   // and the price under each model is the price with that provider.
   let modelProv = read('cd-model-prov') || '';
 
+  // Open weights or API only, and whether the models this provider does not have are shown (hidden by default).
+  const WEIGHTS = ['all', 'open', 'closed'];
+  const modelWeights = () => (WEIGHTS.includes(read('cd-model-weights')) ? read('cd-model-weights') : 'all');
+  const showUnavailable = () => read('cd-model-showall') === '1';
+  function weightButtons() {
+    const row = document.createElement('span');
+    row.className = 'tile-size model-sort model-weights';
+    row.setAttribute('role', 'group');
+    row.title = t('weightsTip');
+    for (const id of WEIGHTS) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = t(`weights${id[0].toUpperCase()}${id.slice(1)}`);
+      b.setAttribute('aria-pressed', id === modelWeights() ? 'true' : 'false');
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        store('cd-model-weights', id);
+        renderModels();
+      });
+      row.appendChild(b);
+    }
+    return row;
+  }
+  function showAllButton() {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tile-size model-sort model-showall';
+    b.textContent = t('showAll');
+    b.title = t('showAllTip');
+    b.setAttribute('aria-pressed', showUnavailable() ? 'true' : 'false');
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      store('cd-model-showall', showUnavailable() ? '0' : '1');
+      renderModels();
+    });
+    return b;
+  }
+
+  // The models window keeps the tallest height it had while it stays open (a pointer left outside by a shrinking
+  // window would close it: the bar's menus close when the pointer leaves).
+  function holdModelHeight() {
+    const box = $('modelList');
+    box.style.minHeight = `${Math.max(parseFloat(box.style.minHeight) || 0, box.offsetHeight)}px`;
+    const pop = box.closest('details');
+    if (pop && !pop.dataset.holdWatch) {
+      pop.dataset.holdWatch = '1';
+      pop.addEventListener('toggle', () => {
+        if (!pop.open) box.style.minHeight = '';
+      });
+    }
+  }
+
+  // Search in the models window: hides the cards that do not match, and the groups left empty.
+  let modelQuery = '';
+  function filterModels() {
+    const q = modelQuery.trim().toLowerCase();
+    const box = $('modelList');
+    let shown = 0;
+    for (const tile of box.querySelectorAll('.model-tile')) {
+      const ok = !q || (tile.dataset.search || '').includes(q);
+      tile.hidden = !ok;
+      if (ok) shown += 1;
+    }
+    for (const fold of box.querySelectorAll('.model-fold')) fold.hidden = !!q && ![...fold.querySelectorAll('.model-tile')].some((x) => !x.hidden);
+    const none = box.querySelector('.model-none');
+    if (none) none.hidden = shown > 0;
+  }
+
+  // Your own machine: what ComfyUI already has of each model's files, to offer the install (asked once in a while).
+  const localInfo = {};
+  let localInfoAt = 0;
+  async function loadLocalInfo(force = false) {
+    if (!force && Date.now() - localInfoAt < 20000) return;
+    localInfoAt = Date.now();
+    const ids = models().models.filter((m) => !m.soon && m.engines && m.engines.local).map((m) => m.id);
+    let changed = false;
+    await Promise.all(ids.map(async (id) => {
+      try {
+        const st = await api(`/api/local/models?model=${id}`);
+        if (JSON.stringify(st) !== JSON.stringify(localInfo[id])) changed = true;
+        localInfo[id] = st;
+      } catch (err) {
+        /* ComfyUI or the route is not there: no button */
+      }
+    }));
+    if (changed && $('modelList').isConnected && modelProv === 'local') renderModels();
+  }
+
+  // Deletes the files of an installed model, after a clear question (the disk space it frees, shared files kept).
+  async function removeLocalModel(e, m, st) {
+    e.stopPropagation();
+    e.preventDefault();
+    const total = st.files.filter((f) => f.present).reduce((n, f) => n + (f.gb || 0), 0);
+    const size = total.toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: total < 10 ? 1 : 0 });
+    if (!(await askConfirm(t('removeConfirm').replace('{name}', m.name).replace('{gb}', size)))) return;
+    try {
+      const out = await postJson('/api/local/delete', { model: m.id });
+      const freed = out.deleted.reduce((n, f) => n + (f.gb || 0), 0).toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: 1 });
+      $('modelInfo').textContent = t('removedMsg').replace('{name}', m.name).replace('{gb}', freed).replace('{kept}', String(out.kept.length));
+    } catch (err) {
+      showError(err.message);
+    }
+    loadLocalInfo(true);
+  }
+
+  // The install bubble of a card: the size to download, then the progress. A model behind a licence sends to its page.
+  function installPill(m, st) {
+    const pill = document.createElement('span');
+    pill.className = 'm-install';
+    pill.tabIndex = 0;
+    pill.setAttribute('role', 'button');
+    const p = st.progress || {};
+    const running = p.state === 'running' && p.model === m.id;
+    const missing = st.files.filter((f) => !f.present);
+    const total = missing.reduce((n, f) => n + (f.gb || 0), 0);
+    const size = total.toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: total < 10 ? 1 : 0 });
+    if (st.needsToken) {
+      // Behind a licence and no Hugging Face token yet: the size, and a click opens Keys where the token goes.
+      pill.textContent = t('installBtn').replace('{gb}', size);
+      pill.title = t('installGatedTip');
+    } else if (running) {
+      pill.classList.add('busy');
+      pill.textContent = `✕ ${p.total ? Math.round((p.done / p.total) * 100) : 0} %`;
+      pill.title = `${t('installing')} ${p.file || ''}: ${t('installStop')}`;
+      setTimeout(() => loadLocalInfo(true), 1500);
+    } else {
+      pill.textContent = t('installBtn').replace('{gb}', size);
+      pill.title = t('installTipSize').replace('{gb}', size);
+    }
+    const go = async (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (st.needsToken) {
+        $('modelPop').open = false;
+        pendingProvider = 'local';
+        renderSettings();
+        $('settingsMenu').open = true;
+        $('settingsResult').textContent = t('hfNeeded');
+        setTimeout(() => $('hfToken').focus(), 150);
+        return;
+      }
+      if (running) {
+        // The same button stops it: what is downloaded stays, the next click continues.
+        try {
+          await postJson('/api/local/install/cancel', { model: m.id });
+        } catch (err) {
+          showError(err.message);
+        }
+        loadLocalInfo(true);
+        return;
+      }
+      try {
+        await postJson('/api/local/install', { model: m.id });
+      } catch (err) {
+        showError(err.message);
+      }
+      loadLocalInfo(true);
+    };
+    pill.addEventListener('click', go);
+    pill.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') go(e);
+    });
+    return pill;
+  }
+
+  // Sorting the models window: as listed, cheapest first, or fastest first (within each group, the models of the chosen provider only).
+  const SORTS = ['default', 'price', 'time'];
+  const modelSort = () => (SORTS.includes(read('cd-model-sort')) ? read('cd-model-sort') : 'default');
+  // A number to compare, in the unit of the provider (dollars, or credits at Magnific). Unknown goes last.
+  function priceValue(m, provider) {
+    const engine = m.engines && m.engines[provider];
+    const price = engine && engine.price;
+    if (price === 'free') return 0;
+    if (price && price.usd != null) return price.usd;
+    if (price && price.usdByRes && price.usdByRes[resolutionId(engine)] != null) return price.usdByRes[resolutionId(engine)];
+    if (price && price.usdPerMp != null) return price.usdPerMp * (state.size ? (state.size[0] * state.size[1]) / 1e6 : 1);
+    if (price && price[resolutionId(engine)] != null) return price[resolutionId(engine)] * (CREDIT_USD[provider] || 1);
+    if (provider === 'kie' && engine) {
+      const seen = Number(read(costKey(engine, 'kie', m.id)));
+      return seen > 0 ? seen * CREDIT_USD.kie : Infinity;
+    }
+    return Infinity;
+  }
+  function timeValue(m, provider) {
+    const when = timeOf(m, provider);
+    return when ? when.seconds : Infinity;
+  }
+  // $ or credits, only for the providers that count in credits.
+  function moneyButtons() {
+    const row = document.createElement('span');
+    row.className = 'tile-size model-sort model-money';
+    row.setAttribute('role', 'group');
+    row.title = t('moneyTip');
+    for (const [id, text] of [['usd', '$'], ['credits', t('credits')]]) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = text;
+      b.setAttribute('aria-pressed', id === moneyMode() ? 'true' : 'false');
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        store('cd-money', id);
+        renderModels();
+        syncCost();
+      });
+      row.appendChild(b);
+    }
+    return row;
+  }
+  function modelSortButtons() {
+    const row = document.createElement('span');
+    row.className = 'tile-size model-sort';
+    row.setAttribute('role', 'group');
+    row.title = t('sortBy');
+    for (const id of SORTS) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = t(`sort${id[0].toUpperCase()}${id.slice(1)}`);
+      b.setAttribute('aria-pressed', id === modelSort() ? 'true' : 'false');
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        store('cd-model-sort', id);
+        renderModels();
+      });
+      row.appendChild(b);
+    }
+    return row;
+  }
+
   function modelTile(m, provider) {
     const b = document.createElement('button');
     b.type = 'button';
@@ -3468,10 +3863,66 @@
     if (here) {
       price.textContent = (priceText(m, provider) || (provider === 'kie' ? t('priceLater') : '')).replace(/^≈ /, '');
       price.title = t('pricePerImage');
+      const credits = CREDIT_USD[provider] && m.engines[provider].price && m.engines[provider].price[resolutionId(m.engines[provider])];
+      if (credits != null && credits !== false) price.title = moneyMode() === 'usd' ? `${t('pricePerImage')} (${credits} ${t('credits')})` : `${t('pricePerImage')} (≈ ${money(credits * CREDIT_USD[provider])})`;
+      if (priceText(m, provider) === t('free')) price.classList.add('free');
     } else {
-      price.textContent = t('notWith').replace('{p}', inSentence(provider));
+      price.textContent = provider === 'local' ? t('notLocal') : t('notWith').replace('{p}', inSentence(provider));
     }
-    b.appendChild(price);
+    const kind = here && m.engines[provider] && m.engines[provider].price && m.engines[provider].price.est;
+    if (kind) price.title = t(`priceBy_${kind}`);
+    // Price and time together under the name, in the same box as the picture.
+    const pills = document.createElement('span');
+    pills.className = 'm-pills';
+    pills.appendChild(price);
+    const when = here ? timeOf(m, provider) : null;
+    if (here) {
+      const time = document.createElement('small');
+      time.className = 'm-time';
+      if (when) {
+        time.textContent = `~${fmtTime(when.seconds)}`;
+        time.title = t(when.measured ? 'timeMeasured' : 'timeEstimate');
+      } else {
+        // Nothing to measure yet (your own machine: it depends on your computer).
+        time.textContent = t('timeLater');
+        time.title = t('timeLaterTip');
+        time.classList.add('later');
+      }
+      pills.appendChild(time);
+    }
+    // Your own machine: a model whose files are not in ComfyUI yet gets an install button, with the size to download.
+    const files = provider === 'local' && here ? localInfo[m.id] : null;
+    if (files && files.supported && files.comfy) {
+      if (files.files.some((f) => !f.present)) pills.appendChild(installPill(m, files));
+      else {
+        // Everything is already in ComfyUI: say so, quietly.
+        const ok = document.createElement('small');
+        ok.className = 'm-installed';
+        ok.textContent = `✓ ${t('installedWord')}`;
+        ok.title = t('installedTip');
+        pills.appendChild(ok);
+        // A small bin to delete the files and free the disk (asks first): on the picture, or at the end of the line
+        // in the list view; both appear only under the pointer.
+        const bin = (cls) => {
+          const el = document.createElement('span');
+          el.className = `m-trash ${cls}`;
+          el.tabIndex = 0;
+          el.setAttribute('role', 'button');
+          el.title = t('removeTip');
+          el.appendChild(icon('trash'));
+          const go = (e) => removeLocalModel(e, m, files);
+          el.addEventListener('click', go);
+          el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') go(e);
+          });
+          return el;
+        };
+        thumb.appendChild(bin('on-thumb'));
+        pills.appendChild(bin('in-line'));
+      }
+    }
+    b.appendChild(pills);
+    b.dataset.search = [m.name, m.id, m.family, m.license, m.en, m.fr].filter(Boolean).join(' ').toLowerCase();
     const info = () => {
       const tags = [t(m.open ? 'openBadge' : 'apiBadge') + (m.license ? ` · ${m.license}` : '')];
       if (m.refs) tags.push(`${t('refsBadge')} (${((m.engines && m.engines[provider] && m.engines[provider].maxRefs) || m.maxRefs) || m.maxRefs || ''})`);
@@ -3533,16 +3984,27 @@
     if (!provs.includes(modelProv)) modelProv = provs.includes(userProvider) ? userProvider : provs.find(hasKeyFor) || provs[0] || '';
     const top = document.createElement('div');
     top.className = 'prov-switch';
-    const lab = document.createElement('span');
-    lab.className = 'mono';
-    lab.textContent = `// ${t('provider')}`;
-    // Title and size switch on the first line; the providers share the second one (none left alone on a line).
+    // Line 1: search and size. Line 2: the providers together. Line 3: dollars or credits, and the sort.
     const head = document.createElement('div');
     head.className = 'ps-head';
-    head.appendChild(lab);
+    const find = document.createElement('input');
+    find.type = 'search';
+    find.className = 'ps-find';
+    find.placeholder = t('searchModel');
+    find.setAttribute('aria-label', t('searchModel'));
+    find.value = modelQuery;
+    find.addEventListener('input', () => {
+      modelQuery = find.value;
+      filterModels();
+    });
+    find.addEventListener('keydown', (e) => e.stopPropagation());
+    head.appendChild(find);
     const chips = document.createElement('div');
     chips.className = 'ps-chips';
-    top.append(head, chips);
+    chips.setAttribute('aria-label', t('provider'));
+    const tools = document.createElement('div');
+    tools.className = 'ps-tools';
+    top.append(head, chips, tools);
     for (const p of provs) {
       const ok = hasKeyFor(p);
       const pill = document.createElement('button');
@@ -3568,15 +4030,21 @@
       chips.appendChild(pill);
     }
     head.appendChild(modelSizeButtons());
+    tools.append(weightButtons(), ...(CREDIT_USD[modelProv] ? [moneyButtons()] : []), modelSortButtons(), showAllButton());
     list.appendChild(top);
     // Open weights, then API only; in each, the models of the chosen provider first.
     const has = (m) => !m.soon && !!(m.engines && m.engines[modelProv]);
-    const order = (items) => [...items.filter(has), ...items.filter((m) => !has(m))];
+    const sortKey = modelSort() === 'price' ? (m) => priceValue(m, modelProv) : modelSort() === 'time' ? (m) => timeValue(m, modelProv) : null;
+    // A stable sort: models with the same figure keep the usual order.
+    const order = (items) => [...items.filter(has).map((m, i) => [m, i]).sort((a, b) => (sortKey ? sortKey(a[0]) - sortKey(b[0]) || a[1] - b[1] : a[1] - b[1])).map(([m]) => m), ...items.filter((m) => !has(m))];
+    const weights = modelWeights();
     const groups = [
       [t('openModels'), order(all.filter((m) => m.open)), 'open'],
       [t('apiModels'), order(all.filter((m) => !m.open)), 'api'],
-    ];
-    for (const [title, items, name] of groups) {
+    ].filter(([, , name]) => weights === 'all' || (weights === 'open') === (name === 'open'));
+    for (const [title, every, name] of groups) {
+      // The models this provider does not have are hidden, unless "Show all" is on.
+      const items = showUnavailable() ? every : every.filter(has);
       if (!items.length) continue;
       const grid = document.createElement('div');
       grid.className = 'tiles models';
@@ -3588,11 +4056,21 @@
       box.open = kept === null || kept === '' ? true : kept === '1';
       const head = document.createElement('summary');
       head.className = 'mono';
-      head.textContent = `// ${title} (${items.filter(has).length}/${items.length})`;
+      head.textContent = `// ${title} (${showUnavailable() ? `${items.filter(has).length}/${items.length}` : items.length})`;
       box.addEventListener('toggle', () => store(key, box.open ? '1' : '0'));
+      // Folding a group shrinks the window: it would leave the pointer and close. Keep its height until it is closed.
+      head.addEventListener('click', () => holdModelHeight());
       box.append(head, grid);
       list.appendChild(box);
     }
+    const none = document.createElement('p');
+    none.className = 'menu-note model-none';
+    none.hidden = true;
+    none.textContent = t('noModelFound');
+    list.appendChild(none);
+    filterModels();
+    holdModelHeight();
+    if (modelProv === 'local') loadLocalInfo();
     const infoLine = document.createElement('p');
     infoLine.className = 'menu-note model-info';
     infoLine.id = 'modelInfo';
@@ -3790,7 +4268,7 @@
     del.textContent = '×';
     del.title = t('deleteCard');
     del.addEventListener('click', async () => {
-      if (window.confirm(t('confirmDelete'))) await removeItem(item);
+      if (await askConfirm(t('confirmDelete'))) await removeItem(item);
     });
     const cap = document.createElement('p');
     cap.className = 'g-cap';
@@ -3900,6 +4378,7 @@
       [t('infoProvider'), item.provider && STR[lang].providers[item.provider] ? STR[lang].providers[item.provider][0] : '?'],
       [t('infoFormat'), `${ratioName(item.width, item.height)} · ${item.width} x ${item.height} · ${nf.format((item.width * item.height) / 1048576)} MP`],
       [t('infoSeed'), String(item.seed)],
+      ...(item.seconds ? [[t('infoTime'), fmtTime(item.seconds)]] : []),
       [t('infoMade'), new Date(item.created).toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US', { dateStyle: 'medium', timeStyle: 'short' })],
     ];
     const dl = document.createElement('dl');
@@ -4772,7 +5251,7 @@
       if (key) storeKey(provider, key, $('rememberKey').checked);
     } else {
       try {
-        const local = provider === 'local' ? { comfyDir: $('comfyDir').value.trim() } : {};
+        const local = provider === 'local' ? { comfyDir: $('comfyDir').value.trim(), hfToken: $('hfToken').value.trim() } : {};
         state.cfg.settings = await postJson('/api/settings', { provider, comfyUrl: $('comfyUrl').value.trim(), key, ...local });
       } catch (err) {
         $('settingsResult').textContent = err.message;
@@ -4780,6 +5259,7 @@
       }
     }
     $('apiKey').value = '';
+    $('hfToken').value = '';
     renderSettings();
     $('settingsResult').textContent = t('savedOk');
     afterKeysChanged();
@@ -4852,7 +5332,9 @@
     }
     const p = st.progress || {};
     const running = p.state === 'running';
-    $('comfyDirRow').hidden = !(st.comfy && !st.canInstall);
+    $('hfBox').hidden = false;
+    $('hfToken').placeholder = state.cfg.settings && state.cfg.settings.hasHfToken ? t('hfSaved') : 'hf_...';
+    $('comfyDirRow').hidden = !(st.comfy && !st.canInstall && !st.needsToken);
     if (!$('comfyDir').value) $('comfyDir').value = (state.cfg.settings && state.cfg.settings.comfyDir) || '';
     $('comfyDir').placeholder = 'D:\\AI\\ComfyUI';
     if (st.comfy && !st.canInstall) $('localState').textContent = t('comfyDirAsk');
@@ -5146,6 +5628,9 @@
     $('viewerFit').textContent = t('fit');
     $('viewerClose').textContent = t('close');
     $('comfyDirLabel').textContent = t('comfyDirLabel');
+    $('hfLabel').textContent = t('hfLabel');
+    $('hfHelp').textContent = t('hfHelp');
+    $('hfLink').textContent = `${t('hfLink')} ↗`;
     $('aboutBtn').textContent = t('about');
     $('batch').title = t('batch');
     $('batch').setAttribute('aria-label', t('batch'));
@@ -5206,8 +5691,18 @@
     } catch (err) {
       /* storage can be blocked, the page still works */
     }
+    // The menu that was open stays open, and the column keeps its place.
+    const openMenu = document.querySelector('details.group[open]');
+    const openId = openMenu ? openMenu.dataset.group : null;
+    const column = document.querySelector('.side');
+    const kept = column ? column.scrollTop : 0;
     applyTexts();
     renderControls();
+    if (openId) {
+      const again = document.querySelector(`details.group[data-group="${openId}"]`);
+      if (again) again.open = true;
+    }
+    if (column) column.scrollTop = kept;
     renderPresets();
     renderModels();
     renderAdvanced();

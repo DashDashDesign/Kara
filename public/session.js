@@ -66,7 +66,7 @@
     for (let i = 0; i < cards.length; i++) {
       const c = cards[i];
       const src = c.blob ? await blobToDataUrl(c.blob) : '';
-      meta.push({ id: c.id, created: c.created, name: c.name, seed: c.seed, width: c.width, height: c.height, prompt: c.prompt, settings: c.settings, fav: !!c.fav, provider: c.provider || null, model: c.model || null, batch: c.batch || null, batchIndex: c.batchIndex || 0, refThumbs: c.refThumbs, refMode: c.refMode || null, guide: c.guide || null });
+      meta.push({ id: c.id, created: c.created, name: c.name, seed: c.seed, width: c.width, height: c.height, prompt: c.prompt, settings: c.settings, fav: !!c.fav, provider: c.provider || null, model: c.model || null, batch: c.batch || null, batchIndex: c.batchIndex || 0, seconds: c.seconds || undefined, refThumbs: c.refThumbs, refMode: c.refMode || null, guide: c.guide || null });
       const rows = (c.summary || []).map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join('');
       figures.push(`<figure data-i="${i}" data-name="${esc(c.name)}">
   ${src ? `<img src="${src}" alt="${esc(c.name)}" width="${c.width}" height="${c.height}">` : ''}
@@ -192,6 +192,7 @@ ${figures.join('\n')}
         model: typeof c.model === 'string' ? c.model : null,
         batch: typeof c.batch === 'string' ? c.batch : null,
         batchIndex: Number(c.batchIndex) || 0,
+        seconds: Number(c.seconds) > 0 && Number(c.seconds) < 36000 ? Number(c.seconds) : undefined,
         // Small JPEG copies of the reference images only, nothing else.
         refThumbs: !Array.isArray(c.refThumbs) ? undefined : c.refThumbs
           .filter((r) => r && typeof r.kind === 'string' && typeof r.src === 'string' && r.src.startsWith('data:image/jpeg;base64,') && r.src.length < 60000)

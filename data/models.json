@@ -147,7 +147,8 @@
           ],
           "price": {
             "1k": 5
-          }
+          },
+          "secs": 8
         },
         "kie": {
           "ratios": [
@@ -164,7 +165,11 @@
               "fr": "1K",
               "mp": 1
             }
-          ]
+          ],
+          "secs": 9,
+          "price": {
+            "1k": 0.8
+          }
         },
         "fal": {
           "ratios": "all",
@@ -190,7 +195,8 @@
           ],
           "price": {
             "usdPerMp": 0.005
-          }
+          },
+          "secs": 3
         }
       },
       "family": "ZI"
@@ -259,10 +265,154 @@
           ],
           "price": {
             "usdPerMp": 0.05
-          }
+          },
+          "secs": 11
         }
       },
       "family": "MO"
+    },
+    {
+      "id": "z-image-base",
+      "name": "Z-Image Base",
+      "open": true,
+      "license": "Apache 2.0",
+      "refs": false,
+      "en": "Z-Image before it was distilled: slower than Turbo, more varied and easier to steer. Open 6B model by Alibaba, through fal. Text only.",
+      "fr": "Z-Image avant la distillation : plus lent que Turbo, plus varié et plus facile à orienter. Modèle libre de 6 milliards de paramètres (Alibaba), via fal. Texte seulement.",
+      "engines": {
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": {
+            "usdPerMp": 0.01
+          },
+          "secs": 108
+        },
+        "local": {
+          "workflow": "zimage_base_t2i.api.json",
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "1.5mp",
+              "en": "1.5 MP",
+              "fr": "1,5 MP",
+              "mp": 1.5
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": "free"
+        }
+      },
+      "family": "ZI"
+    },
+    {
+      "id": "hidream-i1",
+      "name": "HiDream-I1",
+      "open": true,
+      "license": "MIT",
+      "refs": false,
+      "en": "Open 17B model, very good at following long descriptions. On your own machine through ComfyUI, or through fal. Text only.",
+      "fr": "Modèle libre de 17 milliards de paramètres, très bon pour suivre de longues descriptions. Sur votre machine via ComfyUI, ou via fal. Texte seulement.",
+      "engines": {
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": {
+            "usdPerMp": 0.05
+          },
+          "secs": 14
+        },
+        "local": {
+          "workflow": "hidream_i1_t2i.api.json",
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "1.5mp",
+              "en": "1.5 MP",
+              "fr": "1,5 MP",
+              "mp": 1.5
+            }
+          ],
+          "price": "free"
+        }
+      },
+      "family": "HD"
+    },
+    {
+      "id": "flux-2-dev",
+      "name": "FLUX.2 dev",
+      "open": true,
+      "license": "FLUX Non-Commercial",
+      "refs": false,
+      "en": "Black Forest Labs' open 32B FLUX.2: the weights are free to download but only for non-commercial use. Through fal only: it is too heavy for most machines. Text only.",
+      "fr": "Le FLUX.2 libre de Black Forest Labs (32 milliards de paramètres) : les poids sont téléchargeables, mais pour un usage non commercial seulement. Via fal seulement : trop lourd pour la plupart des machines. Texte seulement.",
+      "engines": {
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1mp",
+              "en": "1 MP",
+              "fr": "1 MP",
+              "mp": 1
+            },
+            {
+              "id": "2mp",
+              "en": "2 MP",
+              "fr": "2 MP",
+              "mp": 2
+            }
+          ],
+          "price": {
+            "usdPerMp": 0.012
+          },
+          "secs": 17
+        }
+      },
+      "family": "FX"
     },
     {
       "id": "qwen-2-1",
@@ -298,7 +448,11 @@
               "fr": "2K",
               "mp": 4
             }
-          ]
+          ],
+          "secs": 27,
+          "price": {
+            "1k": 4
+          }
         },
         "local": {
           "workflow": "qwen_image_2_1_t2i.api.json",
@@ -379,7 +533,8 @@
           ],
           "price": {
             "usdPerMp": 0.048
-          }
+          },
+          "secs": 23
         },
         "router": {
           "ratios": [
@@ -419,7 +574,128 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 34,
+          "price": {
+            "usd": 0.043,
+            "est": "gpu"
+          }
+        }
+      },
+      "family": "FX"
+    },
+    {
+      "id": "flux-2-pro",
+      "name": "FLUX 2 Pro",
+      "open": false,
+      "refs": true,
+      "maxRefs": 9,
+      "en": "Black Forest Labs' FLUX 2 Pro, up to 9 reference images. Through fal or Comfy Router.",
+      "fr": "Le FLUX 2 Pro de Black Forest Labs, jusqu'à 9 images de référence. Via fal ou Comfy Router.",
+      "engines": {
+        "router": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "secs": 12,
+          "price": {
+            "usd": 0.015,
+            "est": "gpu"
+          }
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1k": 0.03,
+              "2k": 0.075
+            }
+          },
+          "secs": 8
+        }
+      },
+      "family": "FX"
+    },
+    {
+      "id": "flux-2-max",
+      "name": "FLUX 2 Max",
+      "open": false,
+      "refs": true,
+      "maxRefs": 9,
+      "en": "Black Forest Labs' top FLUX 2, up to 9 reference images. Through fal or Comfy Router.",
+      "fr": "Le plus abouti des FLUX 2 de Black Forest Labs, jusqu'à 9 images de référence. Via fal ou Comfy Router.",
+      "engines": {
+        "router": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "secs": 35,
+          "price": {
+            "usd": 0.044,
+            "est": "gpu"
+          }
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1k": 0.07,
+              "2k": 0.16
+            }
+          },
+          "secs": 23
         }
       },
       "family": "FX"
@@ -464,7 +740,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 10,
+          "price": {
+            "1k": 1.6
+          }
         },
         "fal": {
           "ratios": "all",
@@ -494,7 +774,8 @@
               "2k": 0.014,
               "4k": 0.036
             }
-          }
+          },
+          "secs": 6
         },
         "local": {
           "workflow": "flux3_klein_t2i.api.json",
@@ -532,8 +813,8 @@
       "open": false,
       "refs": true,
       "maxRefs": 3,
-      "en": "Alibaba's Qwen image model, third generation. Text, or up to 3 reference images. Through KIE.",
-      "fr": "Le modèle d'image Qwen d'Alibaba, troisième génération. Texte, ou jusqu'à 3 images de référence. Via KIE.",
+      "en": "Alibaba's Qwen image model, third generation. Text, or up to 3 reference images. Through KIE, fal or Comfy Router.",
+      "fr": "Le modèle d'image Qwen d'Alibaba, troisième génération. Texte, ou jusqu'à 3 images de référence. Via KIE, fal ou Comfy Router.",
       "engines": {
         "kie": {
           "ratios": [
@@ -559,7 +840,59 @@
               "fr": "2K",
               "mp": 4
             }
-          ]
+          ],
+          "secs": 7,
+          "price": {
+            "1k": 4.8
+          }
+        },
+        "router": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "secs": 9,
+          "price": {
+            "usdByRes": {
+              "1k": 0.0429,
+              "2k": 0.0429
+            }
+          }
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "price": {
+            "usdByRes": {
+              "1k": 0.04,
+              "2k": 0.075
+            }
+          },
+          "secs": 11
         }
       },
       "family": "QW"
@@ -570,8 +903,8 @@
       "open": false,
       "refs": true,
       "maxRefs": 3,
-      "en": "The Pro version of Qwen-Image 3. Text, or up to 3 reference images. Through KIE.",
-      "fr": "La version Pro de Qwen-Image 3. Texte, ou jusqu'à 3 images de référence. Via KIE.",
+      "en": "The Pro version of Qwen-Image 3. Text, or up to 3 reference images. Through KIE or Comfy Router.",
+      "fr": "La version Pro de Qwen-Image 3. Texte, ou jusqu'à 3 images de référence. Via KIE ou Comfy Router.",
       "engines": {
         "kie": {
           "ratios": [
@@ -597,7 +930,35 @@
               "fr": "2K",
               "mp": 4
             }
-          ]
+          ],
+          "secs": 11,
+          "price": {
+            "1k": 6.4
+          }
+        },
+        "router": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            },
+            {
+              "id": "2k",
+              "en": "2K",
+              "fr": "2K",
+              "mp": 4
+            }
+          ],
+          "secs": 12,
+          "price": {
+            "usdByRes": {
+              "1k": 0.0572,
+              "2k": 0.10725
+            }
+          }
         }
       },
       "family": "QW"
@@ -643,7 +1004,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 24,
+          "price": {
+            "1k": 18
+          }
         },
         "fal": {
           "ratios": [
@@ -684,7 +1049,8 @@
               "2k": 0.15,
               "4k": 0.3
             }
-          }
+          },
+          "secs": 18
         },
         "magnific": {
           "ratios": [
@@ -721,7 +1087,8 @@
           ],
           "price": {
             "1k": 75
-          }
+          },
+          "secs": 21
         },
         "router": {
           "ratios": [
@@ -755,7 +1122,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 22,
+          "price": {
+            "usd": 0.15
+          }
         }
       },
       "family": "NB"
@@ -801,7 +1172,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 26,
+          "price": {
+            "1k": 4
+          }
         },
         "fal": {
           "ratios": [
@@ -842,7 +1217,8 @@
               "2k": 0.059,
               "4k": 0.134
             }
-          }
+          },
+          "secs": 15
         },
         "magnific": {
           "ratios": [
@@ -879,7 +1255,8 @@
           ],
           "price": {
             "1k": 50
-          }
+          },
+          "secs": 20
         },
         "router": {
           "ratios": [
@@ -913,7 +1290,12 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 18,
+          "price": {
+            "usd": 0.048,
+            "est": "token"
+          }
         }
       },
       "family": "NB"
@@ -959,7 +1341,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 38,
+          "price": {
+            "1k": 8
+          }
         },
         "fal": {
           "ratios": [
@@ -1000,7 +1386,8 @@
               "2k": 0.12,
               "4k": 0.16
             }
-          }
+          },
+          "secs": 13
         },
         "magnific": {
           "ratios": [
@@ -1037,7 +1424,8 @@
           ],
           "price": {
             "1k": 75
-          }
+          },
+          "secs": 11
         },
         "router": {
           "ratios": [
@@ -1071,7 +1459,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 17,
+          "price": {
+            "usd": 0.08
+          }
         }
       },
       "family": "NB"
@@ -1105,7 +1497,11 @@
               "fr": "1K",
               "mp": 1
             }
-          ]
+          ],
+          "secs": 26,
+          "price": {
+            "1k": 4
+          }
         },
         "fal": {
           "ratios": [
@@ -1128,7 +1524,12 @@
               "mp": 1
             }
           ],
-          "maxRefs": 0
+          "maxRefs": 0,
+          "price": {
+            "usd": 0.042,
+            "est": "token"
+          },
+          "secs": 10
         },
         "router": {
           "ratios": [
@@ -1150,7 +1551,12 @@
               "fr": "1K",
               "mp": 1
             }
-          ]
+          ],
+          "secs": 8,
+          "price": {
+            "usd": 0.04,
+            "est": "token"
+          }
         }
       },
       "family": "NB"
@@ -1184,7 +1590,11 @@
               "fr": "1K",
               "mp": 1
             }
-          ]
+          ],
+          "secs": 10,
+          "price": {
+            "1k": 4
+          }
         },
         "fal": {
           "ratios": [
@@ -1209,7 +1619,8 @@
           ],
           "price": {
             "usd": 0.0398
-          }
+          },
+          "secs": 7
         },
         "magnific": {
           "ratios": [
@@ -1226,7 +1637,8 @@
           "price": {
             "1k": 50
           },
-          "maxRefs": 3
+          "maxRefs": 3,
+          "secs": 8
         },
         "router": {
           "ratios": [
@@ -1249,7 +1661,12 @@
               "mp": 1
             }
           ],
-          "maxRefs": 3
+          "maxRefs": 3,
+          "secs": 10,
+          "price": {
+            "usd": 0.039,
+            "est": "token"
+          }
         }
       },
       "family": "NB"
@@ -1298,7 +1715,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 56,
+          "price": {
+            "1k": 6
+          }
         },
         "fal": {
           "ratios": "all",
@@ -1328,7 +1749,8 @@
               "2mp": 0.22,
               "4mp": 0.22
             }
-          }
+          },
+          "secs": 91
         },
         "magnific": {
           "ratios": [
@@ -1364,7 +1786,8 @@
           ],
           "price": {
             "1k": 85
-          }
+          },
+          "secs": 37
         },
         "router": {
           "ratios": [
@@ -1389,7 +1812,12 @@
               "fr": "1K",
               "mp": 1
             }
-          ]
+          ],
+          "secs": 98,
+          "price": {
+            "usd": 0.22,
+            "est": "list"
+          }
         }
       },
       "family": "GPT"
@@ -1433,7 +1861,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 106,
+          "price": {
+            "1k": 6
+          }
         },
         "fal": {
           "ratios": "all",
@@ -1463,7 +1895,8 @@
               "2mp": 0.055,
               "4mp": 0.055
             }
-          }
+          },
+          "secs": 23
         },
         "magnific": {
           "ratios": [
@@ -1499,7 +1932,8 @@
           ],
           "price": {
             "1k": 40
-          }
+          },
+          "secs": 11
         },
         "router": {
           "ratios": [
@@ -1519,7 +1953,12 @@
               "fr": "1K",
               "mp": 1
             }
-          ]
+          ],
+          "secs": 22,
+          "price": {
+            "usd": 0.09,
+            "est": "list"
+          }
         }
       },
       "family": "GPT"
@@ -1563,7 +2002,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 58,
+          "price": {
+            "1k": 6
+          }
         },
         "fal": {
           "ratios": "all",
@@ -1593,7 +2036,8 @@
               "2mp": 0.055,
               "4mp": 0.055
             }
-          }
+          },
+          "secs": 34
         },
         "magnific": {
           "ratios": [
@@ -1629,7 +2073,8 @@
           ],
           "price": {
             "1k": 40
-          }
+          },
+          "secs": 141
         },
         "router": {
           "ratios": [
@@ -1649,7 +2094,12 @@
               "fr": "1K",
               "mp": 1
             }
-          ]
+          ],
+          "secs": 37,
+          "price": {
+            "usd": 0.09,
+            "est": "list"
+          }
         }
       },
       "family": "GPT"
@@ -1687,7 +2137,11 @@
               "fr": "2K",
               "mp": 4
             }
-          ]
+          ],
+          "secs": 22,
+          "price": {
+            "1k": 7
+          }
         },
         "fal": {
           "ratios": "all",
@@ -1717,7 +2171,8 @@
               "2mp": 0.0675,
               "4mp": 0.135
             }
-          }
+          },
+          "secs": 38
         },
         "magnific": {
           "ratios": [
@@ -1746,7 +2201,8 @@
           ],
           "price": {
             "1.5k": 75
-          }
+          },
+          "secs": 52
         },
         "router": {
           "ratios": [
@@ -1772,7 +2228,15 @@
               "fr": "2K",
               "mp": 4
             }
-          ]
+          ],
+          "secs": 31,
+          "price": {
+            "usdByRes": {
+              "1k": 0.045,
+              "2k": 0.09
+            },
+            "est": "list"
+          }
         }
       },
       "family": "SD"
@@ -1816,7 +2280,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 27,
+          "price": {
+            "2k": 5.5
+          }
         },
         "fal": {
           "ratios": "all",
@@ -1843,7 +2311,8 @@
           "maxRefs": 10,
           "price": {
             "usd": 0.035
-          }
+          },
+          "secs": 67
         },
         "magnific": {
           "ratios": [
@@ -1867,7 +2336,8 @@
           "price": {
             "2k": 50
           },
-          "maxRefs": 5
+          "maxRefs": 5,
+          "secs": 29
         },
         "router": {
           "ratios": [
@@ -1899,7 +2369,11 @@
               "fr": "4K",
               "mp": 16
             }
-          ]
+          ],
+          "secs": 47,
+          "price": {
+            "usd": 0.035
+          }
         }
       },
       "family": "SD"
@@ -1943,7 +2417,11 @@
               "fr": "2K",
               "mp": 4
             }
-          ]
+          ],
+          "secs": 12,
+          "price": {
+            "1k": 3.24
+          }
         },
         "fal": {
           "ratios": "all",
@@ -1969,7 +2447,8 @@
           ],
           "price": {
             "usd": 0.027
-          }
+          },
+          "secs": 14
         },
         "router": {
           "ratios": [
@@ -2001,7 +2480,11 @@
               "fr": "2K",
               "mp": 4
             }
-          ]
+          ],
+          "secs": 12,
+          "price": {
+            "usd": 0.02574
+          }
         }
       },
       "family": "SD"
@@ -2039,7 +2522,8 @@
           ],
           "price": {
             "usdPerMp": 0.025
-          }
+          },
+          "secs": 15
         },
         "router": {
           "ratios": "all",
@@ -2057,7 +2541,65 @@
               "mp": 4
             }
           ],
-          "maxRefs": 0
+          "maxRefs": 0,
+          "secs": 9,
+          "price": {
+            "usdByRes": {
+              "1k": 0.0429,
+              "2k": 0.0858
+            },
+            "est": "list"
+          }
+        }
+      },
+      "family": "KR"
+    },
+    {
+      "id": "krea-2-turbo",
+      "name": "Krea 2 Turbo",
+      "open": false,
+      "refs": false,
+      "maxRefs": 0,
+      "en": "Krea's fast model, text only, 1K. Through fal or Comfy Router.",
+      "fr": "Le modèle rapide de Krea, texte seul, en 1K. Via fal ou Comfy Router.",
+      "engines": {
+        "router": {
+          "ratios": [
+            "1:1",
+            "4:5",
+            "2:3",
+            "9:16",
+            "4:3",
+            "3:2",
+            "16:9"
+          ],
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ],
+          "secs": 48,
+          "price": {
+            "usd": 0.015
+          }
+        },
+        "fal": {
+          "ratios": "all",
+          "resolutions": [
+            {
+              "id": "1k",
+              "en": "1K",
+              "fr": "1K",
+              "mp": 1
+            }
+          ],
+          "price": {
+            "usdPerMp": 0.008
+          },
+          "secs": 3
         }
       },
       "family": "KR"
@@ -2088,7 +2630,8 @@
           ],
           "price": {
             "usd": 0.06
-          }
+          },
+          "secs": 12
         },
         "magnific": {
           "ratios": [
@@ -2114,7 +2657,8 @@
           ],
           "price": {
             "1k": 80
-          }
+          },
+          "secs": 13
         },
         "router": {
           "ratios": "all",
@@ -2125,7 +2669,12 @@
               "fr": "1K",
               "mp": 1
             }
-          ]
+          ],
+          "secs": 12,
+          "price": {
+            "usd": 0.286,
+            "est": "list"
+          }
         }
       },
       "family": "ID"

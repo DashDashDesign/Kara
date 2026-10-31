@@ -594,8 +594,8 @@
       "neutral": "average",
       "editorLink": true,
       "keywords": {
-        "en": "brow eyebrow length height spacing tail",
-        "fr": "sourcil longueur hauteur écartement queue"
+        "en": "brow eyebrow length height spacing tail colour color",
+        "fr": "sourcil longueur hauteur écartement queue couleur"
       },
       "sliders": [
         {
@@ -813,12 +813,13 @@
           "id": "yes",
           "en": "Unibrow",
           "fr": "Monosourcil",
-          "p": "a unibrow, the eyebrows joined above the nose"
+          "p": "the two eyebrows grow together across the bridge of the nose, joined in the middle by a band of eyebrow hair almost as thick as the brows themselves, one single continuous eyebrow with no skin showing between the two halves"
         }
       ]
     },
     {
       "id": "browColor",
+      "mergeIn": "brows",
       "icon": "palette",
       "section": "face",
       "type": "single",

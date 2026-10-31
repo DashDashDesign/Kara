@@ -99,6 +99,7 @@ function settingsInfo() {
     providers: comfy.PROVIDERS,
     comfyUrl: (process.env.COMFY_URL || 'http://127.0.0.1:8188').trim(),
     comfyDir: (process.env.COMFY_DIR || '').trim(),
+    hasHfToken: !!(process.env.HF_TOKEN || '').trim(),
     hasKey: { cloud: !!(process.env.COMFY_CLOUD_API_KEY || '').trim(), router: !!(process.env.COMFY_CLOUD_API_KEY || '').trim(), magnific: !!(process.env.MAGNIFIC_API_KEY || '').trim(), kie: !!(process.env.KIE_API_KEY || '').trim(), fal: !!(process.env.FAL_KEY || '').trim() },
   };
 }
@@ -242,6 +243,12 @@ async function handleApi(req, res, url) {
       if (dir && (!path.isAbsolute(dir) || dir.length > 400 || /[\r\n]/.test(dir))) return send(res, 400, { error: 'This folder is not valid: give the full path of the ComfyUI folder.' });
       updates.COMFY_DIR = dir;
     }
+    // The Hugging Face token (read only), for the model files behind a licence: saved, never sent back.
+    if (provider === 'local' && typeof body.hfToken === 'string' && body.hfToken.trim()) {
+      const tok = body.hfToken.trim();
+      if (tok.length > 300 || /s/.test(tok)) return send(res, 400, { error: 'This Hugging Face token does not look right.' });
+      updates.HF_TOKEN = tok;
+    }
     const key = typeof body.key === 'string' ? body.key.trim() : '';
     if (key) {
       if (key.length > 300 || /\s/.test(key)) return send(res, 400, { error: 'This key does not look right.' });
@@ -257,6 +264,7 @@ async function handleApi(req, res, url) {
       if (provider === 'magnific') updates.MAGNIFIC_API_KEY = '';
       if (provider === 'kie') updates.KIE_API_KEY = '';
       if (provider === 'fal') updates.FAL_KEY = '';
+      if (provider === 'local') updates.HF_TOKEN = '';
     }
     env.save(updates);
     return send(res, 200, settingsInfo());
@@ -274,6 +282,21 @@ async function handleApi(req, res, url) {
       return send(res, 400, { error: err.message });
     }
     return send(res, 200, await install.status(String(body.model || 'z-image-turbo')));
+  }
+
+  if (req.method === 'POST' && route === '/api/local/delete') {
+    const body = await readBody(req);
+    try {
+      const out = await install.remove(String(body.model || ''));
+      return send(res, 200, { ...out, status: await install.status(String(body.model)) });
+    } catch (err) {
+      return send(res, 400, { error: err.message });
+    }
+  }
+  if (req.method === 'POST' && route === '/api/local/install/cancel') {
+    const body = await readBody(req);
+    install.cancel();
+    return send(res, 200, await install.status(String(body.model || install.progress.model || 'z-image-turbo')));
   }
 
   // Is there a newer version on GitHub, and install it (the page then asks to restart the app).

@@ -10,6 +10,7 @@
 //   add --local to use ComfyUI on this PC (COMFY_URL in .env) instead of fal
 //   node tools/previews.js --import   the thumbnails made on Magnific (tools/magnific-previews.json)
 //   node tools/previews.js --models   the base character once with each model (KIE or fal, whichever has a key), for the models panel
+//   node tools/previews.js --models --only hidream-i1   that model again (it costs: ask first)
 // MOSS through fal: 0.05 $ per megapixel, so about 0.013 $ per 512 x 512 thumbnail.
 
 const fs = require('fs');
@@ -28,7 +29,9 @@ const MANIFEST = path.join(OUT, 'previews.json');
 const SIZE = 1024; // with --local: generated square, then reduced in ComfyUI
 const THUMB = 320;
 const FAL_SIZE = 512; // through fal: the smallest size it makes, kept as is (webp, light)
-const SEED = 20261030;
+// --seed N changes it (to try again a model preview that came out badly).
+const seedArg = process.argv.indexOf('--seed');
+const SEED = seedArg > 0 ? Number(process.argv[seedArg + 1]) || 20261030 : 20261030;
 // The model of the menu thumbnails (chosen by Greg after a comparison on 28/10): good and cheap.
 const THUMB_MODEL = 'seedream-5-flash';
 
@@ -215,8 +218,16 @@ async function makeModelPreview(model, prompt = basePrompt(), name = `model-${mo
   throw new Error('Took more than 15 minutes.');
 }
 
-async function makeModels(manifest, redo) {
+// Models that did not keep to the portrait framing with the plain prompt: a few more words for them only.
+const PREVIEW_HINT = {
+  // These two seem to read only the start of a long prompt: what they must respect goes first.
+  'nano-banana': { before: 'Close-up head and shoulders portrait, tight crop on the face and shoulders, nothing below the chest in frame. ', after: '' },
+  'hidream-i1': { before: 'A real photograph, photorealistic close-up studio portrait of a real woman, plain white seamless background, not an illustration, not a cartoon, no scenery. ', after: '' },
+};
+
+async function makeModels(manifest, redo, only) {
   const list = models.models.filter((m) => {
+    if (only) return m.id === only;
     const file = manifest[`model/${m.id}`];
     return redo || !file || !fs.existsSync(path.join(ROOT, 'public', file));
   });
@@ -224,7 +235,8 @@ async function makeModels(manifest, redo) {
   for (const m of list) {
     const started = Date.now();
     try {
-      const { file, via } = await makeModelPreview(m);
+      const hint = PREVIEW_HINT[m.id];
+      const { file, via } = await makeModelPreview(m, hint && typeof hint === 'object' ? hint.before + basePrompt() + hint.after : basePrompt() + (hint || ''));
       manifest[`model/${m.id}`] = `previews/${file}`;
       fs.writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
       console.log(`  ok  ${m.name} via ${via}  (${Math.round((Date.now() - started) / 1000)} s)`);
@@ -311,7 +323,8 @@ async function main() {
   const menu = args.includes('--menu') ? args[args.indexOf('--menu') + 1] : null;
   fs.mkdirSync(OUT, { recursive: true });
   const manifest = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, 'utf8')) : {};
-  if (args.includes('--models')) return makeModels(manifest, redo);
+  const only = args.includes('--only') ? args[args.indexOf('--only') + 1] : null;
+  if (args.includes('--models')) return makeModels(manifest, redo, only);
   if (args.includes('--import')) return importMagnific(manifest);
 
   let list = targets();
