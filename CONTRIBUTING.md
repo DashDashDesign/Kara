@@ -34,6 +34,19 @@ Without any API key you can still work on the interface. For image generation yo
 - **No look-alikes.** Do not copy names, presets, texts or visuals from other commercial apps.
 - **Be honest about testing.** Say what you tested for real and what you could not test (for example "tested on Mac" or "only against the mock servers").
 
+## Adding a provider
+
+A provider is a service that makes the images (KIE, fal, Magnific, Comfy Router...). The easiest way to start is to copy an existing one: `lib/fal.js` is a good model (queue, status, result, key test, balance).
+
+1. **Client**: create `lib/<name>.js` with plain `fetch` only, so the same file runs in Node and in the Cloudflare Worker. It sends the prompt, seed, size and reference images, then returns the image link. The key goes only in the request to the provider, never to the browser, never to an image link.
+2. **Models**: describe what each model accepts (sizes, ratios, number of reference images, price) in `data/models.json`, under an engine named after your provider.
+3. **Server**: register the provider in `lib/comfy.js` (search for `fal` and follow every place it appears), and the key name in `lib/env.js`.
+4. **Online version**: do the same in `worker/index.js`. The visitor's own key is sent with each request.
+5. **Interface**: add the provider to the list, key panel and logo in `public/app.js` (search for `fal` there too). Texts in English and French.
+6. **Tests**: add a fake server for your provider in `test/mock-comfy.js` and checks in `test/run-tests.js`. `npm test` runs against fakes only, so please also say in your pull request whether you tested with a real key.
+
+Do not copy another provider's names, logos or visuals without their permission.
+
 ## What gets merged
 
 Every change to `main` is deployed automatically to the online version, so pull requests are reviewed before merging. Expect some questions and requests for changes: it is normal.
