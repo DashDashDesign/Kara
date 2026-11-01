@@ -1,4 +1,4 @@
-# Builds the one-file installers: Kara-Setup.exe on Windows and Kara.dmg on macOS.
+# Builds the one-file installers: Kara-Setup.exe on Windows and Kara.dmg on macOS, plus Kara.mcpb (the Claude Desktop extension).
 # Run by hand (Actions, Installers, Run workflow) or by pushing a tag like v1.0.0.
 # With "publish", both files go to a GitHub Release, so they can be downloaded from the repository page.
 name: Installers
@@ -10,7 +10,7 @@ on:
         description: Version number shown by the installers
         default: 1.0.0
       publish:
-        description: Publish a GitHub Release with both files
+        description: Publish a GitHub Release with the three files
         type: boolean
         default: false
   push:
@@ -51,8 +51,22 @@ jobs:
           name: Kara-dmg
           path: dist/Kara.dmg
 
+  extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build Kara.mcpb
+        run: node tools/build-mcpb.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Kara-mcpb
+          path: dist/Kara.mcpb
+
   release:
-    needs: [windows, macos]
+    needs: [windows, macos, extension]
     if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
     runs-on: ubuntu-latest
     steps:
@@ -65,6 +79,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           v='${{ inputs.version }}'; [ -n "$v" ] || v='${{ github.ref_name }}'; tag="v${v#v}"
-          notes="Kara $tag. Windows: run Kara-Setup.exe (not signed: SmartScreen shows a warning, click More info, then Run anyway). macOS: open Kara.dmg and drag Kara to Applications (not signed: the first time, right-click Kara and choose Open, or allow it in System Settings, Privacy & Security). Kara needs nothing else; ComfyUI or an API key is chosen inside the app."
-          gh release create "$tag" dist/Kara-Setup.exe dist/Kara.dmg --repo "${{ github.repository }}" --title "Kara $tag" --notes "$notes" --target "${{ github.sha }}" \
-            || gh release upload "$tag" dist/Kara-Setup.exe dist/Kara.dmg --repo "${{ github.repository }}" --clobber
+          notes="Kara $tag. Windows: run Kara-Setup.exe (not signed: SmartScreen shows a warning, click More info, then Run anyway). macOS: open Kara.dmg and drag Kara to Applications (not signed: the first time, right-click Kara and choose Open, or allow it in System Settings, Privacy & Security). Kara.mcpb is the extension for Claude Desktop (double-click it). Kara needs nothing else; ComfyUI or an API key is chosen inside the app."
+          gh release create "$tag" dist/Kara-Setup.exe dist/Kara.dmg dist/Kara.mcpb --repo "${{ github.repository }}" --title "Kara $tag" --notes "$notes" --target "${{ github.sha }}" \
+            || gh release upload "$tag" dist/Kara-Setup.exe dist/Kara.dmg dist/Kara.mcpb --repo "${{ github.repository }}" --clobber
