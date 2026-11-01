@@ -42,7 +42,7 @@ With an API model, the face drawing is sent as a reference image instead, so the
 
 ## Download
 
-Nothing else to install: each file carries its own Node.js and opens Kara in a window of its own.
+Kara itself needs no setup: each file carries its own Node.js and opens Kara in a window of its own. To generate images on your own machine you also need ComfyUI; otherwise just add a provider key.
 
 - **Windows:** [Kara-Setup.exe](https://github.com/DashDashDesign/Kara/releases/latest/download/Kara-Setup.exe). No admin rights needed; it adds Kara to the Start menu and the desktop. It is not signed yet, so Windows SmartScreen warns: click **More info**, then **Run anyway**.
 - **macOS:** [Kara.dmg](https://github.com/DashDashDesign/Kara/releases/latest/download/Kara.dmg) (Apple Silicon and Intel). Drag Kara to Applications. It is not signed by Apple: the first time, right-click Kara and choose **Open**, or allow it in **System Settings > Privacy & Security**. The Mac version is built and checked by GitHub Actions on a Mac runner, but has not been tried on a real Mac yet.
