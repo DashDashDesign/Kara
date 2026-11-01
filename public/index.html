@@ -61,7 +61,7 @@
     </div>
     <div class="top-right">
       <details class="drop end prov-menu" id="provMenu">
-        <summary class="status" id="status" role="status" aria-live="polite"><span class="dot" id="dot"></span><span id="statusText" class="mono-plain"></span></summary>
+        <summary class="status" id="status" role="status" aria-live="polite"><span class="status-wallet" id="statusWallet"></span><span class="status-mark"><span class="status-logo" id="statusLogo"></span><span class="dot" id="dot"></span></span><span class="status-label" id="statusLabel"></span><span id="statusText" class="mono-plain"></span></summary>
         <div class="drop-panel menu" id="provList"></div>
       </details>
       <details class="drop end" id="sessionMenu">
@@ -105,6 +105,7 @@
           </div>
         </div>
       </details>
+      <button class="ghost" id="mcpBtn" type="button" hidden></button>
       <button class="ghost icon guide-btn" id="guideBtn" type="button" aria-label="Guide">?</button>
       <button class="ghost" id="aboutBtn" type="button"></button>
       <button class="ghost" id="langBtn" type="button" aria-label="Language">FR</button>
@@ -238,12 +239,16 @@
         <button type="button" data-filter="fav"></button>
       </div>
       <button class="ghost small" id="galleryGroup" type="button" aria-pressed="false"></button>
-      <button class="ghost small" id="galleryClose" type="button"></button>
+      <button class="primary small" id="galleryClose" type="button"></button>
       <p class="menu-note" id="galleryHint"></p>
     </div>
     <div class="gallery-grid" id="galleryGrid"></div>
     <p class="gallery-empty mono" id="galleryEmpty" hidden></p>
   </div>
+
+  <dialog class="about" id="mcp">
+    <div class="about-body" id="mcpBody"></div>
+  </dialog>
 
   <dialog class="about" id="about">
     <div class="about-body" id="aboutBody"></div>

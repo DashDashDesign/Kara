@@ -10,6 +10,7 @@
   "scripts": {
     "start": "node server.js",
     "mock": "node test/mock-comfy.js",
+    "mcpb": "node tools/build-mcpb.js",
     "test": "node test/run-tests.js",
     "cf:dev": "npx wrangler dev",
     "cf:deploy": "npx wrangler deploy"

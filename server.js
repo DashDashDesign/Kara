@@ -8,6 +8,7 @@ const fs = require('node:fs');
 const fsp = require('node:fs/promises');
 const path = require('node:path');
 const { Readable } = require('node:stream');
+const crypto = require('node:crypto');
 
 const env = require('./lib/env');
 
@@ -18,6 +19,7 @@ const limits = require('./lib/limits');
 const install = require('./lib/install');
 const updater = require('./lib/update');
 const { buildPrompt } = require('./lib/prompt');
+const mcpb = require('./lib/mcpb');
 const { resolveSize, refModeOf, packRefs, engineOf } = require('./lib/models');
 
 const PORT = Number(process.env.PORT || 3210);
@@ -161,7 +163,14 @@ async function handleApi(req, res, url) {
     ]);
     // The version number of package.json, shown in About (read each time: an update changes it).
     const pkg = await readJson(path.join(ROOT, 'package.json')).catch(() => ({}));
-    return send(res, 200, { options, presets, models, settings: settingsInfo(), workflows, defaultWorkflow: DEFAULT_WORKFLOW, comfyUrl: comfy.base(), mode: comfy.mode(), version: pkg.version || '' });
+    return send(res, 200, { options, presets, models, settings: settingsInfo(), workflows, defaultWorkflow: DEFAULT_WORKFLOW, comfyUrl: comfy.base(), mode: comfy.mode(), version: pkg.version || '', mcpFile: path.join(ROOT, 'mcp.js'), mcpNode: process.execPath });
+  }
+
+  // The Claude Desktop extension, made from this very copy of Kara (so it always matches), for the MCP window's download button.
+  if (req.method === 'GET' && route === '/api/mcpb') {
+    const made = mcpb.build(ROOT);
+    res.writeHead(200, { 'content-type': 'application/octet-stream', 'content-disposition': 'attachment; filename="Kara.mcpb"', 'content-length': made.bytes.length, 'cache-control': 'no-store' });
+    return res.end(made.bytes);
   }
 
   if (req.method === 'GET' && route === '/api/status') {
@@ -332,8 +341,58 @@ async function handleApi(req, res, url) {
     return send(res, 200, { ok: true });
   }
 
+  // An agent (mcp.js) at the controls of the open page: orders go to the newest open page as server-sent events,
+  // the page answers on /api/remote/result. Only from this computer.
+  if (route.startsWith('/api/remote/')) {
+    if (!fromThisComputer(req)) return send(res, 403, { error: 'Only this computer can drive Kara.' });
+    if (req.method === 'GET' && route === '/api/remote/events') {
+      res.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-store', connection: 'keep-alive' });
+      res.write('retry: 2000\n\n');
+      remotePages.push(res);
+      const ping = setInterval(() => res.write(': ping\n\n'), 20000);
+      req.on('close', () => {
+        clearInterval(ping);
+        const at = remotePages.indexOf(res);
+        if (at >= 0) remotePages.splice(at, 1);
+      });
+      return;
+    }
+    if (req.method === 'GET' && route === '/api/remote/status') return send(res, 200, { pages: remotePages.length });
+    if (req.method === 'POST' && route === '/api/remote/command') {
+      const body = await readBody(req);
+      if (!['apply', 'generate'].includes(body.type)) return send(res, 400, { error: 'Unknown command.' });
+      if (!remotePages.length) return send(res, 409, { error: 'No Kara page is open.', code: 'nopage' });
+      const id = crypto.randomUUID();
+      const { wait, ...order } = body;
+      remotePages[remotePages.length - 1].write(`event: command\ndata: ${JSON.stringify({ ...order, id })}\n\n`);
+      if (!wait) return send(res, 200, { id, delivered: true });
+      const answer = await new Promise((resolve) => {
+        const timer = setTimeout(() => {
+          remoteWaiting.delete(id);
+          resolve({ ok: false, error: 'The page did not answer in time.' });
+        }, 16 * 60 * 1000);
+        remoteWaiting.set(id, (result) => {
+          clearTimeout(timer);
+          remoteWaiting.delete(id);
+          resolve(result);
+        });
+      });
+      return send(res, 200, answer);
+    }
+    if (req.method === 'POST' && route === '/api/remote/result') {
+      const body = await readBody(req);
+      const done = remoteWaiting.get(body.id);
+      if (!done) return send(res, 404, { error: 'Nobody is waiting for this answer.' });
+      done(body);
+      return send(res, 200, { ok: true });
+    }
+  }
+
   return send(res, 404, { error: 'Not found.' });
 }
+
+const remotePages = [];
+const remoteWaiting = new Map();
 
 function serveStatic(req, res, url) {
   let rel = decodeURIComponent(url.pathname);
@@ -396,3 +455,15 @@ server.listen(PORT, '127.0.0.1', () => {
   console.log('  Stop:     press Ctrl+C');
   console.log('');
 });
+
+// Started by an agent (mcp.js): stop when that agent is gone, so no invisible Kara is left running.
+if (process.env.KARA_PARENT_PID) {
+  const parent = Number(process.env.KARA_PARENT_PID);
+  setInterval(() => {
+    try {
+      process.kill(parent, 0);
+    } catch (err) {
+      process.exit(0);
+    }
+  }, 5000).unref();
+}
