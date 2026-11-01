@@ -14,6 +14,7 @@ const env = require('./lib/env');
 env.load(); // reads .env (API key, mode) before anything else
 
 const comfy = require('./lib/comfy');
+const limits = require('./lib/limits');
 const install = require('./lib/install');
 const updater = require('./lib/update');
 const { buildPrompt } = require('./lib/prompt');
@@ -175,7 +176,11 @@ async function handleApi(req, res, url) {
 
   if (req.method === 'POST' && route === '/api/generate') {
     const body = await readBody(req);
-    const { prompt, width, height, resolution, model, refs, workflow: own, guided } = await promptAndSize(body);
+    const made = await promptAndSize(body);
+    const { width, height, resolution, model, refs, workflow: own, guided } = made;
+    // A prompt longer than the model takes is cut, and the page is told.
+    const fitted = limits.fit(made.prompt, comfy.mode(), model);
+    const prompt = fitted.prompt;
     const seed = Number.isInteger(body.seed) && body.seed >= 0 ? body.seed : randomSeed();
     const template = await loadWorkflow(own || body.workflow);
     // A ComfyUI workflow that takes images: they are sent to ComfyUI first, then wired in by name.
@@ -187,7 +192,7 @@ async function handleApi(req, res, url) {
     const guideStrength = guided && Number.isFinite(asked) ? Math.min(0.9, Math.max(0.2, asked)) : undefined;
     const workflow = comfy.inject(template, { prompt, seed, width, height, model, resolution, refs, images, guide, guideStrength });
     const promptId = await comfy.queue(workflow);
-    return send(res, 200, { promptId, seed, prompt, width, height });
+    return send(res, 200, { promptId, seed, prompt, width, height, ...(fitted.cut ? { trimmed: { from: fitted.from, to: fitted.to, max: fitted.max } } : {}) });
   }
 
   if (req.method === 'GET' && route === '/api/job') {

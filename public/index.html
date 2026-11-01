@@ -123,6 +123,7 @@
           <img id="guideOverlay" class="guide-overlay" alt="" hidden>
           <button class="nav prev" id="prev" type="button" hidden>&#8249;</button>
           <button class="nav next" id="next" type="button" hidden>&#8250;</button>
+          <div class="strip" id="batchStrip" hidden></div>
           <div class="progress" id="progress" hidden><p class="mono" id="progressText"></p><div class="bar"><i></i></div></div>
         </div>
         <div class="card-info" id="cardInfo" hidden></div>
@@ -159,7 +160,7 @@
     </aside>
 
     <div class="dock" id="dock">
-      <p class="error" id="error" role="alert" hidden></p>
+      <p class="error" id="error" role="alert" hidden><span id="errorText"></span><button type="button" class="error-x" id="errorClose" aria-label="Close">&#10005;</button></p>
       <div class="dock-row">
         <div class="dock-block">
         <span class="mono" id="dockTitle"></span>
@@ -222,8 +223,8 @@
           <select id="batch" class="batchsel"><option value="1">×1</option><option value="2">×2</option><option value="3">×3</option><option value="4">×4</option></select>
           <span class="gen-wrap">
             <button class="primary" id="generate" type="button"><span class="gen-label"></span><small class="gen-cost" hidden></small></button>
+            <button class="ghost" id="cancel" type="button" hidden></button>
           </span>
-          <button class="ghost" id="cancel" type="button" hidden></button>
         </div>
       </div>
     </div>

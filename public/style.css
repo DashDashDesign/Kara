@@ -1033,3 +1033,79 @@ input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offse
 .extra-panel{width:min(460px,calc(100vw - 32px));padding:14px}
 .extra-panel .extra{display:grid;gap:8px;flex:none;min-width:0}
 .extra-panel #extra{min-height:76px}
+
+/* Cancel sits on top of Generate while an image is being made, instead of pushing it aside */
+#cancel{position:absolute;inset:0;z-index:2;width:100%;height:100%;box-sizing:border-box;background:#17171a;border:1px solid var(--accent);color:var(--accent);font-weight:600}
+#cancel:hover{background:#1f1f24}
+#cancel[hidden]{display:none}
+
+/* The image no longer matches the settings: very slightly faded, full again under the pointer */
+#result{transition:opacity .2s ease}
+#result.stale{opacity:.82}
+#result.stale:hover{opacity:1}
+
+/* Zoomed view: the way out is a big green button, top right */
+#viewerClose{position:fixed;top:16px;right:16px;z-index:5;height:44px;padding:0 20px;border-radius:999px;background:var(--accent);border:0;color:#04120a;font:600 14px var(--corps);box-shadow:0 6px 24px rgba(0,0,0,.55);cursor:pointer}
+#viewerClose::before{content:'\2715';margin-right:8px}
+#viewerClose:hover{filter:brightness(1.1)}
+
+.link-btn{margin-left:auto;background:none;border:0;padding:0;font:500 12px var(--corps);color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.img-menu{position:fixed;z-index:2000;min-width:170px;padding:5px;border-radius:10px;background:#17171a;border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.6);display:grid}
+.img-menu button{background:none;border:0;text-align:left;padding:9px 12px;border-radius:7px;font:500 13px var(--corps);color:var(--txt);cursor:pointer}
+.img-menu button:hover{background:rgba(62,207,96,.14);color:var(--accent)}
+
+.prov-line{display:flex;align-items:stretch;gap:6px}
+.prov-line .prov-row{flex:1}
+.prov-topup{display:grid;place-items:center;width:34px;border:1px dashed rgba(62,207,96,.6);border-radius:9px;color:var(--accent);font:600 18px var(--corps);text-decoration:none}
+.prov-topup:hover{background:rgba(62,207,96,.14)}
+/* One clean ring around the whole tile (picture and name), no second ring around the picture */
+.tile.found .thumb{animation:none}
+#result.stale{opacity:.55}
+.tiles.chips .tile{flex-direction:row;justify-content:center;align-items:center;line-height:1}
+
+/* The character's name is the one editable part of the file name: white and bold says so */
+#charName,#charName::placeholder{color:#fff;font-weight:700;opacity:1}
+#charName::placeholder{opacity:.9}
+#charName:hover{border-color:rgba(255,255,255,.3)}
+
+.prov-line{min-width:0}
+.prov-line .prov-row{min-width:0}
+.prov-topup{flex:none}
+.prov-row .prov-balance{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+
+/* Alert bar: floats just above the settings bar instead of pushing the page, and can be closed */
+.error{position:absolute;left:clamp(14px,2vw,28px);right:clamp(14px,2vw,28px);bottom:calc(100% + 8px);margin:0;display:flex;align-items:flex-start;gap:12px;background:#241a0c;box-shadow:0 10px 30px rgba(0,0,0,.55);z-index:30}
+.error[hidden]{display:none}
+.error #errorText{flex:1}
+.error.info{border-color:rgba(62,207,96,.5);background:#0f1f14}
+.error-x{flex:none;width:26px;height:26px;border:0;border-radius:50%;background:rgba(255,255,255,.1);color:var(--txt);font-size:12px;cursor:pointer}
+.error-x:hover{background:rgba(255,255,255,.22)}
+
+/* Top menus: a small icon before each name */
+#inspirations > summary,#historyMenu > summary,#sessionMenu > summary,#settingsMenu > summary,#aboutBtn,#langBtn{display:inline-flex;align-items:center;gap:7px}
+#inspirations > summary .ico,#historyMenu > summary .ico,#sessionMenu > summary .ico,#settingsMenu > summary .ico,#aboutBtn .ico,#langBtn .ico{width:16px;height:16px;color:inherit}
+.prov-nobal{display:grid;gap:6px;margin-top:8px;padding:10px 12px 4px;border-top:1px solid var(--bord)}
+.prov-nobal .menu-note{margin:0 0 2px}
+.promptpop > summary .ico{width:16px;height:16px;color:inherit;margin-right:7px}
+.batch-wrap{position:relative;display:inline-flex}
+.batch-wrap .ico{position:absolute;left:13px;top:50%;margin-top:-8px;width:16px;height:16px;pointer-events:none;color:var(--txt-60)}
+.batch-wrap .batchsel{padding-left:36px}
+.tiles.chips{justify-content:center;padding-top:10px}
+
+/* Film strip of the images made by one click */
+.strip{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:4;display:flex;gap:6px;padding:6px;border-radius:12px;background:rgba(10,10,10,.78);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12)}
+.strip[hidden]{display:none}
+.strip button{width:52px;height:52px;padding:0;border:2px solid transparent;border-radius:8px;overflow:hidden;background:#000;cursor:pointer;opacity:.65}
+.strip button:hover{opacity:1}
+.strip button.on{border-color:var(--accent);opacity:1}
+.strip img{width:100%;height:100%;object-fit:cover;display:block}
+body.layout-side .menu-tools{box-shadow:none;padding-bottom:16px}
+
+.strip button{width:auto;height:60px;opacity:.45}
+.strip button.on{opacity:1}
+.strip img{width:auto;height:100%;max-width:120px;object-fit:contain}
+#copyPrompt,.card-info .ghost.small{display:inline-flex;align-items:center;gap:6px}
+#copyPrompt .ico,.card-info .ghost.small .ico{width:15px;height:15px;color:inherit}
+/* The film strip's pictures are not the big picture: undo the rule that stretches every image of the screen */
+.screen .strip img{position:static;inset:auto;width:auto;height:100%;max-width:120px;object-fit:contain;display:block;animation:none}
+.strip button{position:relative;flex:none;display:block}

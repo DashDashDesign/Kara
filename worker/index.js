@@ -14,6 +14,7 @@ import api from '../lib/magnific-api.js';
 import kie from '../lib/kie.js';
 import fal from '../lib/fal.js';
 import router from '../lib/router.js';
+import limits from '../lib/limits.js';
 
 const NIL_ID = '00000000-0000-0000-0000-000000000000';
 const DEFAULT_WORKFLOW = 'zimage_turbo_t2i.api.json';
@@ -183,11 +184,14 @@ async function handleApi(request, env, url) {
 
   if (method === 'POST' && route === '/api/generate') {
     const body = await readBody(request);
-    const { prompt, width, height, resolution, model, refs } = promptAndSize(body, provider);
+    const made = promptAndSize(body, provider);
+    const { width, height, resolution, model, refs } = made;
+    const fitted = limits.fit(made.prompt, provider, model);
+    const prompt = fitted.prompt;
     const seed = Number.isInteger(body.seed) && body.seed >= 0 ? body.seed : Math.floor(Math.random() * 2 ** 32);
     const ask = { prompt, seed, width, height, model, resolution, refs };
     const promptId = provider === 'kie' ? await kc.queue(ask) : provider === 'fal' ? await fc.queue(ask) : provider === 'router' ? await rc.queue(ask) : await queue(env, ask);
-    return json(200, { promptId, seed, prompt, width, height });
+    return json(200, { promptId, seed, prompt, width, height, ...(fitted.cut ? { trimmed: { from: fitted.from, to: fitted.to, max: fitted.max } } : {}) });
   }
 
   if (method === 'GET' && route === '/api/job') {

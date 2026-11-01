@@ -148,6 +148,9 @@
       galleryHint: 'Drag to reorder. Click an image to open it.',
       galleryEmpty: 'No image here yet.',
       close: 'Close',
+      trimmedNote: '{model} takes {max} characters at most and your description has {from}: it was cut at the last full sentence, so the final details were ignored.',
+      copyImage: 'Copy image',
+      copyFailed: 'Copy not possible here',
       fav: 'Favourite',
       refsTitle: '// Start from images',
       dropText: 'Drop one or more photos or drawings here (several views of the same character help), or click to choose',
@@ -174,6 +177,10 @@
       clearAll: 'Remove all',
       clearField: 'Clear',
       sameAsHair: 'Same colour as the hair',
+      hairLink: 'Choose the hair colour',
+      topUp: 'Add credits',
+      noBalanceNote: 'These providers do not let an app read your balance, so it cannot be shown here. Check it on their website:',
+      viewBalance: 'View my {p} balance',
       guide: 'Guide the image with this drawing',
       guideShort: 'Face drawing',
       layoutGuided: 'Portrait (locked)',
@@ -245,7 +252,7 @@
       timeEstimate: 'Estimate',
       notWith: 'not at {p}',
       keyMissing: 'add a key',
-      balanceShort: 'no balance shown',
+      balanceShort: 'no balance',
       addKeyFor: 'Add a {p} key to use it (click)',
       provider: 'Provider',
       tiles_none: 'Names only',
@@ -462,6 +469,9 @@
       galleryHint: 'Glissez pour réorganiser. Cliquez sur une image pour l\'ouvrir.',
       galleryEmpty: 'Aucune image ici pour l\'instant.',
       close: 'Fermer',
+      trimmedNote: 'Votre description fait {from} caractères et {model} en accepte {max} au maximum : elle a été coupée à la dernière phrase entière, les derniers détails sont donc ignorés.',
+      copyImage: "Copier l'image",
+      copyFailed: 'Copie impossible ici',
       fav: 'Favori',
       refsTitle: "// Partir d'images",
       dropText: 'Déposez une ou plusieurs photos ou dessins ici (plusieurs vues du même perso aident), ou cliquez pour choisir',
@@ -488,6 +498,10 @@
       clearAll: 'Tout retirer',
       clearField: 'Effacer',
       sameAsHair: 'Même couleur que les cheveux',
+      hairLink: 'Choisir la couleur des cheveux',
+      topUp: 'Recharger des crédits',
+      noBalanceNote: "Ces fournisseurs ne permettent pas à une application de lire votre solde : il est techniquement impossible de l'afficher ici. Consultez-le sur leur site :",
+      viewBalance: 'Voir mon solde {p}',
       guide: "Guider l'image avec ce dessin",
       guideShort: 'Dessin du visage',
       layoutGuided: 'Portrait (verrouillé)',
@@ -559,7 +573,7 @@
       timeEstimate: 'Estimation',
       notWith: 'pas chez {p}',
       keyMissing: 'ajouter une clé',
-      balanceShort: 'solde non fourni',
+      balanceShort: 'pas de solde',
       addKeyFor: 'Ajoutez une clé {p} pour l\'utiliser (clic)',
       provider: 'Fournisseur',
       tiles_none: 'Noms seulement',
@@ -678,6 +692,11 @@
     heart: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
     globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/>',
     body: '<circle cx="12" cy="5" r="2.5"/><path d="M6 9.5h12M12 9.5v5M9 21l3-6.5 3 6.5"/>',
+    layers: '<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>',
+    copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+    check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+    folder: '<path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+    key: '<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9"/><path d="m16 7 3 3"/>',
     pencil: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
     text: '<path d="M4 6h16M4 12h16M4 18h10"/>',
   };
@@ -689,6 +708,12 @@
     // Static markup from the table above, never user text.
     span.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ICONS.text}</svg>`;
     return span;
+  }
+
+  // A button or menu title: its small icon, then the text.
+  function labelWith(el, name, text) {
+    el.textContent = '';
+    el.append(icon(name), text);
   }
 
   let lang = 'en';
@@ -855,25 +880,31 @@
   const snapshot = () => JSON.stringify({ selection: state.selection, custom: state.custom, extra: state.extra, activePreset: state.activePreset });
 
   // Records the settings as they are now, after a change, under a readable name.
-  function commit(text) {
+  function commit(text, at) {
     clearTimeout(typingTimer);
     const snap = snapshot();
     if (state.steps[state.pos] && state.steps[state.pos].snap === snap) return;
     state.steps = state.steps.slice(0, state.pos + 1);
-    state.steps.push({ snap, text, time: Date.now() });
+    state.steps.push({ snap, text, time: Date.now(), at });
     if (state.steps.length > 120) state.steps.shift();
     state.pos = state.steps.length - 1;
     syncSteps();
-    // A setting changed while an image is on screen: nothing visible happens until the next generation,
-    // so Generate glows again to say so (showCard removes it once a card is shown).
-    if (state.history.length) $('generate').classList.add('hint');
+  }
+
+  // The image on screen no longer matches the settings (changed, and not set back exactly as before):
+  // it is faded a little and Generate glows, until the settings match again or a new image is made.
+  function syncStale() {
+    const item = state.history[state.view];
+    const stale = !!(item && item.settings && item.settings !== snapshot());
+    $('result').classList.toggle('stale', stale);
+    if (state.history.length) $('generate').classList.toggle('hint', stale);
   }
 
   // Typing records one step once the user pauses, not one per letter.
   let typingTimer = null;
-  function commitSoon(text) {
+  function commitSoon(text, at) {
     clearTimeout(typingTimer);
-    typingTimer = setTimeout(() => commit(text()), 900);
+    typingTimer = setTimeout(() => commit(text(), at), 900);
   }
 
   function restore(snap) {
@@ -890,7 +921,7 @@
     schedulePreview();
   }
 
-  function goTo(index) {
+  function goToStep(index, fromUndo) {
     // A pending typed change is saved first, so it can be come back to.
     if (typingTimer) {
       clearTimeout(typingTimer);
@@ -899,15 +930,26 @@
       if (state.steps[state.pos].snap !== snap) commit(t('edit'));
     }
     if (index < 0 || index >= state.steps.length || index === state.pos) return;
+    // Undo shows the setting that was just taken back; jumping shows the step that was clicked.
+    const shown = (fromUndo ? state.steps[state.pos] : state.steps[index]).at;
     state.pos = index;
     restore(state.steps[index].snap);
     syncSteps();
+    showStepMenu(shown);
   }
 
-  const undo = () => goTo(state.pos - 1);
-  const redo = () => goTo(state.pos + 1);
+  // Opens the menu a history step is about, and makes its choice blink.
+  function showStepMenu(at) {
+    const group = at && groupById(at.group);
+    if (!group || ($('faceEditor') && !$('faceEditor').hidden)) return;
+    jumpToMenu({ group, option: at.option ? optionById(group, at.option) : null });
+  }
+
+  const undo = () => goToStep(state.pos - 1, true);
+  const redo = () => goToStep(state.pos + 1);
 
   function syncSteps() {
+    syncStale();
     $('undo').disabled = state.pos <= 0;
     $('redo').disabled = state.pos >= state.steps.length - 1;
     const list = $('stepList');
@@ -923,7 +965,7 @@
       const when = document.createElement('time');
       when.textContent = new Date(step.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       b.append(what, when);
-      b.addEventListener('click', () => goTo(i));
+      b.addEventListener('click', () => goToStep(i));
       list.appendChild(b);
     }
   }
@@ -963,7 +1005,7 @@
     renderPresets();
     schedulePreview();
     const option = optionById(group, id);
-    commit(`${label(group)}${colon()}${group.type === 'multi' ? (was ? '- ' : '+ ') : ''}${label(option)}`);
+    commit(`${label(group)}${colon()}${group.type === 'multi' ? (was ? '- ' : '+ ') : ''}${label(option)}`, { group: group.id, option: id });
     // A docked menu with a single choice closes once picked.
     const pop = document.querySelector(`details.pop[data-group="${group.id}"]`);
     if (pop && group.type !== 'multi') pop.open = false;
@@ -981,7 +1023,7 @@
     syncControls();
     renderPresets();
     schedulePreview();
-    commit(`${label(group)}${colon()}${currentValue(group)}`);
+    commit(`${label(group)}${colon()}${currentValue(group)}`, { group: group.id });
   }
 
   // One menu = a <details>. Section columns hold accordions; docked sections (render) open upwards from the bottom bar.
@@ -1032,7 +1074,7 @@
         syncControls();
         renderPresets();
         schedulePreview();
-        commit(`${label(group)}${colon()}${t('cleared')}`);
+        commit(`${label(group)}${colon()}${t('cleared')}`, { group: group.id });
       });
       bar.appendChild(clear);
       body.appendChild(bar);
@@ -1107,7 +1149,7 @@
       syncControls();
       renderPresets();
       schedulePreview();
-      commitSoon(() => `${label(group)}${colon()}${own.value.trim() ? quote(own.value) : t('cleared')}`);
+      commitSoon(() => `${label(group)}${colon()}${own.value.trim() ? quote(own.value) : t('cleared')}`, { group: group.id });
     });
     // A × in the field empties it (shown only when something is typed).
     const ownWrap = document.createElement('span');
@@ -1240,7 +1282,7 @@
     syncControls();
     renderPresets();
     schedulePreview();
-    commitSoon(() => `${label(group)}${colon()}${phrase || label(optionById(group, group.neutral) || {})}`);
+    commitSoon(() => `${label(group)}${colon()}${phrase || label(optionById(group, group.neutral) || {})}`, { group: group.id });
   }
 
   // Colours of the two eyes: the chosen colour, or two different ones.
@@ -1282,7 +1324,17 @@
     box.type = 'checkbox';
     const words = document.createElement('span');
     words.textContent = t('sameAsHair');
-    row.append(box, words);
+    // Hair comes later in the menus: a link goes there, so nobody has to wonder what "the hair" is.
+    const link = document.createElement('button');
+    link.type = 'button';
+    link.className = 'link-btn';
+    link.textContent = `${t('hairLink')} →`;
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if ($('faceEditor') && !$('faceEditor').hidden) closeFaceEditor();
+      jumpToMenu({ group: groupById('hairColor'), option: null });
+    });
+    row.append(box, words, link);
     box.addEventListener('change', () => {
       if (box.checked) {
         delete state.parked[group.id];
@@ -2485,7 +2537,7 @@
     return hits.slice(0, 10);
   }
   // Opens the menu and shows the choice.
-  function goTo(entry) {
+  function jumpToMenu(entry) {
     const { group, option } = entry;
     const box = document.querySelector(`details.group[data-group="${group.id}"], details.pop[data-group="${group.id}"]`);
     if (!box) return;
@@ -2561,7 +2613,7 @@
       input.value = '';
       list.hidden = true;
       input.blur();
-      goTo(e);
+      jumpToMenu(e);
     };
     input.addEventListener('input', show);
     input.addEventListener('focus', () => input.value.trim() && show());
@@ -2918,11 +2970,17 @@
     $('cancel').hidden = !busy;
   }
 
-  function showError(message) {
+  // The orange bar above the settings bar. kind 'info': a notice, not a failure. It floats over the page (no shift) and has a cross.
+  function showError(message, kind) {
     const el = $('error');
-    el.textContent = message;
+    $('errorText').textContent = message;
+    el.classList.toggle('info', kind === 'info');
     el.hidden = !message;
+    // Notices and errors fade away by themselves (a new message restarts the clock).
+    clearTimeout(errorTimer);
+    if (message) errorTimer = setTimeout(() => showError(''), kind === 'info' ? 10000 : 20000);
   }
+  let errorTimer = null;
 
   function showProgress(text) {
     $('progress').hidden = !text;
@@ -2964,7 +3022,7 @@
       img.classList.add('in');
     }
     $('placeholder').hidden = true;
-    $('generate').classList.remove('hint');
+    syncStale();
     const via = item.provider && STR[lang].providers[item.provider] ? ` · ${shortName(item.provider)}` : '';
     const m = item.model ? modelById(item.model) : null;
     $('meta').textContent = `${m ? `${m.name} · ` : ''}seed ${item.seed} · ${item.width} x ${item.height}${via}`;
@@ -2976,6 +3034,93 @@
     applyLayout();
   }
 
+  // Right click on the image (page or zoomed view): save it, or copy it to the clipboard.
+  function imageMenu(e) {
+    const item = state.history[state.view];
+    if (!item) return;
+    e.preventDefault();
+    closeImageMenu();
+    const menu = document.createElement('div');
+    menu.className = 'img-menu';
+    menu.id = 'imgMenu';
+    const save = document.createElement('button');
+    save.type = 'button';
+    save.textContent = t('download');
+    save.addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = item.url;
+      a.download = item.name;
+      a.click();
+      closeImageMenu();
+    });
+    const copy = document.createElement('button');
+    copy.type = 'button';
+    copy.textContent = t('copyImage');
+    copy.addEventListener('click', async () => {
+      closeImageMenu();
+      try {
+        const blob = await (await fetch(item.url)).blob();
+        // The clipboard takes PNG reliably: other formats are redrawn first.
+        let png = blob;
+        if (blob.type !== 'image/png') {
+          const bmp = await createImageBitmap(blob);
+          const cv = document.createElement('canvas');
+          cv.width = bmp.width;
+          cv.height = bmp.height;
+          cv.getContext('2d').drawImage(bmp, 0, 0);
+          png = await new Promise((ok) => cv.toBlob(ok, 'image/png'));
+        }
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': png })]);
+        showNote(t('copied'));
+      } catch (err) {
+        showNote(t('copyFailed'));
+      }
+    });
+    menu.append(save, copy);
+    document.body.appendChild(menu);
+    const w = menu.offsetWidth;
+    const h = menu.offsetHeight;
+    menu.style.left = `${Math.min(e.clientX, window.innerWidth - w - 8)}px`;
+    menu.style.top = `${Math.min(e.clientY, window.innerHeight - h - 8)}px`;
+  }
+  function closeImageMenu() {
+    const m = $('imgMenu');
+    if (m) m.remove();
+  }
+  function showNote(text) {
+    const n = document.createElement('div');
+    n.className = 'tip note-toast';
+    n.textContent = text;
+    n.style.left = '50%';
+    n.style.bottom = '90px';
+    n.style.transform = 'translateX(-50%)';
+    document.body.appendChild(n);
+    setTimeout(() => n.remove(), 1600);
+  }
+
+  // Images made by one click (a batch): a small film strip over the picture, to jump between them.
+  function syncStrip(item) {
+    const strip = $('batchStrip');
+    const list = item && item.batch ? state.history.filter((c) => c.batch === item.batch).sort((a, b) => (a.batchIndex || 0) - (b.batchIndex || 0)) : [];
+    strip.hidden = list.length < 2;
+    strip.textContent = '';
+    for (const c of list) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = c === item ? 'on' : '';
+      b.setAttribute('aria-label', c.name);
+      const im = document.createElement('img');
+      im.src = c.url;
+      im.alt = '';
+      b.appendChild(im);
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showCard(state.history.indexOf(c), true);
+      });
+      strip.appendChild(b);
+    }
+  }
+
   function syncFav() {
     const item = state.history[state.view];
     const on = !!(item && item.fav);
@@ -2985,6 +3130,7 @@
 
   function syncDeck() {
     syncFav();
+    syncStrip(state.history[state.view]);
     const total = state.history.length;
     $('deck').classList.toggle('empty', total === 0);
     if (!total) {
@@ -3072,6 +3218,10 @@
         const seed = !state.render.on || state.seedMode === 'random' || typed === null ? null : typed + i;
         try {
           const job = await postJson('/api/generate', { ...base, seed }, provHeaders);
+          if (job.trimmed) {
+            const m = modelById(state.model);
+            showError(t('trimmedNote').replace('{model}', m ? m.name : '').replace('{max}', job.trimmed.max).replace('{from}', job.trimmed.from), 'info');
+          }
           jobs.push({ job, index: i, done: false });
         } catch (err) {
           errors.push(err.message);
@@ -3122,12 +3272,15 @@
               settings,
             }, first.url);
             if (token !== state.jobToken) return;
-            state.history.unshift(item);
+            // Newest on top; inside one batch, in the order of the batch, so the arrows walk through it 1, 2, 3.
+            let at = 0;
+            while (item.batch && at < state.history.length && state.history[at].batch === item.batch && state.history[at].batchIndex > item.batchIndex) at++;
+            state.history.splice(at, 0, item);
             saveOrder();
             made += 1;
             if (item.seconds) recordTime(prov, state.model, item.seconds);
             trackUsage('image', { provider: prov });
-            showCard(0, true);
+            showCard(at, true);
           }
         }
         const secs = Math.round((Date.now() - started) / 1000);
@@ -3361,9 +3514,9 @@
       document.execCommand('copy');
       sel.removeAllRanges();
     }
-    $('copyPrompt').textContent = t('copied');
+    labelWith($('copyPrompt'), 'check', t('copied'));
     setTimeout(() => {
-      $('copyPrompt').textContent = t('copy');
+      labelWith($('copyPrompt'), 'copy', t('copy'));
     }, 1400);
   }
 
@@ -4426,15 +4579,15 @@
     const copy = document.createElement('button');
     copy.type = 'button';
     copy.className = 'ghost small';
-    copy.textContent = t('copy');
+    labelWith(copy, 'copy', t('copy'));
     copy.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(item.prompt || '');
-        copy.textContent = t('copied');
+        labelWith(copy, 'check', t('copied'));
       } catch (err) {
         copy.textContent = '!';
       }
-      setTimeout(() => (copy.textContent = t('copy')), 1500);
+      setTimeout(() => labelWith(copy, 'copy', t('copy')), 1500);
     });
     head.append(label, copy);
     const pre = document.createElement('pre');
@@ -5237,6 +5390,18 @@
     $('keyLink').hidden = $('keyRow').hidden || !KEY_PAGES[provider];
     $('keyLink').href = KEY_PAGES[provider] || '#';
     $('keyLink').textContent = `${t('getKey')} ↗`;
+    let top = $('topUpLink');
+    if (!top) {
+      top = document.createElement('a');
+      top.id = 'topUpLink';
+      top.className = 'key-link';
+      top.target = '_blank';
+      top.rel = 'noopener';
+      $('keyLink').after(top);
+    }
+    top.hidden = !TOPUP_PAGES[provider] || !saved;
+    top.href = TOPUP_PAGES[provider] || '#';
+    top.textContent = `${t('topUp')} ↗`;
     $('rememberRow').hidden = !info.byok;
     $('forgetKey').hidden = $('keyRow').hidden || !saved;
     $('settingsNote').textContent = info.byok ? t('byokNote') : provider !== 'local' && info.editable ? t('localNote') : '';
@@ -5377,6 +5542,18 @@
   }
 
   // Asks each provider for its balance with its own key (saved on the PC, or in this browser online).
+  // Where credits are bought, for each provider that sells them.
+  const TOPUP_PAGES = {
+    magnific: 'https://www.magnific.com/user/my-subscriptions',
+    kie: 'https://kie.ai/billing',
+    fal: 'https://fal.ai/dashboard/billing',
+    router: 'https://platform.comfy.org',
+    cloud: 'https://platform.comfy.org',
+  };
+
+  // Providers that never tell an app the balance: the page where you can read it.
+  const BALANCE_PAGES = { magnific: 'https://www.magnific.com/user/my-subscriptions', router: 'https://platform.comfy.org', cloud: 'https://platform.comfy.org' };
+
   async function loadBalances() {
     const info = state.cfg.settings || {};
     const ids = providersHere();
@@ -5402,7 +5579,7 @@
       line.classList.toggle('none', !(b && (b.free || Number.isFinite(b.amount))));
       line.textContent = text ? `${t('balance')} : ${text}`.replace(' : ', lang === 'fr' ? ' : ' : ': ') : '';
     }
-    $('settingsLabel').textContent = t('settings');
+    labelWith($('settingsLabel'), 'key', t('settings'));
     syncProvMenu();
   }
 
@@ -5447,7 +5624,38 @@
           $('modelPop').open = true;
         }
       });
-      list.appendChild(row);
+      if (ok && TOPUP_PAGES[p]) {
+        const wrap = document.createElement('div');
+        wrap.className = 'prov-line';
+        const plus = document.createElement('a');
+        plus.className = 'prov-topup';
+        plus.href = TOPUP_PAGES[p];
+        plus.target = '_blank';
+        plus.rel = 'noopener';
+        plus.textContent = '+';
+        plus.title = `${t('topUp')} (${shortName(p)})`;
+        wrap.append(row, plus);
+        list.appendChild(wrap);
+      } else list.appendChild(row);
+    }
+    const blind = SHOWN.filter((x) => providersHere().includes(x) && hasKeyFor(x) && BALANCE_PAGES[x]);
+    if (blind.length) {
+      const note = document.createElement('div');
+      note.className = 'prov-nobal';
+      const msg = document.createElement('p');
+      msg.className = 'menu-note';
+      msg.textContent = t('noBalanceNote');
+      note.appendChild(msg);
+      for (const x of blind) {
+        const a = document.createElement('a');
+        a.className = 'key-link';
+        a.href = BALANCE_PAGES[x];
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = `${t('viewBalance').replace('{p}', shortName(x))} ↗`;
+        note.appendChild(a);
+      }
+      list.appendChild(note);
     }
   }
 
@@ -5581,7 +5789,7 @@
   function applyTexts() {
     document.documentElement.lang = lang;
     $('lede').textContent = t('lede');
-    $('presetsLabel').textContent = t('startFrom');
+    labelWith($('presetsLabel'), 'spark', t('startFrom'));
     $('extraLabel').textContent = t('extraLabel');
     $('extra').placeholder = t('extraPlaceholder');
     syncExtraChip();
@@ -5610,7 +5818,7 @@
     sizeName();
     $('charName').title = t('nameTitle');
     $('cancel').textContent = t('cancel');
-    $('promptSummary').textContent = t('promptBtn');
+    labelWith($('promptSummary'), 'text', t('promptBtn'));
     $('promptTitle').textContent = t('prompt');
     $('galleryBtn').textContent = '';
     $('galleryBtn').append(icon('grid'), t('gallery'));
@@ -5633,7 +5841,7 @@
     $('hfLabel').textContent = t('hfLabel');
     $('hfHelp').textContent = t('hfHelp');
     $('hfLink').textContent = `${t('hfLink')} ↗`;
-    $('aboutBtn').textContent = t('about');
+    labelWith($('aboutBtn'), 'info', t('about'));
     $('batch').title = t('batch');
     $('batch').setAttribute('aria-label', t('batch'));
     $('galleryEmpty').textContent = t('galleryEmpty');
@@ -5654,21 +5862,21 @@
     $('refModeRow').querySelector('[data-mode="inspire"]').textContent = t('refInspire');
     $('refModeRow').querySelector('[data-mode="sheet"]').title = t('refSheetNote');
     $('refModeRow').querySelector('[data-mode="inspire"]').title = t('refInspireNote');
-    $('settingsLabel').textContent = t('settings');
+    labelWith($('settingsLabel'), 'key', t('settings'));
     $('dockTitle').textContent = t('dockTitle');
     $('providerTitle').textContent = t('providerTitle');
     $('comfyUrlLabel').textContent = t('comfyUrlLabel');
     $('rememberLabel').textContent = t('remember');
     $('saveSettings').textContent = t('save');
     $('forgetKey').textContent = t('forget');
-    $('copyPrompt').textContent = t('copy');
+    labelWith($('copyPrompt'), 'copy', t('copy'));
     $('waiting').textContent = t('waiting');
     $('waitingHint').textContent = t('waitingHint');
     $('undo').title = `${t('undo')} (Ctrl+Z)`;
     $('undo').setAttribute('aria-label', t('undo'));
     $('redo').title = `${t('redo')} (Ctrl+Shift+Z)`;
     $('redo').setAttribute('aria-label', t('redo'));
-    $('historyLabel').textContent = t('steps');
+    labelWith($('historyLabel'), 'clock', t('steps'));
     // Under the image: icons, with their name on hover and for screen readers.
     for (const [id, ico, key] of [['reuse', 'reuse', 'reuse'], ['deleteCard', 'trash', 'deleteCard'], ['download', 'download', 'download']]) {
       $(id).textContent = '';
@@ -5676,12 +5884,12 @@
       $(id).title = t(key);
       $(id).setAttribute('aria-label', t(key));
     }
-    $('sessionLabel').textContent = t('session');
+    labelWith($('sessionLabel'), 'folder', t('session'));
     $('exportBtn').textContent = t('exportSession');
     $('importBtn').textContent = t('importSession');
     $('clearBtn').textContent = t('clearSession');
     $('sessionNote').textContent = t('sessionNote');
-    $('langBtn').textContent = lang === 'fr' ? 'EN' : 'FR';
+    labelWith($('langBtn'), 'globe', lang === 'fr' ? 'EN' : 'FR');
     $('generate').title = `${t('generate')} (Ctrl+Enter)`;
     setBusy(state.busy);
   }
@@ -6110,6 +6318,11 @@
       renderGallery();
     });
     state.batch = Math.max(1, Math.min(4, Number(read('cd-batch')) || 1));
+    // The number of images per click: a small stack icon sits inside the select.
+    const batchBox = document.createElement('span');
+    batchBox.className = 'batch-wrap';
+    $('batch').before(batchBox);
+    batchBox.append(icon('layers'), $('batch'));
     $('batch').value = String(state.batch);
     $('batch').addEventListener('change', () => {
       state.batch = Math.max(1, Math.min(4, Number($('batch').value) || 1));
@@ -6203,6 +6416,11 @@
       e.target.value = '';
     });
     $('clearBtn').addEventListener('click', clearSession);
+    $('errorClose').addEventListener('click', () => showError(''));
+    $('result').addEventListener('contextmenu', imageMenu);
+    $('viewerImg').addEventListener('contextmenu', imageMenu);
+    window.addEventListener('blur', closeImageMenu);
+    window.addEventListener('scroll', closeImageMenu, true);
     $('undo').addEventListener('click', undo);
     $('redo').addEventListener('click', redo);
     $('prev').addEventListener('click', previous);
@@ -6210,10 +6428,15 @@
     $('reuse').addEventListener('click', reuseCard);
     $('compareGuide').addEventListener('click', () => syncCompare(state.history[state.view], $('compareGuide').getAttribute('aria-pressed') !== 'true'));
     document.addEventListener('keydown', (e) => {
-      const typing = e.target.closest && e.target.closest('input, textarea, select, [contenteditable]');
+      const typing = e.target.closest && e.target.closest('input:not([type=range]):not([type=checkbox]):not([type=radio]), textarea, select, [contenteditable]');
       if (!$('viewer').hidden) return viewerKeys(e);
       if ($('faceEditor') && !$('faceEditor').hidden) {
         if (e.key === 'Escape') closeFaceEditor();
+        else if (!typing && (e.ctrlKey || e.metaKey) && /^[zy]$/i.test(e.key)) {
+          e.preventDefault();
+          if (e.key.toLowerCase() === 'y' || e.shiftKey) redo();
+          else undo();
+        }
         // V switches front and profile, S the drawing style.
         else if (!typing && !e.ctrlKey && !e.metaKey && !e.altKey && /^[vs]$/i.test(e.key)) {
           e.preventDefault();
@@ -6233,6 +6456,7 @@
         return;
       }
       if (!$('gallery').hidden) return;
+      if (e.key === 'Escape') closeImageMenu();
       if (e.key === 'Escape') {
         $('inspirations').open = $('sessionMenu').open = $('historyMenu').open = $('settingsMenu').open = false;
         for (const d of document.querySelectorAll('#dock details[open]')) d.open = false;
@@ -6265,12 +6489,14 @@
       }
     });
     document.addEventListener('click', (e) => {
+      if (!e.target.closest('#imgMenu')) closeImageMenu();
       // A button that re-drew its own menu is no longer in the page: that click was inside, keep menus open.
       if (!e.target.isConnected) return;
       // Only the bar's own menus: a folded group inside the models panel keeps its state.
       if (!e.target.closest('#dock details.pop')) for (const d of document.querySelectorAll('#dock details.pop[open]')) d.open = false;
       if (!e.target.closest('#inspirations')) $('inspirations').open = false;
       if (!e.target.closest('#historyMenu')) $('historyMenu').open = false;
+      if (!e.target.closest('#provMenu')) $('provMenu').open = false;
       if (!e.target.closest('#sessionMenu')) $('sessionMenu').open = false;
       if (!e.target.closest('#settingsMenu')) $('settingsMenu').open = false;
     });
