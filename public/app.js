@@ -5914,7 +5914,29 @@
       const d = el.closest('details.pop');
       return d && d.parentElement.closest('.more-pop') ? $('morePop') : d;
     };
+    // A colour picker is a window of the system: while it is open the pointer is over it, not over the menu. The menu
+    // that opened it is held (kept open, no other menu opens on hover) until a click elsewhere or the picker's end.
+    const held = () => {
+      for (const d of $('dock').querySelectorAll('details.pop[data-hold]')) {
+        if (d.open) return d;
+        delete d.dataset.hold;
+      }
+      return null;
+    };
+    const release = () => {
+      for (const d of $('dock').querySelectorAll('details.pop[data-hold]')) delete d.dataset.hold;
+    };
+    $('dock').addEventListener('click', (e) => {
+      if (!e.target.closest('.well, input[type=color]')) return;
+      const d = outer(e.target);
+      if (d) d.dataset.hold = '1';
+    }, true);
+    $('dock').addEventListener('change', (e) => {
+      if (e.target.matches('input[type=color]')) release();
+    });
+    window.addEventListener('focus', release);
     $('dock').addEventListener('mouseover', (e) => {
+      if (held()) return;
       const d = outer(e.target);
       if (d && $('dock').contains(d)) openOnly(d);
     });
@@ -5923,6 +5945,7 @@
       if (!d || (e.relatedTarget && d.contains(e.relatedTarget))) return;
       clearTimeout(closer);
       closer = setTimeout(() => {
+        if (d.dataset.hold) return;
         if (!d.matches(':hover') && !d.contains(document.activeElement)) d.open = false;
       }, 260);
     });
@@ -6794,7 +6817,10 @@
       // A button that re-drew its own menu is no longer in the page: that click was inside, keep menus open.
       if (!e.target.isConnected) return;
       // Only the bar's own menus: a folded group inside the models panel keeps its state.
-      if (!e.target.closest('#dock details.pop')) for (const d of document.querySelectorAll('#dock details.pop[open]')) d.open = false;
+      if (!e.target.closest('#dock details.pop')) {
+        for (const d of document.querySelectorAll('#dock details.pop[data-hold]')) delete d.dataset.hold;
+        for (const d of document.querySelectorAll('#dock details.pop[open]')) d.open = false;
+      }
       if (!e.target.closest('#inspirations')) $('inspirations').open = false;
       if (!e.target.closest('#historyMenu')) $('historyMenu').open = false;
       if (!e.target.closest('#provMenu')) $('provMenu').open = false;
