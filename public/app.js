@@ -6542,7 +6542,7 @@
     const sidebar = document.querySelector('.side');
     if(!appElement || !sidebar) return;
 
-    const MIN = 300, MAX = 700;
+    const MIN = 300, MAX = 600;
     const W_KEY = 'karaSidebarWidth', SIDE_KEY = 'karaSidebarSide';
     const setWidth = (w) => appElement.style.setProperty('--side-w', w + 'px');
 
