@@ -90,7 +90,27 @@
       versionWord: 'version',
       aboutText: 'Kara is an open-source character designer. Build a character from simple menus, add reference images if you like, and get a clean character sheet from the image model of your choice: on your own computer through ComfyUI, or online through Comfy Router, KIE, fal or Magnific with your own key.',
       aboutBy: 'Made by',
+      budgetLabel: 'Balance',
+      budgetTitle: 'Balance per provider',
+      budgetTip: 'What is left with each image provider. Click to see them or to switch.',
+      provReady: '{p}: ready.',
+      provDown: '{p}: not answering.',
+      provBalance: 'Left: {m}.',
+      provFree: 'Free.',
       aboutLicense: 'MIT license: free to use, change and share.',
+      mcpBtn: 'MCP',
+      mcpTip: 'Use Kara from Claude or another AI agent',
+      mcpTitle: 'Connect Kara to Claude',
+      mcpIntro: 'With MCP, Claude (or another AI agent) can use Kara for you: you describe the character in the chat, Claude sets the menus in this window and makes the image, which then shows here.',
+      mcpDesktop: 'Claude Desktop (the chat)',
+      mcpStep1: '1. Download the Kara extension.',
+      mcpDownload: 'Download Kara.mcpb',
+      mcpStep2: '2. Double-click the file you downloaded, then click Install in Claude.',
+      mcpStep3: '3. Start a new conversation and ask, for example: "With Kara, make a 50 year old pirate as a front and back sheet." Keep this window open.',
+      mcpCode: 'Claude Code (the terminal)',
+      mcpOther: 'Another agent that takes an MCP configuration',
+      mcpCopy: 'Copy',
+      mcpFree: 'On your own machine, images are free. A paid provider (KIE, fal, Magnific, Comfy Router) never starts without a quote with its price and your yes in the chat. ComfyUI must be running to make images on your own machine.',
       aboutRepo: 'Code on GitHub',
       aboutFeedback: 'Send feedback',
       aboutFeedbackNote: 'Opens a new issue on GitHub (a free GitHub account is needed).',
@@ -411,7 +431,27 @@
       versionWord: 'version',
       aboutText: "Kara est un créateur de personnages open source. Composez un personnage avec des menus simples, ajoutez des images de référence si vous voulez, et obtenez une planche de personnage propre avec le modèle d'image de votre choix : sur votre machine via ComfyUI, ou en ligne via Comfy Router, KIE, fal ou Magnific avec votre propre clé.",
       aboutBy: 'Conçu par',
+      budgetLabel: 'Solde',
+      budgetTitle: 'Solde par fournisseur',
+      budgetTip: "Ce qu'il reste chez chaque fournisseur d'images. Cliquez pour les voir ou pour en changer.",
+      provReady: '{p} : prêt.',
+      provDown: '{p} : ne répond pas.',
+      provBalance: 'Reste : {m}.',
+      provFree: 'Gratuit.',
       aboutLicense: "Licence MIT : libre d'utiliser, de modifier et de partager.",
+      mcpBtn: 'MCP',
+      mcpTip: 'Utiliser Kara depuis Claude ou un autre agent IA',
+      mcpTitle: 'Connecter Kara à Claude',
+      mcpIntro: "Avec MCP, Claude (ou un autre agent IA) peut utiliser Kara pour vous : vous décrivez le personnage dans le chat, Claude règle les menus de cette fenêtre et fait l'image, qui s'affiche ici.",
+      mcpDesktop: 'Claude Desktop (le chat)',
+      mcpStep1: "1. Téléchargez l'extension Kara.",
+      mcpDownload: 'Télécharger Kara.mcpb',
+      mcpStep2: '2. Double-cliquez sur le fichier téléchargé, puis cliquez sur Installer dans Claude.',
+      mcpStep3: '3. Ouvrez une nouvelle conversation et demandez par exemple : « Avec Kara, fais un pirate de 50 ans en planche face et dos. » Gardez cette fenêtre ouverte.',
+      mcpCode: 'Claude Code (le terminal)',
+      mcpOther: 'Un autre agent qui prend une configuration MCP',
+      mcpCopy: 'Copier',
+      mcpFree: "Sur votre machine, les images sont gratuites. Un fournisseur payant (KIE, fal, Magnific, Comfy Router) ne démarre jamais sans un devis avec son prix et votre accord dans le chat. ComfyUI doit être lancé pour faire des images sur votre machine.",
       aboutRepo: 'Code source sur GitHub',
       aboutFeedback: 'Donner un avis',
       aboutFeedbackNote: 'Ouvrez un nouveau sujet sur GitHub (un compte GitHub gratuit est nécessaire).',
@@ -658,6 +698,8 @@
     forehead: '<path d="M5 14V10a7 7 0 0 1 14 0v4"/><path d="M7 15c1.5-1 3.5-1 5 0c1.5-1 3.5-1 5 0"/>',
     brow: '<path d="M3 12c2-3 5-4 8-3"/><path d="M13 9c3-1 6 0 8 3"/><path d="M6 16h3M15 16h3"/>',
     search: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>',
+    plug: '<path d="M9 3v5M15 3v5"/><path d="M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v4"/>',
+    wallet: '<path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H17v3"/><path d="M4 7.5V17a2 2 0 0 0 2 2h13V8H6.5A2.5 2.5 0 0 1 4 7.5z"/><circle cx="16" cy="13.5" r=".6"/>',
     info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7.5h.01"/>',
     spark: '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16v4M17 18h4"/>',
     person: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>',
@@ -711,9 +753,14 @@
   }
 
   // A button or menu title: its small icon, then the text.
+  // The icon, then the name in its own span (small screens show the icon alone; the name stays as the tooltip and for screen readers).
   function labelWith(el, name, text) {
     el.textContent = '';
-    el.append(icon(name), text);
+    const words = document.createElement('span');
+    words.className = 'lbl';
+    words.textContent = text;
+    el.append(icon(name), words);
+    if (el.closest('.top')) el.setAttribute('aria-label', text);
   }
 
   let lang = 'en';
@@ -761,6 +808,8 @@
   const BYOK = ['router', 'magnific', 'kie', 'fal'];
   const keys = {};
   let userProvider = '';
+  // The provider just picked in the pill when the current model does not run there: the models window shows its models, and its row stays lit.
+  let browsingProv = '';
   try {
     const old = localStorage.getItem('cd-user-key');
     if (old) {
@@ -3304,6 +3353,99 @@
     }
   }
 
+  /* ---------- An agent at the controls (mcp.js): menus and Generate, driven through the local server ---------- */
+
+  // Puts an agent's choices into the menus, as if they had been clicked.
+  function applyRemote(cmd) {
+    const sel = cmd.selection && typeof cmd.selection === 'object' ? cmd.selection : {};
+    const chosen = {};
+    for (const [gid, val] of Object.entries(sel)) {
+      const group = gid === 'custom' ? null : groupById(gid);
+      if (!group) continue;
+      const known = (id) => group.options.some((o) => o.id === id);
+      if (group.type === 'multi') chosen[gid] = (Array.isArray(val) ? val : [val]).filter(known).slice(0, group.max || 99);
+      else if (known(val)) chosen[gid] = val;
+    }
+    const custom = {};
+    for (const [gid, text] of Object.entries(sel.custom && typeof sel.custom === 'object' ? sel.custom : {})) {
+      if (groupById(gid) && typeof text === 'string' && text.trim()) custom[gid] = text.trim().slice(0, 200);
+    }
+    $('inspirations').open = false;
+    state.selection = { ...state.cfg.options.defaults, ...chosen };
+    state.custom = custom;
+    state.parked = {};
+    for (const f of document.querySelectorAll('input.own')) f.value = '';
+    state.extra = typeof cmd.extra === 'string' ? cmd.extra.slice(0, 400) : '';
+    $('extra').value = state.extra;
+    state.activePreset = null;
+    if (cmd.model && modelById(cmd.model) && providersOf(modelById(cmd.model)).length) useModel(cmd.model);
+    const wanted = cmd.provider && providersOf(modelById(state.model)).includes(cmd.provider) ? cmd.provider : userProvider;
+    useProvider(wanted);
+    syncControls();
+    renderPresets();
+    schedulePreview();
+    commit('Claude');
+  }
+
+  // Makes one image with the page's own Generate, so it lands in the history and the gallery, and gives it back to the agent.
+  async function remoteGenerate(cmd) {
+    if (state.busy) throw new Error('Kara is already making an image.');
+    applyRemote(cmd);
+    // Paid providers only start when the agent says the user has agreed to a quote (mcp.js checks that).
+    if (userProvider !== 'local' && cmd.paidOk !== true) throw new Error('A paid provider needs the user\'s agreement first.');
+    const before = state.history[0] ? state.history[0].id : null;
+    const batch = state.batch;
+    state.batch = 1;
+    try {
+      await generate();
+    } finally {
+      state.batch = batch;
+    }
+    const item = state.history[0];
+    if (!item || item.id === before) throw new Error($('errorText').textContent || t('failed'));
+    const blob = item.blob || (await (await fetch(item.url)).blob());
+    const data = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result).split(',')[1] || '');
+      reader.onerror = () => reject(new Error('The image could not be read.'));
+      reader.readAsDataURL(blob);
+    });
+    return { seed: item.seed, width: item.width, height: item.height, prompt: item.prompt, provider: item.provider, model: item.model, mime: blob.type || 'image/png', data };
+  }
+
+  function setupRemote() {
+    const info = state.cfg.settings || {};
+    // Only the copy that runs on this computer (the online version has no such channel).
+    if (info.byok || !info.editable || !window.EventSource) return;
+    const events = new EventSource('/api/remote/events');
+    events.addEventListener('command', async (e) => {
+      let cmd;
+      try {
+        cmd = JSON.parse(e.data);
+      } catch (err) {
+        return;
+      }
+      let result;
+      try {
+        if (cmd.type === 'apply') {
+          applyRemote(cmd);
+          result = { ok: true };
+        } else if (cmd.type === 'generate') {
+          result = { ok: true, ...(await remoteGenerate(cmd)) };
+        } else {
+          throw new Error('Unknown command.');
+        }
+      } catch (err) {
+        result = { ok: false, error: err.message || 'Failed.' };
+      }
+      try {
+        await postJson('/api/remote/result', { id: cmd.id, ...result });
+      } catch (err) {
+        /* the agent gave up waiting */
+      }
+    });
+  }
+
   async function cancel() {
     state.jobToken += 1;
     showProgress('');
@@ -3717,12 +3859,14 @@
   }
 
   function useModel(id) {
+    browsingProv = '';
     state.model = id;
     store('cd-model', id);
     userProvider = pickProvider(modelById(id));
   }
 
   function useProvider(p) {
+    browsingProv = '';
     store(`cd-prov-${state.model}`, p);
     userProvider = p;
     renderModels();
@@ -4679,6 +4823,64 @@
     $('about').showModal();
   }
 
+  // How to use Kara from Claude: the download, the steps, and the lines to copy (only on a copy that runs on this computer).
+  function openMcp() {
+    const body = $('mcpBody');
+    body.textContent = '';
+    const el = (tag, cls, text) => {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text) n.textContent = text;
+      return n;
+    };
+    const copyBox = (text) => {
+      const box = el('div', 'mcp-copy');
+      const code = el('pre', '', text);
+      const btn = el('button', 'ghost small', t('mcpCopy'));
+      btn.type = 'button';
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.textContent = t('copied');
+          setTimeout(() => (btn.textContent = t('mcpCopy')), 1500);
+        } catch (err) {
+          const range = document.createRange();
+          range.selectNodeContents(code);
+          getSelection().removeAllRanges();
+          getSelection().addRange(range);
+        }
+      });
+      box.append(code, btn);
+      return box;
+    };
+    // The real paths of this copy of Kara and of the Node it runs with (the installed app brings its own Node), with forward slashes: valid in JSON and in every shell.
+    const slash = (p) => String(p).split('\\').join('/');
+    const file = slash(state.cfg.mcpFile || 'mcp.js');
+    const node = slash(state.cfg.mcpNode || 'node');
+    const download = el('a', 'primary small', t('mcpDownload'));
+    download.href = '/api/mcpb';
+    download.download = 'Kara.mcpb';
+    const close = el('button', 'ghost small about-close', t('close'));
+    close.type = 'button';
+    close.addEventListener('click', () => $('mcp').close());
+    body.append(
+      el('p', 'mono', `// ${t('mcpTitle')}`),
+      el('p', 'about-text', t('mcpIntro')),
+      el('p', 'mcp-h', t('mcpDesktop')),
+      el('p', 'menu-note', t('mcpStep1')),
+      download,
+      el('p', 'menu-note', t('mcpStep2')),
+      el('p', 'menu-note', t('mcpStep3')),
+      el('p', 'mcp-h', t('mcpCode')),
+      copyBox(`claude mcp add kara -- "${node}" "${file}"`),
+      el('p', 'mcp-h', t('mcpOther')),
+      copyBox(JSON.stringify({ mcpServers: { kara: { command: node, args: [file] } } }, null, 2)),
+      el('p', 'menu-note', t('mcpFree')),
+      close
+    );
+    $('mcp').showModal();
+  }
+
   function updateBox(el) {
     const box = el('div', 'about-update');
     const note = el('p', 'menu-note', t('updChecking'));
@@ -4754,7 +4956,7 @@
         return;
       }
       if (!document.body.classList.contains('layout-side') || e.ctrlKey) return;
-      if (!$('viewer').hidden || !$('gallery').hidden || $('about').open) return;
+      if (!$('viewer').hidden || !$('gallery').hidden || $('about').open || $('mcp').open) return;
       // Places that scroll on their own keep the wheel.
       if (e.target.closest('.side, .pop-panel, .drop-panel, .card-info, textarea, select, .dock')) return;
       const side = document.querySelector('.side');
@@ -4921,6 +5123,22 @@
   function viewerCentre() {
     const box = $('viewer').getBoundingClientRect();
     return [box.width / 2, (box.height - 64) / 2];
+  }
+
+  // Measured after opening: no part of the panel may be outside the window (phones: the Balance menu opened to the left, off screen).
+  function keepOnScreen(panel) {
+    panel.style.left = '';
+    panel.style.right = '';
+    const margin = 10;
+    // clientWidth, not innerWidth: on a phone the window itself grows when a panel sticks out.
+    const width = document.documentElement.clientWidth;
+    const box = panel.getBoundingClientRect();
+    if (box.left >= margin && box.right <= width - margin) return;
+    // Where the left edge should be in the window, then the same place measured from the menu's button (the panel is positioned from it).
+    const want = Math.max(margin, Math.min(box.left, width - margin - box.width));
+    const base = (panel.offsetParent || document.body).getBoundingClientRect().left;
+    panel.style.right = 'auto';
+    panel.style.left = `${want - base}px`;
   }
 
   function setupViewer() {
@@ -5589,14 +5807,31 @@
     const b = balances[userProvider];
     const money = b && (b.free || Number.isFinite(b.amount)) ? formatBalance(b) : '';
     $('statusText').textContent = userProvider ? [shortName(userProvider), money].filter(Boolean).join(' · ') : '';
+    // The provider's own logo in the pill (rebuilt only when the provider changes, so it does not flash); the dot is its status badge.
+    const mark = $('statusLogo');
+    if (mark.dataset.p !== (userProvider || '')) {
+      mark.dataset.p = userProvider || '';
+      mark.textContent = '';
+      if (userProvider) mark.appendChild(logo(userProvider, shortName(userProvider).slice(0, 2), 'small'));
+    }
+    $('statusLabel').textContent = t('budgetLabel');
+    // The tooltip in plain words: what the pill is, whether the provider answers, what is left (no technical details).
+    const who = userProvider ? shortName(userProvider) : '';
+    const specific = [who ? t(state.comfyOk ? 'provReady' : 'provDown').replace('{p}', who) : '', money ? (b && b.free ? t('provFree') : t('provBalance').replace('{m}', money)) : ''].filter(Boolean).join(' ');
+    $('status').title = specific ? `${t('budgetTip')}\n${specific}` : t('budgetTip');
     const list = $('provList');
     list.textContent = '';
+    const head = document.createElement('p');
+    head.className = 'mono';
+    head.textContent = `// ${t('budgetTitle')}`;
+    list.appendChild(head);
     for (const p of SHOWN.filter((x) => providersHere().includes(x))) {
       const ok = hasKeyFor(p);
       const row = document.createElement('button');
       row.type = 'button';
       row.className = `prov-row${ok ? '' : ' nokey'}`;
       row.setAttribute('aria-pressed', p === userProvider ? 'true' : 'false');
+      if (p === browsingProv && p !== userProvider) row.classList.add('browsing');
       const name = document.createElement('span');
       name.className = 'prov-name';
       name.append(logo(p, shortName(p).slice(0, 2), 'small'), shortName(p));
@@ -5619,9 +5854,11 @@
           if (p !== userProvider) useProvider(p);
           else renderModels();
         } else {
-          // The current model is not there: show the models this provider has.
+          // The current model is not there: show the models this provider has, and keep its row lit meanwhile.
+          browsingProv = p;
           renderModels();
           $('modelPop').open = true;
+          syncProvMenu();
         }
       });
       if (ok && TOPUP_PAGES[p]) {
@@ -5771,9 +6008,6 @@
       // KIE, fal and Comfy Router messages come from the server as they are; the others have translated texts.
       const help = s.mode === 'kie' || s.mode === 'fal' || s.mode === 'router' ? s.error : remote ? t(`${prefix}Help_${s.code || 'http'}`) : `${t('comfyHelp')} ${s.url}`;
       if (Number.isFinite(s.credits)) state.credits = s.credits;
-      const extra = s.mode === 'kie' && Number.isFinite(s.credits) ? ` · ${s.credits} ${t('credits')}` : !remote && s.device ? ` · ${s.device}` : '';
-      const line = s.ok ? `${t(`${prefix}On`)}${extra}` : t(`${prefix}Off`);
-      $('status').title = line;
       syncProvMenu();
       if (!s.ok && !state.busy) showError(help);
       if (s.ok) {
@@ -5782,7 +6016,8 @@
       }
     } catch (err) {
       $('dot').className = 'dot off';
-      $('status').title = t('comfyOff');
+      state.comfyOk = false;
+      syncProvMenu();
     }
   }
 
@@ -5821,7 +6056,8 @@
     labelWith($('promptSummary'), 'text', t('promptBtn'));
     $('promptTitle').textContent = t('prompt');
     $('galleryBtn').textContent = '';
-    $('galleryBtn').append(icon('grid'), t('gallery'));
+    $('galleryBtn').append(icon('grid'), Object.assign(document.createElement('span'), { className: 'lbl', textContent: t('gallery') }));
+    $('galleryBtn').setAttribute('aria-label', t('gallery'));
     $('randomBtn').textContent = '';
     const randomText = document.createElement('span');
     randomText.className = 'btn-text';
@@ -5842,6 +6078,11 @@
     $('hfHelp').textContent = t('hfHelp');
     $('hfLink').textContent = `${t('hfLink')} ↗`;
     labelWith($('aboutBtn'), 'info', t('about'));
+    $('mcpBtn').textContent = '';
+    $('mcpBtn').append(icon('plug'), Object.assign(document.createElement('span'), { className: 'lbl', textContent: t('mcpBtn') }));
+    $('mcpBtn').title = t('mcpTip');
+    $('statusWallet').textContent = '';
+    $('statusWallet').appendChild(icon('wallet'));
     $('batch').title = t('batch');
     $('batch').setAttribute('aria-label', t('batch'));
     $('galleryEmpty').textContent = t('galleryEmpty');
@@ -6171,6 +6412,19 @@
     };
     let current = null;
     const show = (el) => {
+      // The bottom bar's menus unfold by themselves when the pointer arrives, so a tooltip there only flashes before the menu replaces it.
+      if (el.matches('.dock details.pop > summary') && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        current = null;
+        tip.hidden = true;
+        return;
+      }
+      // A menu button whose menu is open shows no tooltip: the menu is right there.
+      const owner = el.closest('summary') ? el.closest('details') : null;
+      if (owner && owner.open) {
+        current = null;
+        tip.hidden = true;
+        return;
+      }
       current = el;
       const text = el.dataset.tip;
       if (!text) {
@@ -6305,6 +6559,52 @@
     }, true);
     setupViewer();
     setupCardInfo();
+    // Icon-only buttons and chips: their name (and value) as a tooltip, read when the pointer or focus arrives.
+    const nameIt = (e) => {
+      const el = e.target.closest && e.target.closest('.top button, .top summary, .dock summary.chipbtn, .dock #advancedBtn, .dock .promptpop > summary');
+      if (!el) return;
+      const label = el.querySelector(':scope > .words, :scope > .lbl, :scope > .btn-text');
+      const details = el.closest('details');
+      // The name is already on screen, or the menu is open and shows itself: no tooltip.
+      if ((label && getComputedStyle(label).display !== 'none') || (details && details.open)) {
+        if (el.dataset.nameTip) {
+          el.removeAttribute('data-tip');
+          delete el.dataset.nameTip;
+        }
+        return;
+      }
+      const words = el.querySelector(':scope > .words');
+      const text = words ? [...words.children].map((c) => c.textContent.trim()).filter(Boolean).join(' · ') : (label || {}).textContent;
+      if (text && !el.getAttribute('title') && (!el.getAttribute('data-tip') || el.dataset.nameTip)) {
+        el.setAttribute('data-tip', text);
+        el.dataset.nameTip = '1';
+      }
+    };
+    document.addEventListener('pointerover', nameIt, true);
+    document.addEventListener('focusin', nameIt, true);
+    // Every menu panel starts with its name as a green // line, like Budget, Keys and Seed (read from the menu's button each time it opens, so the language is right).
+    document.addEventListener(
+      'toggle',
+      (e) => {
+        const d = e.target;
+        if (!d.matches || !d.matches('details.drop, details.pop') || !d.open) return;
+        const button = d.querySelector(':scope > summary');
+        if (button && button.dataset.nameTip) {
+          button.removeAttribute('data-tip');
+          delete button.dataset.nameTip;
+        }
+        const panel = d.querySelector(':scope > .drop-panel, :scope > .pop-panel');
+        const sum = d.querySelector(':scope > summary');
+        // A menu of the top bar that would open past the edge of a small screen is slid back inside it.
+        if (panel && panel.classList.contains('drop-panel')) keepOnScreen(panel);
+        const first = panel && panel.firstElementChild;
+        if (!panel || !sum || (first && (first.classList.contains('mono') || first.querySelector(':scope > .mono')))) return;
+        const name = sum.querySelector('.g-name');
+        const text = String((name || sum).textContent).split(' · ')[0].trim();
+        if (text) panel.dataset.title = text;
+      },
+      true
+    );
     $('galleryBtn').addEventListener('click', openGallery);
     $('randomBtn').addEventListener('click', randomCharacter);
     $('galleryClose').addEventListener('click', closeGallery);
@@ -6378,7 +6678,8 @@
     state.steps = [{ snap: snapshot(), text: t(saved ? 'resumed' : 'start'), time: Date.now() }];
     state.pos = 0;
     syncSteps();
-    loadSession();
+    // The agent channel opens once the saved images are loaded, so a new image is never lost under them.
+    loadSession().then(setupRemote);
     window.addEventListener('resize', applyLayout);
     applyLayout();
     sizeName();
@@ -6522,8 +6823,21 @@
     $('cancel').addEventListener('click', cancel);
     $('langBtn').addEventListener('click', toggleLang);
     $('aboutBtn').addEventListener('click', openAbout);
+    // Only a copy running on this computer can be driven by an agent: the online version has no MCP button.
+    $('mcpBtn').hidden = !(state.cfg.settings && state.cfg.settings.editable && !state.cfg.settings.byok);
+    $('mcpBtn').addEventListener('click', openMcp);
+    $('modelPop').addEventListener('toggle', () => {
+      if (!$('modelPop').open && browsingProv) {
+        browsingProv = '';
+        syncProvMenu();
+      }
+    });
     $('about').addEventListener('click', (e) => {
       if (e.target === $('about')) $('about').close();
+    });
+    // A click on the dimmed page around the MCP window closes it, like the About window.
+    $('mcp').addEventListener('click', (e) => {
+      if (e.target === $('mcp')) $('mcp').close();
     });
     setupSideScroll();
     initResizableSidebar(); 

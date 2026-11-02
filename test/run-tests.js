@@ -334,6 +334,127 @@ async function main() {
       assert.ok(Number.isInteger(r.seed) && r.seed >= 0);
     });
 
+    await check('MCP server: an agent lists tools, reads menus, builds a prompt, generates locally and is stopped before paid providers', async () => {
+      const out = fs.mkdtempSync(path.join(os.tmpdir(), 'kara-mcp-'));
+      const child = spawn(process.execPath, [path.join(ROOT, 'mcp.js')], { env: { ...process.env, KARA_URL: APP, KARA_MCP_OUT: out, KARA_MCP_WAIT_MS: '300' }, stdio: ['pipe', 'pipe', 'inherit'] });
+      const waiting = new Map();
+      let buf = '';
+      child.stdout.on('data', (d) => {
+        buf += d;
+        let nl;
+        while ((nl = buf.indexOf('\n')) >= 0) {
+          const msg = JSON.parse(buf.slice(0, nl));
+          buf = buf.slice(nl + 1);
+          if (waiting.has(msg.id)) waiting.get(msg.id)(msg);
+        }
+      });
+      let n = 0;
+      const rpc = (method, params) => new Promise((resolve) => {
+        const id = ++n;
+        waiting.set(id, resolve);
+        child.stdin.write(`${JSON.stringify({ jsonrpc: '2.0', id, method, params })}\n`);
+      });
+      try {
+        const init = await rpc('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'test', version: '0' } });
+        assert.equal(init.result.serverInfo.name, 'kara');
+        const list = await rpc('tools/list');
+        assert.deepEqual(list.result.tools.map((t) => t.name), ['kara_menus', 'kara_status', 'kara_prompt', 'kara_apply', 'kara_result', 'kara_generate']);
+        const menu = await rpc('tools/call', { name: 'kara_menus', arguments: { menu: 'hairStyle' } });
+        assert.match(menu.result.content[0].text, /^hairStyle \[Hairstyle/);
+        const prompt = await rpc('tools/call', { name: 'kara_prompt', arguments: { selection: { hairStyle: 'bald' } } });
+        assert.match(prompt.result.content[0].text, /bald/i);
+        // A paid provider: a quote with the price first, nothing is spent, and the quote cannot be used at once (the user must answer).
+        const paid = await rpc('tools/call', { name: 'kara_generate', arguments: { provider: 'kie', model: 'nano-banana-pro', confirm: true } });
+        const quote = paid.result.content[0].text;
+        assert.match(quote, /NOT STARTED/);
+        assert.match(quote, /Provider: kie\. Model: Nano Banana Pro\..*about \d+\.\d\d USD/);
+        const id = /quote_id="(\w+)"/.exec(quote)[1];
+        const early = await rpc('tools/call', { name: 'kara_generate', arguments: { provider: 'kie', model: 'nano-banana-pro', quote_id: id } });
+        assert.match(early.result.content[0].text, /has not had time to answer/);
+        const forged = await rpc('tools/call', { name: 'kara_generate', arguments: { provider: 'kie', quote_id: 'nope' } });
+        assert.match(forged.result.content[0].text, /unknown or expired/);
+        // The fake ComfyUI takes longer than 300 ms: the call says STILL RUNNING and kara_result brings the image.
+        const slow = await rpc('tools/call', { name: 'kara_generate', arguments: { selection: { layout: 'portrait' }, seed: 7 } });
+        assert.match(slow.result.content[0].text, /STILL RUNNING/);
+        const jobId = /job_id="([a-z0-9]+)"/.exec(slow.result.content[0].text)[1];
+        let gen;
+        for (let i = 0; i < 30; i++) {
+          gen = await rpc('tools/call', { name: 'kara_result', arguments: { job_id: jobId } });
+          if (!/STILL RUNNING/.test(gen.result.content[0].text)) break;
+        }
+        assert.ok(!gen.result.isError, JSON.stringify(gen.result));
+        assert.equal((await rpc('tools/call', { name: 'kara_result', arguments: { job_id: 'nope' } })).result.isError, true);
+        assert.equal(gen.result.content.find((c) => c.type === 'image').mimeType.startsWith('image/'), true);
+        assert.equal(fs.readdirSync(out).length, 1);
+        const unknown = await rpc('tools/call', { name: 'nope', arguments: {} });
+        assert.ok(unknown.error);
+      } finally {
+        child.kill();
+        fs.rmSync(out, { recursive: true, force: true });
+      }
+    });
+
+    await check('agent channel: an order goes to the open page, its answer comes back, other sites and unknown orders are refused', async () => {
+      assert.equal((await post('/api/remote/command', { type: 'apply' })).status, 409);
+      assert.equal((await post('/api/remote/command', { type: 'rm -rf' })).status, 400);
+      const foreign = await fetch(`${APP}/api/remote/command`, { method: 'POST', headers: { 'content-type': 'application/json', origin: 'http://evil.example' }, body: JSON.stringify({ type: 'apply' }) });
+      assert.equal(foreign.status, 403);
+      const stop = new AbortController();
+      const events = await fetch(`${APP}/api/remote/events`, { signal: stop.signal });
+      assert.equal(events.status, 200);
+      assert.equal((await (await fetch(`${APP}/api/remote/status`)).json()).pages, 1);
+      try {
+        const asked = post('/api/remote/command', { type: 'generate', wait: true, selection: { hairStyle: 'bald' }, paidOk: false });
+        const reader = events.body.getReader();
+        let text = '';
+        while (!/data: .*\n\n/.test(text)) text += Buffer.from((await reader.read()).value || []).toString('utf8');
+        const order = JSON.parse(/data: (.*)\n\n/.exec(text)[1]);
+        assert.equal(order.type, 'generate');
+        assert.equal(order.selection.hairStyle, 'bald');
+        assert.equal(order.paidOk, false);
+        assert.equal((await post('/api/remote/result', { id: order.id, ok: true, seed: 5 })).status, 200);
+        assert.deepEqual(await (await asked).json(), { id: order.id, ok: true, seed: 5 });
+        assert.equal((await post('/api/remote/result', { id: order.id, ok: true })).status, 404);
+      } finally {
+        stop.abort();
+      }
+    });
+
+    await check('Claude Desktop extension: Kara.mcpb is a zip with a manifest, the icon, the MCP server and the app', async () => {
+      const out = require('node:child_process').execFileSync(process.execPath, [path.join(ROOT, 'tools', 'build-mcpb.js')], { encoding: 'utf8' });
+      assert.match(out, /Kara\.mcpb: \d+ files/);
+      const file = fs.readFileSync(path.join(ROOT, 'dist', 'Kara.mcpb'));
+      assert.equal(file.subarray(0, 4).toString('latin1'), 'PK\u0003\u0004');
+      // Entry names are read from the central directory, then the manifest is inflated and checked.
+      const end = file.lastIndexOf(Buffer.from([0x50, 0x4b, 0x05, 0x06]));
+      const count = file.readUInt16LE(end + 10);
+      let at = file.readUInt32LE(end + 16);
+      const names = new Map();
+      for (let i = 0; i < count; i++) {
+        const nameLen = file.readUInt16LE(at + 28);
+        const extra = file.readUInt16LE(at + 30) + file.readUInt16LE(at + 32);
+        const local = file.readUInt32LE(at + 42);
+        names.set(file.toString('utf8', at + 46, at + 46 + nameLen), { method: file.readUInt16LE(at + 10), size: file.readUInt32LE(at + 20), local });
+        at += 46 + nameLen + extra;
+      }
+      for (const need of ['manifest.json', 'icon.png', 'mcp.js', 'server.js', 'lib/comfy.js', 'data/options.json', 'public/index.html', 'workflows/zimage_turbo_t2i.api.json']) assert.ok(names.has(need), `missing ${need}`);
+      assert.ok(![...names.keys()].some((n) => /^(test|video|docs|installer|\.env)/.test(n)), 'dev files must stay out');
+      const m = names.get('manifest.json');
+      const start = m.local + 30 + file.readUInt16LE(m.local + 26) + file.readUInt16LE(m.local + 28);
+      const body = file.subarray(start, start + m.size);
+      const manifest = JSON.parse((m.method === 8 ? require('node:zlib').inflateRawSync(body) : body).toString('utf8'));
+      assert.equal(manifest.server.entry_point, 'mcp.js');
+      assert.deepEqual(manifest.server.mcp_config.args, ['${__dirname}/mcp.js']);
+      assert.equal(manifest.version, require('../package.json').version);
+      assert.ok(names.has(manifest.icon));
+      // The app offers the same file for download (its MCP window), and tells where mcp.js is.
+      const dl = await fetch(`${APP}/api/mcpb`);
+      assert.equal(dl.status, 200);
+      assert.match(dl.headers.get('content-disposition'), /Kara.mcpb/);
+      assert.equal(Buffer.from(await dl.arrayBuffer()).subarray(0, 2).toString('latin1'), 'PK');
+      assert.match((await (await fetch(`${APP}/api/config`)).json()).mcpFile, /mcp.js$/);
+    });
+
     await check('static files are served and path tricks are refused', async () => {
       assert.equal((await fetch(APP + '/')).status, 200);
       assert.equal((await fetch(APP + '/app.js')).status, 200);

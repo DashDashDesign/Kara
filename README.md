@@ -105,13 +105,33 @@ page (public/)  ->  server.js  ->  ComfyUI on your own machine, Comfy Router, KI
 - `worker/index.js`: the same API for Cloudflare.
 - `public/`: the interface. The thumbnails were made once with image models, so the menus show a picture of each choice (grey mannequins, so the pictures never suggest a gender or a face).
 
+## Use Kara from an AI agent (MCP)
+
+Kara also speaks MCP, so Claude or any other agent can pick the menus and generate characters for you. It is one file, `mcp.js`, with no dependency, and your keys stay in Kara's `.env`.
+
+In the app, the **MCP** button (top right) explains all this and gives the file and the lines to copy.
+
+**Claude Desktop (the chat): double-click one file.** Click the **MCP** button in Kara and download `Kara.mcpb` (it is also on the latest [release](https://github.com/DashDashDesign/Kara/releases/latest)), double-click it, then click Install in Claude Desktop. Kara starts by itself when Claude needs it (if you already run Kara, that one is used, with its keys). Start ComfyUI first to generate on your own machine. Then ask, for example: "With the Kara extension, generate a 50 year old pirate as a front and back sheet."
+
+**Claude Code:** `claude mcp add kara -- node /path/to/Kara/mcp.js`
+
+**Another agent that takes an MCP config:**
+
+```json
+{ "mcpServers": { "kara": { "command": "node", "args": ["/path/to/Kara/mcp.js"] } } }
+```
+
+Tools: `kara_menus` (every menu and its choices), `kara_status` (models and keys), `kara_prompt` (the prompt, free), `kara_apply` (sets the menus in the open Kara window, so you see the choices appear), `kara_generate` (the image, also saved in `~/kara/mcp`). When a Kara window is open, the agent drives it: the menus are set there, the image is made by its own Generate button, and it lands in its history and gallery, shown large. Without a window, the server makes the image alone. This channel only exists on your own machine (never in the online version). On your own machine it is free. A paid provider (KIE, fal, Magnific, Comfy Router) never starts at once, even if you named it: Kara first gives the agent a quote (provider, model, price) to show you, and only generates after you have said yes. When it is done, the real cost is reported for KIE and fal.
+
+To build the extension yourself: `npm run mcpb` (writes `dist/Kara.mcpb`).
+
 ## For developers
 
 ```
 npm test
 ```
 
-Runs the whole app against fake ComfyUI and API servers (63 checks): no key and no GPU needed. `npm run mock` starts only the fake ComfyUI, to try the interface without a GPU.
+Runs the whole app against fake ComfyUI and API servers (68 checks): no key and no GPU needed. `npm run mock` starts only the fake ComfyUI, to try the interface without a GPU.
 
 ## License
 

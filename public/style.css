@@ -52,7 +52,8 @@ body:not(.layout-side) .resizer{display:none}
 h1{font:900 24px/1 var(--titres);text-transform:uppercase;margin:0;letter-spacing:.01em;white-space:nowrap}
 h1 em{font-style:normal;color:var(--accent)}
 h1 .tagline{margin-left:8px;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;vertical-align:4px}
-@media (max-width:1440px){h1 .tagline{display:none}}
+/* measured with English labels: the tagline, Random's name and MCP's name leave below 1640 px so the left tools never run under the right buttons */
+@media (max-width:1640px){h1 .tagline{display:none}}
 .toolbar{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
 .top-right{display:flex;align-items:center;gap:12px;flex:none}
 .status{display:flex;align-items:center;gap:10px}
@@ -442,7 +443,9 @@ textarea:focus,input[type=number]:focus{border-color:rgba(62,207,96,.55);outline
 .gallery-empty{text-align:center;margin-top:60px;color:var(--gris)}
 #galleryBtn,#randomBtn{display:inline-flex;align-items:center;gap:7px}
 /* the ? (guide) button took the room: below 1360 px, Random is its dice alone (its name stays on hover) */
-@media (max-width:1360px){#randomBtn .btn-text{display:none}#randomBtn{padding-left:12px;padding-right:12px}}
+@media (max-width:1640px){#randomBtn .btn-text{display:none}#randomBtn{padding-left:12px;padding-right:12px}}
+/* below 1300 px the tools no longer fit beside the right-hand buttons: they get a row of their own (it was 1180 px before the MCP button and the budget icon) */
+@media (min-width:1201px) and (max-width:1300px){.top{flex-wrap:wrap}.toolbar{order:3;flex-basis:100%}.top-right{margin-left:auto}}
 .icon-btn{display:inline-grid;place-items:center;padding:5px 9px}
 #favCard[aria-pressed="true"]{color:#ff5a6e;border-color:rgba(255,90,110,.5)}
 #favCard[aria-pressed="true"] svg path{fill:currentColor}
@@ -699,7 +702,7 @@ body.viewer-open #result{visibility:hidden}
 #aboutBtn.has-update::after{content:"";position:absolute;top:4px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
 .about{max-width:min(620px,calc(100vw - 32px));width:100%;background:#141416;color:var(--txt);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:0;box-shadow:0 24px 80px rgba(0,0,0,.7)}
 .about::backdrop{background:rgba(0,0,0,.6)}
-.about-body{display:grid;gap:12px;padding:22px 24px}
+.about-body{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;padding:22px 24px}
 .about-body > p{margin:0}
 .about-text{font:400 15px/1.55 var(--corps);color:var(--txt-72)}
 .about-by{font:500 14px var(--corps)}
@@ -711,6 +714,12 @@ body.viewer-open #result{visibility:hidden}
 @media (min-width:680px){.about-links{flex-wrap:nowrap}.about-links a{white-space:nowrap}}
 .about-links a{text-decoration:none}
 .about-close{justify-self:end}
+.mcp-h{margin:6px 0 0;font:600 14px var(--corps);color:var(--txt)}
+.about-body > a.primary{justify-self:start;text-decoration:none}
+.mcp-copy{display:flex;gap:8px;align-items:flex-start;min-width:0}
+.mcp-copy .ghost{flex:none}
+/* long lines wrap instead of pushing the Copy button out of the window */
+.mcp-copy pre{flex:1 1 0;min-width:0;margin:0;padding:10px 12px;background:#0d0d0f;border:1px solid var(--bord);border-radius:10px;font:12px/1.5 ui-monospace,Consolas,monospace;color:var(--txt-72);overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;user-select:text}
 .hexrow .hex-reset{flex:none;width:32px;height:32px;padding:0;display:grid;place-items:center;font-size:16px;line-height:1}
 .hexrow .hex-reset[hidden]{display:none}
 
@@ -916,13 +925,26 @@ input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offse
 .prov-menu > summary::-webkit-details-marker{display:none}
 .prov-menu > summary:hover,.prov-menu[open] > summary{border-color:rgba(255,255,255,.28)}
 .prov-menu #statusText{display:inline}
-/* below 1600 px the provider name ran over Gallery and History: the dot stays, the name is in the menu and on hover */
-@media (max-width:1600px){.prov-menu #statusText{display:none}}
+/* the logo of the provider, with the status dot as a badge on its corner */
+.status-wallet{display:inline-flex;flex:none;color:var(--txt-60)}
+.status-wallet .ico{width:16px;height:16px}
+.status-mark{position:relative;display:inline-flex;flex:none}
+.status-logo{display:inline-flex}
+.status-logo .logo{margin:0}
+.status-mark .dot{position:absolute;right:-4px;bottom:-4px;width:10px;height:10px;border:2px solid #0b0b0c;box-sizing:border-box}
+.status-mark .dot.on{box-shadow:none}
+.status-label{display:none;font:500 12px var(--corps);color:var(--txt-60);white-space:nowrap}
+/* the small name only where the top bar has room (the provider text itself already needs 1600 px) */
+@media (min-width:1900px){.status-label:not(:empty){display:inline}}
+/* below 1800 px the provider name ran over Gallery and History (measured at 1700 px): the logo and its dot stay, the name is in the menu and on hover */
+@media (max-width:1800px){.prov-menu #statusText{display:none}}
 .prov-menu .drop-panel{min-width:300px}
 .prov-row{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%}
 .prov-row .prov-name{display:inline-flex;align-items:center;gap:8px}
 .prov-row .prov-balance{font:400 12px var(--mono);color:var(--txt-60)}
 .prov-row[aria-pressed="true"]{color:var(--accent)}
+@media (max-width:700px){#generate.hint::after{display:none}}
+.prov-row.browsing{color:var(--accent);box-shadow:inset 0 0 0 1px rgba(62,207,96,.45);border-radius:8px}
 .prov-row.nokey{opacity:.5}
 .prov-row.nokey .prov-balance{font-family:var(--corps)}
 @media (max-width:700px){.prov-menu #statusText{display:none}.prov-menu > summary{padding:10px}}
@@ -958,7 +980,9 @@ input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offse
 .guide-overlay.corner{inset:auto auto 12px 12px;width:22%;height:auto;mix-blend-mode:normal;opacity:1;border-radius:10px;border:1px solid rgba(255,255,255,.2);box-shadow:0 10px 30px rgba(0,0,0,.5)}
 
 /* Tooltips (data-tip): at once, in the app's colours */
-.tip{position:fixed;z-index:1000;max-width:320px;padding:7px 11px;border-radius:9px;background:#f5f5f0;color:#0a0a0a;font:500 13px/1.4 var(--corps);box-shadow:0 8px 24px rgba(0,0,0,.45);pointer-events:none}
+.drop-panel[data-title]::before,.pop-panel[data-title]::before{content:"// " attr(data-title);display:block;grid-column:1/-1;flex-basis:100%;font:500 11px/1.4 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.drop-panel.steps[data-title]::before{padding:6px 8px 2px;margin:0 0 4px}
+.tip{white-space:pre-line;position:fixed;z-index:1000;max-width:320px;padding:7px 11px;border-radius:9px;background:#f5f5f0;color:#0a0a0a;font:500 13px/1.4 var(--corps);box-shadow:0 8px 24px rgba(0,0,0,.45);pointer-events:none}
 
 /* Face drawing chip: panel with the switch, the strength and what it does; the layouts it locks */
 .guide-pop.on > summary.chipbtn{border-color:rgba(62,207,96,.5)}
@@ -1088,8 +1112,10 @@ input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offse
 .error-x:hover{background:rgba(255,255,255,.22)}
 
 /* Top menus: a small icon before each name */
-#inspirations > summary,#historyMenu > summary,#sessionMenu > summary,#settingsMenu > summary,#aboutBtn,#langBtn{display:inline-flex;align-items:center;gap:7px}
-#inspirations > summary .ico,#historyMenu > summary .ico,#sessionMenu > summary .ico,#settingsMenu > summary .ico,#aboutBtn .ico,#langBtn .ico{width:16px;height:16px;color:inherit}
+#inspirations > summary,#historyMenu > summary,#sessionMenu > summary,#settingsMenu > summary,#aboutBtn,#mcpBtn,#langBtn{display:inline-flex;align-items:center;gap:7px}
+#mcpBtn[hidden]{display:none}
+@media (max-width:1640px){#mcpBtn .lbl{display:none}}
+#inspirations > summary .ico,#historyMenu > summary .ico,#sessionMenu > summary .ico,#settingsMenu > summary .ico,#aboutBtn .ico,#mcpBtn .ico,#langBtn .ico{width:16px;height:16px;color:inherit}
 .prov-nobal{display:grid;gap:6px;margin-top:8px;padding:10px 12px 4px;border-top:1px solid var(--bord)}
 .prov-nobal .menu-note{margin:0 0 2px}
 .promptpop > summary .ico{width:16px;height:16px;color:inherit;margin-right:7px}
@@ -1116,3 +1142,76 @@ body.layout-side .menu-tools{box-shadow:none;padding-bottom:16px}
 .screen .strip img{position:static;inset:auto;width:auto;height:100%;max-width:120px;object-fit:contain;display:block;animation:none}
 .strip button{position:relative;flex:none;display:block}
 
+/* ===== Tablets and phones: icons only, no names (the names stay as tooltips and for screen readers) ===== */
+/* iPad and small windows: one row. The logo, the tools next to it, the account buttons pushed to the right edge. */
+@media (max-width:1200px){
+  .top{flex-wrap:nowrap;align-items:center;gap:10px}
+  .top-left{flex:none}
+  .toolbar{order:0;flex:1 1 auto;flex-basis:auto;min-width:0;gap:8px}
+  .top-right{margin-left:auto;flex-wrap:nowrap;gap:8px;flex:none}
+  .top .lbl,.top .btn-text,.top h1 .tagline{display:none}
+  .top .toolbar .ghost,.top .top-right .ghost,.top .prov-menu > summary,.top .history-tools .ghost{width:40px;height:40px;padding:0;gap:0;display:inline-flex;align-items:center;justify-content:center}
+  .top .toolbar > .drop > summary::after,.top .top-right > .drop:not(.prov-menu) > summary::after,.top .history-tools .drop > summary::after{display:none}
+  .top .prov-menu > summary{width:auto;padding:0 12px;gap:8px}
+  .top .history-tools{gap:8px}
+  .top .guide-btn{width:40px;height:40px}
+}
+/* Phones: the logo and the account buttons on the first row, the tools on the second */
+@media (max-width:760px){
+  .top{flex-wrap:wrap;gap:8px 6px}
+  .top-left{flex:1 1 auto;min-width:0}
+  .top-right{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-end;gap:6px}
+  .toolbar{order:3;flex:1 1 100%;justify-content:space-between;gap:6px}
+  .top .history-tools{display:contents}
+  .top .toolbar .ghost,.top .top-right .ghost,.top .prov-menu > summary,.top .history-tools .ghost,.top .guide-btn{width:38px;height:38px}
+  .top .prov-menu > summary{width:auto;padding:0 8px;height:38px}
+}
+/* Dock (the settings bar): the chips show their icon only, apart from the model which keeps its name */
+@media (max-width:900px){
+  .dock .pop:not(#modelPop) > summary.chipbtn .words{display:none}
+  .dock .pop:not(#modelPop) > summary.chipbtn{padding:0;justify-content:center;width:100%;min-width:48px;max-width:none}
+  .dock .pop:not(#modelPop) > summary.chipbtn::after{display:none}
+  .dock .pop:not(#modelPop) > summary.chipbtn .ico{color:var(--txt-72)}
+  .dock #advancedBtn .lbl,.dock .promptpop > summary .lbl{display:none}
+  .dock #advancedBtn,.dock .promptpop > summary{width:48px;height:48px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+  .dock .promptpop > summary::after{display:none}
+  .dock-groups .pop:not(#modelPop){flex:1 1 0}
+}
+
+/* Tablets and phones: the number of images and Generate stay on screen in a bar at the bottom (they were at the very end of a long page) */
+@media (max-width:900px){
+  .buttons{position:fixed;left:12px;right:12px;bottom:12px;z-index:50;margin:0;height:auto;padding:6px;gap:8px;border-radius:999px;background:rgba(14,14,16,.94);border:1px solid var(--bord);box-shadow:0 10px 30px rgba(0,0,0,.6);justify-content:flex-end}
+  .buttons .gen-wrap{flex:1 1 auto;display:flex}
+  .buttons #generate{flex:1 1 auto;width:100%}
+  .dock{padding-bottom:104px}
+}
+
+/* Small phones: the seven account icons share one row under the logo (the wallet icon in the pill is dropped, its logo says enough) */
+@media (max-width:420px){
+  .top-right{flex:1 1 100%;flex-wrap:nowrap;justify-content:space-between;gap:4px}
+  .top .toolbar .ghost,.top .top-right .ghost,.top .history-tools .ghost,.top .guide-btn{width:34px;height:34px}
+  .top .prov-menu > summary{height:34px;padding:0 8px;gap:6px}
+  .top .status-wallet{display:none}
+}
+
+/* Phones: the tagline fits next to the logo, so it comes back */
+@media (max-width:760px){
+  .top h1 .tagline{display:inline;white-space:nowrap;margin-left:6px}
+}
+/* Tablets and phones: the settings bar is one flowing grid of equal icon buttons (no lonely button on a row of its own) */
+@media (max-width:900px){
+  .dock{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}
+  .dock-row,.dock-block,.dock-groups,.dock-more,.advanced:not([hidden]){display:contents}
+  .dock > .error{flex:1 1 100%}
+  #modelPop{flex:1 1 100%}
+  .dock #advancedBtn{flex:1 1 0;min-width:48px;width:auto;height:48px;border-radius:12px}
+  .dock .promptpop{flex:1 1 0;min-width:48px}
+  .dock .promptpop > summary{width:100%;height:48px;border-radius:12px}
+}
+
+/* Small phones: seven icon buttons fit on one row (about 42 px each) instead of leaving the last one alone */
+@media (max-width:420px){
+  .dock{gap:6px}
+  .dock .pop:not(#modelPop),.dock #advancedBtn,.dock .promptpop{min-width:40px}
+  .dock .pop:not(#modelPop) > summary.chipbtn{min-width:40px}
+}
