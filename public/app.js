@@ -6526,6 +6526,7 @@
       if (e.target === $('about')) $('about').close();
     });
     setupSideScroll();
+    initResizableSidebar(); 
     refreshPreview();
     refreshStatus();
     setInterval(refreshStatus, 6000);
@@ -6533,6 +6534,69 @@
     $('guideBtn').addEventListener('click', startTour);
     $('guideBtn').title = tourText().title;
     if (!read('cd-tour-done')) setTimeout(startTour, 1200);
+  }
+
+// Resizable menu column: drag the edge to change its width, and use the swap button to move it left or right. Both choices are remembered.
+  function initResizableSidebar(){
+    const appElement = document.querySelector('.app');
+    const sidebar = document.querySelector('.side');
+    if(!appElement || !sidebar) return;
+
+    const MIN = 300, MAX = 700;
+    const W_KEY = 'karaSidebarWidth', SIDE_KEY = 'karaSidebarSide';
+    const setWidth = (w) => appElement.style.setProperty('--side-w', w + 'px');
+
+    try{
+      const saved = parseInt(localStorage.getItem(W_KEY), 10);
+      if(saved >= MIN && saved <= MAX) setWidth(saved);
+      if(localStorage.getItem(SIDE_KEY) === 'right') document.body.classList.add('side-right');
+    }catch(e){}
+
+    const swapBtn = document.getElementById('sideSwapBtn');
+    if(swapBtn){
+      swapBtn.addEventListener('click', () => {
+        const right = document.body.classList.toggle('side-right');
+        try{ localStorage.setItem(SIDE_KEY, right ? 'right' : 'left'); }catch(e){}
+      });
+    }
+
+    let resizer = sidebar.querySelector('.resizer');
+    if(!resizer){
+      resizer = document.createElement('div');
+      resizer.className = 'resizer';
+      sidebar.appendChild(resizer);
+    }
+
+    resizer.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      resizer.setPointerCapture(e.pointerId);
+      document.body.style.cursor = 'ew-resize';
+      document.body.style.userSelect = 'none';
+      let lastWidth = null;
+
+      const onMove = (ev) => {
+        const rect = sidebar.getBoundingClientRect();
+        const isRight = document.body.classList.contains('side-right');
+        const w = isRight ? rect.right - ev.clientX : ev.clientX - rect.left;
+        lastWidth = Math.round(Math.min(MAX, Math.max(MIN, w)));
+        setWidth(lastWidth);
+      };
+
+      const onUp = () => {
+        resizer.removeEventListener('pointermove', onMove);
+        resizer.removeEventListener('pointerup', onUp);
+        resizer.removeEventListener('pointercancel', onUp);
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        if(lastWidth !== null){
+          try{ localStorage.setItem(W_KEY, lastWidth); }catch(e){}
+        }
+      };
+
+      resizer.addEventListener('pointermove', onMove);
+      resizer.addEventListener('pointerup', onUp);
+      resizer.addEventListener('pointercancel', onUp);
+    });
   }
 
   init();
