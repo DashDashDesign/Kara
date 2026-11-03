@@ -6976,6 +6976,8 @@
     handle.addEventListener('pointerdown', (e) => {
       if (e.button !== 0 || e.target.closest('#sideSwap')) return;
       e.preventDefault();
+      // preventDefault keeps the focus away: give it back, so the arrows work right after a click on the handle.
+      handle.focus({ preventScroll: true });
       handle.setPointerCapture(e.pointerId);
       handle.classList.add('dragging');
       document.body.classList.add('side-dragging');
