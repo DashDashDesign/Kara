@@ -79,6 +79,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           v='${{ inputs.version }}'; [ -n "$v" ] || v='${{ github.ref_name }}'; tag="v${v#v}"
-          notes="Kara $tag. Windows: run Kara-Setup.exe (not signed: SmartScreen shows a warning, click More info, then Run anyway). macOS: open Kara.dmg and drag Kara to Applications (not signed: the first time, right-click Kara and choose Open, or allow it in System Settings, Privacy & Security). Kara.mcpb is the extension for Claude Desktop (double-click it). Kara needs nothing else; ComfyUI or an API key is chosen inside the app."
+          # What changed: the section of CHANGELOG.md for this version (from "## v1.4.0" to the next "## "), then how to install.
+          changes=$(gh api "repos/${{ github.repository }}/contents/CHANGELOG.md?ref=${{ github.sha }}" -H "Accept: application/vnd.github.raw" 2>/dev/null \
+            | awk -v h="## $tag" '$0 == h || index($0, h " ") == 1 { on = 1; next } on && /^## / { exit } on' || true)
+          [ -n "$changes" ] && changes="$changes"$'\n\n'"## Install"$'\n\n'
+          notes="${changes}Kara $tag. Windows: run Kara-Setup.exe (not signed: SmartScreen shows a warning, click More info, then Run anyway). macOS: open Kara.dmg and drag Kara to Applications (not signed: the first time, right-click Kara and choose Open, or allow it in System Settings, Privacy & Security). Kara.mcpb is the extension for Claude Desktop (double-click it). Kara needs nothing else; ComfyUI or an API key is chosen inside the app."
           gh release create "$tag" dist/Kara-Setup.exe dist/Kara.dmg dist/Kara.mcpb --repo "${{ github.repository }}" --title "Kara $tag" --notes "$notes" --target "${{ github.sha }}" \
             || gh release upload "$tag" dist/Kara-Setup.exe dist/Kara.dmg dist/Kara.mcpb --repo "${{ github.repository }}" --clobber
