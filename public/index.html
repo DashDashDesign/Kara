@@ -52,7 +52,6 @@
       <div class="history-tools">
         <button class="ghost icon" id="undo" type="button" disabled>&#8630;</button>
         <button class="ghost icon" id="redo" type="button" disabled>&#8631;</button>
-        <button class="ghost small" id="sideSwapBtn" type="button">⇄</button>
         <button class="ghost" id="galleryBtn" type="button"></button>
         <details class="drop" id="historyMenu">
           <summary class="ghost" id="historyLabel"></summary>
@@ -159,8 +158,8 @@
         <p class="menu-note" id="refNote"></p>
       </section>
       <div class="controls" id="controls"></div>
-      <div class="resizer" id="dragResizer"></div>   // add this line
     </aside>
+    <div class="side-handle" id="sideHandle" role="separator" aria-orientation="vertical" tabindex="0"><button class="side-swap" id="sideSwap" type="button">&#8644;</button></div>
 
     <div class="dock" id="dock">
       <p class="error" id="error" role="alert" hidden><span id="errorText"></span><button type="button" class="error-x" id="errorClose" aria-label="Close">&#10005;</button></p>
