@@ -11,6 +11,9 @@
       randomTitle: 'A character picked at random (the settings at the bottom stay as they are)',
       undo: 'Undo',
       redo: 'Redo',
+      sideToRight: 'Move the menus to the right',
+      sideToLeft: 'Move the menus to the left',
+      sideResize: 'Drag to widen or narrow the menus (double-click: back to the usual width)',
       steps: 'History',
       start: 'Start',
       resumed: 'Settings from last visit',
@@ -50,6 +53,7 @@
       copied: 'Copied',
       waiting: '// Your character will appear here',
       waitingHint: 'Make your choices on the left, then click Generate.',
+      waitingHintRight: 'Make your choices on the right, then click Generate.',
       queued: '// Waiting in the {p} queue',
       running: '// Generating',
       failed: 'The generation failed.',
@@ -352,6 +356,9 @@
       randomTitle: 'Un personnage tiré au hasard (les réglages du bas restent comme ils sont)',
       undo: 'Annuler',
       redo: 'Rétablir',
+      sideToRight: 'Passer les menus à droite',
+      sideToLeft: 'Passer les menus à gauche',
+      sideResize: 'Glissez pour élargir ou rétrécir les menus (double-clic : revenir à la largeur de départ)',
       steps: 'Historique',
       start: 'Départ',
       resumed: 'Réglages de la dernière visite',
@@ -391,6 +398,7 @@
       copied: 'Copié',
       waiting: '// Votre personnage apparaîtra ici',
       waitingHint: 'Faites vos choix à gauche, puis cliquez sur Générer.',
+      waitingHintRight: 'Faites vos choix à droite, puis cliquez sur Générer.',
       queued: '// En attente dans la file de {p}',
       running: '// Génération en cours',
       failed: 'La génération a échoué.',
@@ -6135,11 +6143,11 @@
     $('forgetKey').textContent = t('forget');
     labelWith($('copyPrompt'), 'copy', t('copy'));
     $('waiting').textContent = t('waiting');
-    $('waitingHint').textContent = t('waitingHint');
     $('undo').title = `${t('undo')} (Ctrl+Z)`;
     $('undo').setAttribute('aria-label', t('undo'));
     $('redo').title = `${t('redo')} (Ctrl+Shift+Z)`;
     $('redo').setAttribute('aria-label', t('redo'));
+    syncSideHandle();
     labelWith($('historyLabel'), 'clock', t('steps'));
     // Under the image: icons, with their name on hover and for screen readers.
     for (const [id, ico, key] of [['reuse', 'reuse', 'reuse'], ['deleteCard', 'trash', 'deleteCard'], ['download', 'download', 'download']]) {
@@ -6240,7 +6248,7 @@
           ready: 'Ready: you can already generate with {p}.',
           none: 'Nothing is set up yet: choose one of the two buttons below.',
         },
-        { h: 'Build the character', p: 'Each menu on the left shows pictures: click one to choose it. Short on ideas? Start from Inspirations or from Random, at the top.' },
+        { h: 'Build the character', p: 'Each menu here shows pictures: click one to choose it. Short on ideas? Start from Inspirations or from Random, at the top.' },
         { h: 'Layout, look, background', p: 'Here you choose the model, the sheet layout (front, back and face, turnaround...), the look (photo, illustration, anime...) and the background.' },
         { h: 'Generate', p: 'Click here. Your image appears in the middle within seconds. Every image is kept in History and in the Gallery.' },
       ],
@@ -6263,7 +6271,7 @@
           ready: 'Prêt : vous pouvez déjà générer avec {p}.',
           none: 'Rien n’est encore réglé : choisissez l’un des deux boutons ci-dessous.',
         },
-        { h: 'Composez le personnage', p: 'Chaque menu à gauche montre des images : cliquez sur l’une d’elles pour la choisir. Pas d’idée ? Partez d’une Inspiration ou du bouton Au hasard, en haut.' },
+        { h: 'Composez le personnage', p: 'Chaque menu ici montre des images : cliquez sur l’une d’elles pour la choisir. Pas d’idée ? Partez d’une Inspiration ou du bouton Au hasard, en haut.' },
         { h: 'Mise en page, look, fond', p: 'Ici, vous choisissez le modèle, la mise en page de la planche (face, dos et visage, turnaround...), le look (photo, illustration, anime...) et le fond.' },
         { h: 'Générez', p: 'Cliquez ici. Votre image apparaît au centre en quelques secondes. Chaque image est gardée dans l’Historique et la Galerie.' },
       ],
@@ -6866,6 +6874,7 @@
       if (e.target === $('mcp')) $('mcp').close();
     });
     setupSideScroll();
+    setupSideHandle();
     refreshPreview();
     refreshStatus();
     setInterval(refreshStatus, 6000);
@@ -6873,6 +6882,100 @@
     $('guideBtn').addEventListener('click', startTour);
     $('guideBtn').title = tourText().title;
     if (!read('cd-tour-done')) setTimeout(startTour, 1200);
+  }
+
+  /* ---------- Menu column: width and side ---------- */
+
+  // The handle between the menus and the image: drag it to change the width of the menus
+  // (300 to 600 px, never more than half the window), double-click to go back to the usual width,
+  // and its round button moves the menus to the other side. Both choices are remembered.
+  const SIDE_MIN = 300, SIDE_MAX = 600;
+
+  function setSideWidth(w) {
+    if (w) $('app').style.setProperty('--side-col', `min(${w}px, 50%)`);
+    else $('app').style.removeProperty('--side-col');
+  }
+
+  function syncSideHandle() {
+    const right = document.body.classList.contains('side-right');
+    const swap = $('sideSwap');
+    swap.title = t(right ? 'sideToLeft' : 'sideToRight');
+    swap.setAttribute('aria-label', swap.title);
+    $('sideHandle').title = t('sideResize');
+    $('sideHandle').setAttribute('aria-label', t('sideResize'));
+    // The empty window says on which side the menus are.
+    $('waitingHint').textContent = t(right ? 'waitingHintRight' : 'waitingHint');
+  }
+
+  function setupSideHandle() {
+    const handle = $('sideHandle');
+    const side = document.querySelector('.side');
+    const saved = parseInt(read('kara-side-width'), 10);
+    if (saved >= SIDE_MIN && saved <= SIDE_MAX) setSideWidth(saved);
+    document.body.classList.toggle('side-right', read('kara-side') === 'right');
+    syncSideHandle();
+
+    $('sideSwap').addEventListener('click', () => {
+      const right = document.body.classList.toggle('side-right');
+      store('kara-side', right ? 'right' : 'left');
+      syncSideHandle();
+    });
+
+    const keep = (w) => {
+      setSideWidth(w);
+      store('kara-side-width', w ? String(w) : '');
+    };
+
+    handle.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 || e.target.closest('#sideSwap')) return;
+      e.preventDefault();
+      handle.setPointerCapture(e.pointerId);
+      handle.classList.add('dragging');
+      document.body.classList.add('side-dragging');
+      // The width follows the pointer from where it was grabbed (no jump on the first move),
+      // and the page is laid out again at most once per frame.
+      const startX = e.clientX;
+      const startW = side.getBoundingClientRect().width;
+      const dir = document.body.classList.contains('side-right') ? -1 : 1;
+      let last = null;
+      let frame = 0;
+      const move = (ev) => {
+        last = Math.round(Math.min(SIDE_MAX, Math.max(SIDE_MIN, startW + dir * (ev.clientX - startX))));
+        if (!frame) frame = requestAnimationFrame(() => {
+          frame = 0;
+          setSideWidth(last);
+        });
+      };
+      const up = () => {
+        cancelAnimationFrame(frame);
+        frame = 0;
+        handle.removeEventListener('pointermove', move);
+        handle.removeEventListener('pointerup', up);
+        handle.removeEventListener('pointercancel', up);
+        handle.classList.remove('dragging');
+        document.body.classList.remove('side-dragging');
+        if (last !== null) keep(last);
+      };
+      handle.addEventListener('pointermove', move);
+      handle.addEventListener('pointerup', up);
+      handle.addEventListener('pointercancel', up);
+    });
+    handle.addEventListener('dblclick', (e) => {
+      if (!e.target.closest('#sideSwap')) keep(null);
+    });
+    // From the keyboard: arrows widen or narrow by 20 px, Home goes back to the usual width.
+    handle.addEventListener('keydown', (e) => {
+      if (e.target !== handle) return;
+      if (e.key === 'Home') {
+        keep(null);
+        e.preventDefault();
+        return;
+      }
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      const grow = (e.key === 'ArrowRight') !== document.body.classList.contains('side-right');
+      keep(Math.min(SIDE_MAX, Math.max(SIDE_MIN, Math.round(side.getBoundingClientRect().width) + (grow ? 20 : -20))));
+      e.preventDefault();
+    });
   }
 
   init();
