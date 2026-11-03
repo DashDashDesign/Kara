@@ -724,7 +724,9 @@ body.viewer-open #result{visibility:hidden}
 .about-contrib-all{margin-left:4px;color:var(--txt-60);text-decoration:none;font-size:13px}
 .about-contrib-all:hover{color:var(--accent)}
 .about-studio img{display:block;height:22px;width:auto}
-.about-links{display:flex;flex-wrap:wrap;gap:8px}
+.about-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+/* Send feedback stays white but takes the size of the buttons beside it */
+.about-links .primary.small{padding:6px 13px;font:500 13px var(--corps)}
 /* The three buttons on one line whenever the window is wide enough (in English too) */
 @media (min-width:680px){.about-links{flex-wrap:nowrap}.about-links a{white-space:nowrap}}
 .about-links a{text-decoration:none}
