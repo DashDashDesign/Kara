@@ -134,6 +134,8 @@
       mcpCopy: 'Copy',
       mcpFree: 'On your own machine, images are free. A paid provider (KIE, fal, Magnific, Comfy Router) never starts without a quote with its price and your yes in the chat. ComfyUI must be running to make images on your own machine.',
       aboutRepo: 'Code on GitHub',
+      aboutDemo: 'Watch the demo (1 min 14)',
+      aboutDemoNote: 'Loads the video from YouTube only when you click.',
       aboutFeedback: 'Send feedback',
       aboutFeedbackNote: 'Opens a new issue on GitHub (a free GitHub account is needed).',
       updTitle: 'Updates',
@@ -481,6 +483,8 @@
       mcpCopy: 'Copier',
       mcpFree: "Sur votre machine, les images sont gratuites. Un fournisseur payant (KIE, fal, Magnific, Comfy Router) ne démarre jamais sans un devis avec son prix et votre accord dans le chat. ComfyUI doit être lancé pour faire des images sur votre machine.",
       aboutRepo: 'Code source sur GitHub',
+      aboutDemo: 'Voir la démo (1 min 14)',
+      aboutDemoNote: 'La vidéo ne se charge depuis YouTube que si vous cliquez.',
       aboutFeedback: 'Donner un avis',
       aboutFeedbackNote: 'Ouvrez un nouveau sujet sur GitHub (un compte GitHub gratuit est nécessaire).',
       updTitle: 'Mises à jour',
@@ -4868,7 +4872,30 @@
     const close = el('button', 'ghost small about-close', t('close'));
     close.type = 'button';
     close.addEventListener('click', () => $('about').close());
-    body.append(el('p', 'mono', `// Kara${state.cfg.version ? ` · ${t('versionWord')} ${state.cfg.version}` : ''}`), el('p', 'about-text', t('aboutText')), by, people, el('p', 'menu-note', t('aboutLicense')), row, el('p', 'menu-note', t('aboutFeedbackNote')));
+    // The demo video: a button first, the YouTube player (no-cookie address) only after a click, so nothing is
+    // requested from YouTube just by opening this window and the app still works offline.
+    const demo = el('div', 'about-demo');
+    const play = el('button', 'about-demo-play', `▶  ${t('aboutDemo')}`);
+    play.type = 'button';
+    play.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = 'https://www.youtube-nocookie.com/embed/sbWnhC0Yd08?autoplay=1&rel=0';
+      frame.title = 'Kara';
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      frame.allowFullscreen = true;
+      demo.textContent = '';
+      demo.append(frame);
+      // Closing the window (button, Escape or a click outside) removes the player, so the sound stops.
+      // (watching the open attribute instead of the close event, which some browsers send late)
+      const watch = new MutationObserver(() => {
+        if ($('about').open) return;
+        frame.remove();
+        watch.disconnect();
+      });
+      watch.observe($('about'), { attributes: true, attributeFilter: ['open'] });
+    });
+    demo.append(play, el('span', 'menu-note', t('aboutDemoNote')));
+    body.append(el('p', 'mono', `// Kara${state.cfg.version ? ` · ${t('versionWord')} ${state.cfg.version}` : ''}`), el('p', 'about-text', t('aboutText')), demo, by, people, el('p', 'menu-note', t('aboutLicense')), row, el('p', 'menu-note', t('aboutFeedbackNote')));
     // The app installed on a computer can update itself from GitHub; the online version is always up to date.
     if (state.cfg.settings && state.cfg.settings.editable) body.append(updateBox(el));
     body.append(close);

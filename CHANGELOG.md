@@ -2,6 +2,11 @@
 
 Each version, newest first. The section of a version is also the text of its release on GitHub.
 
+## v1.4.1 (3 November 2026)
+
+### New
+- About has a "Watch the demo" button: the 74-second video plays right there, loaded from YouTube only when you click, so nothing is requested from YouTube just by opening the window. Closing the window stops the video.
+
 ## v1.4.0 (3 November 2026)
 
 ### New
