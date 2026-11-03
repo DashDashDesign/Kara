@@ -717,9 +717,12 @@ body.viewer-open #result{visibility:hidden}
 .about-by{font:500 14px var(--corps)}
 .about-studio{display:inline-block;vertical-align:-6px;margin-left:4px;opacity:.9}
 .about-studio:hover{opacity:1}
-.about-contrib{font:400 14px/1.55 var(--corps);color:var(--txt-72)}
-.about-contrib a{color:var(--txt);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2)}
-.about-contrib a:hover{color:var(--accent);border-color:var(--accent)}
+.about-contrib{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font:400 14px/1.55 var(--corps);color:var(--txt-72)}
+.about-avatar{position:relative;width:26px;height:26px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--bg-3);border:1px solid rgba(255,255,255,.14);font:600 10px var(--corps);color:var(--txt-72);text-decoration:none;transition:border-color .15s,transform .15s}
+.about-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.about-avatar:hover{border-color:var(--accent);transform:scale(1.12)}
+.about-contrib-all{margin-left:4px;color:var(--txt-60);text-decoration:none;font-size:13px}
+.about-contrib-all:hover{color:var(--accent)}
 .about-studio img{display:block;height:22px;width:auto}
 .about-links{display:flex;flex-wrap:wrap;gap:8px}
 /* The three buttons on one line whenever the window is wide enough (in English too) */
@@ -993,8 +996,9 @@ input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offse
 
 /* Tooltips (data-tip): at once, in the app's colours */
 .drop-panel[data-title]::before,.pop-panel[data-title]::before{content:"// " attr(data-title);display:block;grid-column:1/-1;flex-basis:100%;font:500 11px/16px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 4px;padding-bottom:6px;
-  /* the title stays at the top while the panel scrolls, its own background hides what passes under it */
-  position:sticky;top:var(--pad,14px);z-index:3;background:#141416;--o:calc(-1 * var(--pad,14px));box-shadow:0 var(--o) 0 #141416,var(--pad,14px) 0 0 #141416,var(--o) 0 0 #141416,var(--pad,14px) var(--o) 0 #141416,var(--o) var(--o) 0 #141416}
+  /* the title stays at the top while the panel scrolls (sticky offsets count from inside the padding),
+     its background and shadows hide what passes under it and in the padding above */
+  position:sticky;top:0;z-index:3;background:#141416;--o:calc(-1 * var(--pad,14px));box-shadow:0 var(--o) 0 #141416,var(--pad,14px) 0 0 #141416,var(--o) 0 0 #141416,var(--pad,14px) var(--o) 0 #141416,var(--o) var(--o) 0 #141416}
 .drop-panel.steps[data-title]::before{padding:6px 8px 2px;margin:0 0 4px}
 .tip{white-space:pre-line;position:fixed;z-index:1000;max-width:320px;padding:7px 11px;border-radius:9px;background:#f5f5f0;color:#0a0a0a;font:500 13px/1.4 var(--corps);box-shadow:0 8px 24px rgba(0,0,0,.45);pointer-events:none}
 
@@ -1061,7 +1065,7 @@ input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offse
 .prov-switch{display:grid;gap:10px}
 #modelList > .prov-switch{position:sticky;top:-14px;z-index:3;margin:-14px -14px 12px;padding:14px 14px 12px;background:#141416}
 /* under the panel title (16 px line and 6 px below it), which stays at the top too */
-#modelList[data-title] > .prov-switch{top:calc(var(--pad) + 22px);margin-top:-4px;padding-top:4px}
+#modelList[data-title] > .prov-switch{top:22px;margin-top:-4px;padding-top:4px}
 .ps-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .ps-head .model-size{margin:0}
 .ps-chips{display:flex;flex-wrap:wrap;gap:6px}

@@ -4843,9 +4843,22 @@
     mark.alt = 'Dash Dash';
     studio.appendChild(mark);
     by.append(`${t('aboutBy')} `, studio);
+    // Contributors: a small round avatar each (their GitHub picture, initials when offline), the name on hover,
+    // their GitHub page on click, so the row stays small however many there are.
     const people = el('p', 'about-contrib', t('aboutContrib'));
-    CONTRIBUTORS.forEach((c, i) => people.append(i ? ', ' : '', link(`https://github.com/${c.github}`, c.name, '')));
-    people.append(' · ', link(`${REPO}/graphs/contributors`, t('aboutContribAll'), ''));
+    for (const c of CONTRIBUTORS) {
+      const a = link(`https://github.com/${c.github}`, '', 'about-avatar');
+      a.title = c.name;
+      a.setAttribute('aria-label', c.name);
+      a.append(el('span', '', c.name.split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase()));
+      const img = document.createElement('img');
+      img.alt = '';
+      img.src = `https://github.com/${c.github}.png?size=64`;
+      img.addEventListener('error', () => img.remove());
+      a.append(img);
+      people.append(a);
+    }
+    people.append(link(`${REPO}/graphs/contributors`, t('aboutContribAll'), 'about-contrib-all'));
     const row = el('div', 'about-links');
     row.append(link(REPO, t('aboutRepo')), link(`${REPO}/issues/new`, t('aboutFeedback'), 'primary small'), link(SITE, `${t('aboutSite')} · dashdash.design`));
     const close = el('button', 'ghost small about-close', t('close'));
