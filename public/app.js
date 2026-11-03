@@ -3,6 +3,22 @@
 (() => {
   const $ = (id) => document.getElementById(id);
 
+  // The saved choices used to start with "cd-" (Character Designer, the old name): they move to "kara-" once,
+  // before anything reads them, so nobody loses their settings.
+  for (const name of ['localStorage', 'sessionStorage']) {
+    try {
+      const box = window[name];
+      for (const key of Object.keys(box)) {
+        if (!key.startsWith('cd-')) continue;
+        const next = `kara-${key.slice(3)}`;
+        if (box.getItem(next) === null) box.setItem(next, box.getItem(key));
+        box.removeItem(key);
+      }
+    } catch (err) {
+      /* storage can be blocked, the page still works */
+    }
+  }
+
   const STR = {
     en: {
       lede: 'Ready-made characters to start from. Your current settings stay one click away with Undo.',
@@ -94,6 +110,8 @@
       versionWord: 'version',
       aboutText: 'Kara is an open-source character designer. Build a character from simple menus, add reference images if you like, and get a clean character sheet from the image model of your choice: on your own computer through ComfyUI, or online through Comfy Router, KIE, fal or Magnific with your own key.',
       aboutBy: 'Made by',
+      aboutContrib: 'Contributors: ',
+      aboutContribAll: 'all on GitHub',
       budgetLabel: 'Balance',
       budgetTitle: 'Balance per provider',
       budgetTip: 'What is left with each image provider. Click to see them or to switch.',
@@ -439,6 +457,8 @@
       versionWord: 'version',
       aboutText: "Kara est un créateur de personnages open source. Composez un personnage avec des menus simples, ajoutez des images de référence si vous voulez, et obtenez une planche de personnage propre avec le modèle d'image de votre choix : sur votre machine via ComfyUI, ou en ligne via Comfy Router, KIE, fal ou Magnific avec votre propre clé.",
       aboutBy: 'Conçu par',
+      aboutContrib: 'Contributeurs : ',
+      aboutContribAll: 'tous sur GitHub',
       budgetLabel: 'Solde',
       budgetTitle: 'Solde par fournisseur',
       budgetTip: "Ce qu'il reste chez chaque fournisseur d'images. Cliquez pour les voir ou pour en changer.",
@@ -773,7 +793,7 @@
 
   let lang = 'en';
   try {
-    const saved = localStorage.getItem('cd-lang');
+    const saved = localStorage.getItem('kara-lang');
     if (saved === 'fr' || saved === 'en') lang = saved;
     else lang = (navigator.language || 'en').toLowerCase().startsWith('fr') ? 'fr' : 'en';
   } catch (err) {
@@ -819,12 +839,12 @@
   // The provider just picked in the pill when the current model does not run there: the models window shows its models, and its row stays lit.
   let browsingProv = '';
   try {
-    const old = localStorage.getItem('cd-user-key');
+    const old = localStorage.getItem('kara-user-key');
     if (old) {
-      localStorage.setItem('cd-user-key-magnific', old);
-      localStorage.removeItem('cd-user-key');
+      localStorage.setItem('kara-user-key-magnific', old);
+      localStorage.removeItem('kara-user-key');
     }
-    for (const p of BYOK) keys[p] = localStorage.getItem(`cd-user-key-${p}`) || sessionStorage.getItem(`cd-user-key-${p}`) || '';
+    for (const p of BYOK) keys[p] = localStorage.getItem(`kara-user-key-${p}`) || sessionStorage.getItem(`kara-user-key-${p}`) || '';
   } catch (err) {
     /* storage blocked: no saved key */
   }
@@ -832,9 +852,9 @@
   function storeKey(provider, key, remember) {
     keys[provider] = key;
     try {
-      localStorage.removeItem(`cd-user-key-${provider}`);
-      sessionStorage.removeItem(`cd-user-key-${provider}`);
-      if (key) (remember ? localStorage : sessionStorage).setItem(`cd-user-key-${provider}`, key);
+      localStorage.removeItem(`kara-user-key-${provider}`);
+      sessionStorage.removeItem(`kara-user-key-${provider}`);
+      if (key) (remember ? localStorage : sessionStorage).setItem(`kara-user-key-${provider}`, key);
     } catch (err) {
       /* storage blocked: the key still works until the page is closed */
     }
@@ -1440,9 +1460,9 @@
 
   let faceSeq = 0;
   // Drawing style of the face: 'avatar' (flat colours) or 'plate' (anatomy plate: ink lines on paper, construction guides).
-  let faceStyle = read('cd-face-style') === 'avatar' ? 'avatar' : 'plate';
+  let faceStyle = read('kara-face-style') === 'avatar' ? 'avatar' : 'plate';
   // Which side of the head the drawings show: front or profile (the guide sent to the models stays the front).
-  let faceView = read('cd-face-view') === 'profile' ? 'profile' : 'front';
+  let faceView = read('kara-face-view') === 'profile' ? 'profile' : 'front';
   // out: 'control' (lines only, open skull so the hair stays free: the image for ControlNet) or 'ref' (flat colours: a reference image).
   // An ear seen from the front: an oval, its top drawn out to a point when the tip slider is high.
   function earFront(x, y, rx, ry, side, tip, attrs) {
@@ -1914,7 +1934,7 @@
       b.textContent = t(key);
       b.addEventListener('click', () => {
         faceStyle = id;
-        store('cd-face-style', id);
+        store('kara-face-style', id);
         syncControls();
       });
       styles.appendChild(b);
@@ -1928,7 +1948,7 @@
       b.textContent = t(key);
       b.addEventListener('click', () => {
         faceView = id;
-        store('cd-face-view', id);
+        store('kara-face-view', id);
         syncControls();
       });
       views.appendChild(b);
@@ -2257,7 +2277,7 @@
 
   /* ---------- Height slider (metres or feet) ---------- */
 
-  let heightUnit = read('cd-height-unit');
+  let heightUnit = read('kara-height-unit');
   // Metres, in every language, until the user picks feet.
   const hUnit = () => heightUnit || 'm';
 
@@ -2410,7 +2430,7 @@
     });
     unit.addEventListener('click', () => {
       heightUnit = hUnit() === 'm' ? 'ft' : 'm';
-      store('cd-height-unit', heightUnit);
+      store('kara-height-unit', heightUnit);
       sync();
       syncControls();
     });
@@ -2920,7 +2940,7 @@
 
   // Thumbnails: none (names only, more of them on screen), four per row (the default) or two larger ones. Kept on this device.
   const TILE_SIZES = [['none', 'list'], ['small', 'grid'], ['big', 'grid2']];
-  const tileSize = () => (TILE_SIZES.some(([id]) => id === read('cd-tiles')) ? read('cd-tiles') : 'small');
+  const tileSize = () => (TILE_SIZES.some(([id]) => id === read('kara-tiles')) ? read('kara-tiles') : 'small');
   function syncTileSize() {
     const size = tileSize();
     document.body.classList.toggle('tiles-big', size === 'big');
@@ -2939,7 +2959,7 @@
       b.setAttribute('aria-pressed', id === tileSize() ? 'true' : 'false');
       b.appendChild(icon(ic));
       b.addEventListener('click', () => {
-        store('cd-tiles', id);
+        store('kara-tiles', id);
         syncTileSize();
         // The open menu changes height: keep it at the top of the column.
         const box = row.closest('details.group') || document.querySelector('.side details.group[open]');
@@ -3000,7 +3020,7 @@
   }
 
   async function refreshPreview() {
-    store('cd-settings', snapshot());
+    store('kara-settings', snapshot());
     try {
       syncSuffix();
       const data = await postJson('/api/preview', { selection: payloadSelection(), extra: state.extra, model: state.model, render: renderPayload(), refCounts: refCounts(), refMode: state.refMode, guide: guideMode() === 'control' || undefined });
@@ -3731,7 +3751,7 @@
   function setSeedMode(mode) {
     state.seedMode = mode;
     $('seedMode').value = mode;
-    store('cd-seed-mode', mode);
+    store('kara-seed-mode', mode);
     syncSeedChip();
   }
 
@@ -3754,11 +3774,11 @@
   // Premium plan (about 16 $ for 20,000 credits a month, read on third-party sites), so the figures are approximate.
   const CREDIT_USD = { kie: 0.005, magnific: 0.0008 };
   // Shown as dollars (default) or as the provider's credits; kept on this device.
-  const moneyMode = () => (read('cd-money') === 'credits' ? 'credits' : 'usd');
+  const moneyMode = () => (read('kara-money') === 'credits' ? 'credits' : 'usd');
   const money = (usd) => new Intl.NumberFormat(lang === 'fr' ? 'fr-FR' : 'en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 3 }).format(usd);
 
   // Render time: the last five single images of a model with a provider, kept in this browser.
-  const timeKey = (provider, model) => `cd-time-${provider}-${model}`;
+  const timeKey = (provider, model) => `kara-time-${provider}-${model}`;
   function recordTime(provider, model, seconds) {
     let list = [];
     try { list = JSON.parse(read(timeKey(provider, model)) || '[]'); } catch (err) { list = []; }
@@ -3776,7 +3796,7 @@
   }
   const fmtTime = (s) => (s < 60 ? `${Math.max(1, Math.round(s))} s` : `${Math.floor(s / 60)}m ${String(Math.round(s % 60)).padStart(2, '0')}s`);
 
-  const costKey = (engine, provider = userProvider, model = state.model) => `cd-cost-${provider}-${model}-${resolutionId(engine)}`;
+  const costKey = (engine, provider = userProvider, model = state.model) => `kara-cost-${provider}-${model}-${resolutionId(engine)}`;
 
   // Price of one image of a model with a provider: known prices come from models.json,
   // KIE prices are measured on the balance after an image. '' when unknown.
@@ -3861,7 +3881,7 @@
   // The provider used for a model: the one last picked for it if it still has a key, else the first in ORDER with a key.
   function pickProvider(m) {
     const ready = ORDER.filter((p) => readyProvidersOf(m).includes(p));
-    const saved = read(`cd-prov-${m && m.id}`);
+    const saved = read(`kara-prov-${m && m.id}`);
     if (ready.includes(saved)) return saved;
     return ready[0] || ORDER.find((p) => providersOf(m).includes(p)) || state.cfg.mode;
   }
@@ -3869,13 +3889,13 @@
   function useModel(id) {
     browsingProv = '';
     state.model = id;
-    store('cd-model', id);
+    store('kara-model', id);
     userProvider = pickProvider(modelById(id));
   }
 
   function useProvider(p) {
     browsingProv = '';
-    store(`cd-prov-${state.model}`, p);
+    store(`kara-prov-${state.model}`, p);
     userProvider = p;
     renderModels();
     renderAdvanced();
@@ -3896,12 +3916,12 @@
   // onPc: tile of the "on this PC" group, a click runs the model on this PC.
   // The models panel: a row of providers on top; the models the chosen one does not offer are greyed,
   // and the price under each model is the price with that provider.
-  let modelProv = read('cd-model-prov') || '';
+  let modelProv = read('kara-model-prov') || '';
 
   // Open weights or API only, and whether the models this provider does not have are shown (hidden by default).
   const WEIGHTS = ['all', 'open', 'closed'];
-  const modelWeights = () => (WEIGHTS.includes(read('cd-model-weights')) ? read('cd-model-weights') : 'all');
-  const showUnavailable = () => read('cd-model-showall') === '1';
+  const modelWeights = () => (WEIGHTS.includes(read('kara-model-weights')) ? read('kara-model-weights') : 'all');
+  const showUnavailable = () => read('kara-model-showall') === '1';
   function weightButtons() {
     const row = document.createElement('span');
     row.className = 'tile-size model-sort model-weights';
@@ -3914,7 +3934,7 @@
       b.setAttribute('aria-pressed', id === modelWeights() ? 'true' : 'false');
       b.addEventListener('click', (e) => {
         e.stopPropagation();
-        store('cd-model-weights', id);
+        store('kara-model-weights', id);
         renderModels();
       });
       row.appendChild(b);
@@ -3930,7 +3950,7 @@
     b.setAttribute('aria-pressed', showUnavailable() ? 'true' : 'false');
     b.addEventListener('click', (e) => {
       e.stopPropagation();
-      store('cd-model-showall', showUnavailable() ? '0' : '1');
+      store('kara-model-showall', showUnavailable() ? '0' : '1');
       renderModels();
     });
     return b;
@@ -4065,7 +4085,7 @@
 
   // Sorting the models window: as listed, cheapest first, or fastest first (within each group, the models of the chosen provider only).
   const SORTS = ['default', 'price', 'time'];
-  const modelSort = () => (SORTS.includes(read('cd-model-sort')) ? read('cd-model-sort') : 'default');
+  const modelSort = () => (SORTS.includes(read('kara-model-sort')) ? read('kara-model-sort') : 'default');
   // A number to compare, in the unit of the provider (dollars, or credits at Magnific). Unknown goes last.
   function priceValue(m, provider) {
     const engine = m.engines && m.engines[provider];
@@ -4098,7 +4118,7 @@
       b.setAttribute('aria-pressed', id === moneyMode() ? 'true' : 'false');
       b.addEventListener('click', (e) => {
         e.stopPropagation();
-        store('cd-money', id);
+        store('kara-money', id);
         renderModels();
         syncCost();
       });
@@ -4118,7 +4138,7 @@
       b.setAttribute('aria-pressed', id === modelSort() ? 'true' : 'false');
       b.addEventListener('click', (e) => {
         e.stopPropagation();
-        store('cd-model-sort', id);
+        store('kara-model-sort', id);
         renderModels();
       });
       row.appendChild(b);
@@ -4243,8 +4263,8 @@
     b.addEventListener('click', () => {
       if (!here) return;
       state.model = m.id;
-      store('cd-model', m.id);
-      store(`cd-prov-${m.id}`, provider);
+      store('kara-model', m.id);
+      store(`kara-prov-${m.id}`, provider);
       userProvider = provider;
       refreshStatus();
       syncBalances();
@@ -4260,7 +4280,7 @@
 
   // Size of the model tiles, kept on this device: medium by default (small was too small to see the pictures).
   const MODEL_SIZES = [['list', 'list'], ['small', 'grid'], ['medium', 'grid2'], ['big', 'square']];
-  const modelTileSize = () => (MODEL_SIZES.some(([id]) => id === read('cd-model-tiles')) ? read('cd-model-tiles') : 'medium');
+  const modelTileSize = () => (MODEL_SIZES.some(([id]) => id === read('kara-model-tiles')) ? read('kara-model-tiles') : 'medium');
   function modelSizeButtons() {
     const row = document.createElement('span');
     row.className = 'tile-size model-size';
@@ -4273,7 +4293,7 @@
       b.appendChild(icon(ic));
       b.addEventListener('click', (e) => {
         e.stopPropagation();
-        store('cd-model-tiles', id);
+        store('kara-model-tiles', id);
         renderModels();
       });
       row.appendChild(b);
@@ -4328,7 +4348,7 @@
           return;
         }
         modelProv = p;
-        store('cd-model-prov', p);
+        store('kara-model-prov', p);
         // The current model goes along when this provider has it.
         const cur = modelById(state.model);
         if (cur && cur.engines && cur.engines[p] && p !== userProvider) useProvider(p);
@@ -4358,7 +4378,7 @@
       for (const m of items) grid.appendChild(modelTile(m, modelProv));
       const box = document.createElement('details');
       box.className = 'model-fold';
-      const key = `cd-fold-${name}`;
+      const key = `kara-fold-${name}`;
       const kept = read(key);
       box.open = kept === null || kept === '' ? true : kept === '1';
       const head = document.createElement('summary');
@@ -4412,7 +4432,7 @@
     if (state.render.ratio !== 'auto' && !ratios.some((r) => r.id === state.render.ratio)) state.render.ratio = 'auto';
     // "auto" keeps the size of the sheet layout; a resolution is only applied when picked.
     if (state.render.resolution !== 'auto' && !resolutions.some((r) => r.id === state.render.resolution)) state.render.resolution = 'auto';
-    store('cd-render', JSON.stringify(state.render));
+    store('kara-render', JSON.stringify(state.render));
 
     $('advancedBtn').setAttribute('aria-pressed', state.render.on ? 'true' : 'false');
     $('advancedGroups').hidden = !state.render.on;
@@ -4463,7 +4483,7 @@
   function sortByOrder(cards) {
     let order = [];
     try {
-      order = JSON.parse(read('cd-order') || '[]');
+      order = JSON.parse(read('kara-order') || '[]');
     } catch (err) {
       order = [];
     }
@@ -4479,7 +4499,7 @@
   }
 
   function saveOrder() {
-    store('cd-order', JSON.stringify(state.history.map((c) => c.id)));
+    store('kara-order', JSON.stringify(state.history.map((c) => c.id)));
   }
 
   async function toggleFav(item) {
@@ -4499,7 +4519,7 @@
   let galleryFilter = 'all';
   let dragged = null;
 
-  let galleryGrouped = read('cd-group') === '1';
+  let galleryGrouped = read('kara-group') === '1';
 
   function renderGallery() {
     const grid = $('galleryGrid');
@@ -4794,6 +4814,10 @@
 
   const REPO = 'https://github.com/DashDashDesign/Kara';
   const SITE = 'https://dashdash.design';
+  // People whose pull request was merged, shown in About (add a line at each merge).
+  const CONTRIBUTORS = [
+    { name: 'Anurag Dubey', github: 'anuragdubey2004' },
+  ];
 
   function openAbout() {
     const body = $('aboutBody');
@@ -4819,12 +4843,15 @@
     mark.alt = 'Dash Dash';
     studio.appendChild(mark);
     by.append(`${t('aboutBy')} `, studio);
+    const people = el('p', 'about-contrib', t('aboutContrib'));
+    CONTRIBUTORS.forEach((c, i) => people.append(i ? ', ' : '', link(`https://github.com/${c.github}`, c.name, '')));
+    people.append(' · ', link(`${REPO}/graphs/contributors`, t('aboutContribAll'), ''));
     const row = el('div', 'about-links');
     row.append(link(REPO, t('aboutRepo')), link(`${REPO}/issues/new`, t('aboutFeedback'), 'primary small'), link(SITE, `${t('aboutSite')} · dashdash.design`));
     const close = el('button', 'ghost small about-close', t('close'));
     close.type = 'button';
     close.addEventListener('click', () => $('about').close());
-    body.append(el('p', 'mono', `// Kara${state.cfg.version ? ` · ${t('versionWord')} ${state.cfg.version}` : ''}`), el('p', 'about-text', t('aboutText')), by, el('p', 'menu-note', t('aboutLicense')), row, el('p', 'menu-note', t('aboutFeedbackNote')));
+    body.append(el('p', 'mono', `// Kara${state.cfg.version ? ` · ${t('versionWord')} ${state.cfg.version}` : ''}`), el('p', 'about-text', t('aboutText')), by, people, el('p', 'menu-note', t('aboutLicense')), row, el('p', 'menu-note', t('aboutFeedbackNote')));
     // The app installed on a computer can update itself from GitHub; the online version is always up to date.
     if (state.cfg.settings && state.cfg.settings.editable) body.append(updateBox(el));
     body.append(close);
@@ -5285,7 +5312,7 @@
 
   /* ---------- The face drawing as a guide for the image ---------- */
 
-  let guideOn = read('cd-guide') === '1';
+  let guideOn = read('kara-guide') === '1';
   // How the drawing is used with the current model: 'control' (ControlNet workflow on this PC: the drawing steers the image),
   // 'ref' (sent as a reference image), or null (this model takes no image, or a starting image already gives the face).
   function guideMode() {
@@ -5345,7 +5372,7 @@
   // The face drawing chip in the bottom bar: only where ControlNet exists (Z-Image Turbo on your own machine).
   // Hover it to switch it on or off, set its strength, and read what it does.
   let guideStrength = (() => {
-    const v = Number(read('cd-guide-strength'));
+    const v = Number(read('kara-guide-strength'));
     return v >= 0.2 && v <= 0.9 ? v : 0.55;
   })();
   function buildGuidePop() {
@@ -5364,7 +5391,7 @@
     sw.append(box, make('span', '', 'guideSwitchText'));
     box.addEventListener('change', () => {
       guideOn = box.checked;
-      store('cd-guide', guideOn ? '1' : '0');
+      store('kara-guide', guideOn ? '1' : '0');
       syncControls();
       renderRefs();
       schedulePreview();
@@ -5382,7 +5409,7 @@
     row.append(head, range, ends);
     range.addEventListener('input', () => {
       guideStrength = Number(range.value) / 100;
-      store('cd-guide-strength', String(guideStrength));
+      store('kara-guide-strength', String(guideStrength));
       $('guideStrengthValue').textContent = `${Math.round(guideStrength * 100)} %`;
     });
     const open = make('button', 'ghost small', 'guideEditorBtn');
@@ -5431,7 +5458,7 @@
     box.append(input, text, hint);
     input.addEventListener('change', () => {
       guideOn = input.checked;
-      store('cd-guide', guideOn ? '1' : '0');
+      store('kara-guide', guideOn ? '1' : '0');
       syncControls();
       renderRefs();
       schedulePreview();
@@ -5547,7 +5574,7 @@
   function askKey(provider, modelId) {
     $('modelPop').open = false;
     pendingProvider = provider;
-    store('cd-model', modelId);
+    store('kara-model', modelId);
     renderSettings();
     $('settingsMenu').open = true;
     loadBalances();
@@ -5557,7 +5584,7 @@
 
   // After a key is saved or forgotten: models available, provider of the current model, status.
   function afterKeysChanged() {
-    const wanted = read('cd-model');
+    const wanted = read('kara-model');
     const m = modelById(wanted);
     if (m && readyProvidersOf(m).length) useModel(wanted);
     else userProvider = pickProvider(modelById(state.model));
@@ -5856,7 +5883,7 @@
           return;
         }
         modelProv = p;
-        store('cd-model-prov', p);
+        store('kara-model-prov', p);
         const cur = modelById(state.model);
         if (cur && cur.engines && cur.engines[p]) {
           if (p !== userProvider) useProvider(p);
@@ -6169,7 +6196,7 @@
   function toggleLang() {
     lang = lang === 'fr' ? 'en' : 'fr';
     try {
-      localStorage.setItem('cd-lang', lang);
+      localStorage.setItem('kara-lang', lang);
     } catch (err) {
       /* storage can be blocked, the page still works */
     }
@@ -6307,7 +6334,7 @@
     // The two ways to make images open Keys on the right card; the guide waits behind the ? button.
     const openKeysOn = (p) => {
       endTour(false);
-      store('cd-tour-step', String(Math.min(tourStep + 1, TOUR_TARGETS.length - 1)));
+      store('kara-tour-step', String(Math.min(tourStep + 1, TOUR_TARGETS.length - 1)));
       pendingProvider = p;
       renderSettings();
       $('settingsMenu').open = true;
@@ -6415,12 +6442,12 @@
 
   function endTour(finished) {
     if ($('tour')) $('tour').hidden = true;
-    store('cd-tour-done', '1');
-    if (finished) store('cd-tour-step', '0');
+    store('kara-tour-done', '1');
+    if (finished) store('kara-tour-step', '0');
   }
 
   function startTour() {
-    showTourStep(Number(read('cd-tour-step')) || 0);
+    showTourStep(Number(read('kara-tour-step')) || 0);
   }
 
   /* ---------- Tooltips: at once on hover, in the app's own style (instead of the browser's, slow and grey) ---------- */
@@ -6517,8 +6544,8 @@
 
   function trackVisit() {
     try {
-      if (sessionStorage.getItem('cd-visit-counted')) return;
-      sessionStorage.setItem('cd-visit-counted', '1');
+      if (sessionStorage.getItem('kara-visit-counted')) return;
+      sessionStorage.setItem('kara-visit-counted', '1');
     } catch (err) {
       // Private mode without storage: still count the visit.
     }
@@ -6537,15 +6564,15 @@
     }
     await loadPreviews();
     state.selection = { ...state.cfg.options.defaults };
-    const savedModel = modelById(read('cd-model'));
+    const savedModel = modelById(read('kara-model'));
     useModel(savedModel && readyProvidersOf(savedModel).length ? savedModel.id : state.cfg.models.default);
     try {
-      const r = JSON.parse(read('cd-render') || 'null');
+      const r = JSON.parse(read('kara-render') || 'null');
       if (r && typeof r === 'object') state.render = { ...state.render, ...r };
     } catch (err) {
       /* default render */
     }
-    const savedMode = read('cd-seed-mode');
+    const savedMode = read('kara-seed-mode');
     if (['random', 'fixed', 'inc', 'dec'].includes(savedMode)) state.seedMode = savedMode;
     $('seedMode').value = state.seedMode;
     for (const [id, name] of [['modelPop', 'chip'], ['ratioPop', 'ratio'], ['resPop', 'grid'], ['guidePop', 'face'], ['extraPop', 'pencil'], ['seedPop', 'dice']]) {
@@ -6557,7 +6584,7 @@
     }
     $('seedDice').textContent = '';
     $('seedDice').appendChild(icon('dice'));
-    state.name = read('cd-name') || '';
+    state.name = read('kara-name') || '';
     $('charName').value = state.name;
     renderModels();
     renderAdvanced();
@@ -6645,10 +6672,10 @@
     });
     $('galleryGroup').addEventListener('click', () => {
       galleryGrouped = !galleryGrouped;
-      store('cd-group', galleryGrouped ? '1' : '0');
+      store('kara-group', galleryGrouped ? '1' : '0');
       renderGallery();
     });
-    state.batch = Math.max(1, Math.min(4, Number(read('cd-batch')) || 1));
+    state.batch = Math.max(1, Math.min(4, Number(read('kara-batch')) || 1));
     // The number of images per click: a small stack icon sits inside the select.
     const batchBox = document.createElement('span');
     batchBox.className = 'batch-wrap';
@@ -6657,7 +6684,7 @@
     $('batch').value = String(state.batch);
     $('batch').addEventListener('change', () => {
       state.batch = Math.max(1, Math.min(4, Number($('batch').value) || 1));
-      store('cd-batch', String(state.batch));
+      store('kara-batch', String(state.batch));
       syncCost();
     });
     for (const b of $('galleryFilter').querySelectorAll('button')) {
@@ -6691,7 +6718,7 @@
         schedulePreview();
       });
     }
-    const saved = read('cd-settings');
+    const saved = read('kara-settings');
     if (saved) {
       try {
         const s = JSON.parse(saved);
@@ -6717,7 +6744,7 @@
     $('charName').addEventListener('input', () => {
       sizeName();
       state.name = $('charName').value;
-      store('cd-name', state.name);
+      store('kara-name', state.name);
     });
     $('charName').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') $('charName').blur();
@@ -6774,10 +6801,10 @@
           e.preventDefault();
           if (e.key.toLowerCase() === 'v') {
             faceView = faceView === 'profile' ? 'front' : 'profile';
-            store('cd-face-view', faceView);
+            store('kara-face-view', faceView);
           } else {
             faceStyle = faceStyle === 'plate' ? 'avatar' : 'plate';
-            store('cd-face-style', faceStyle);
+            store('kara-face-style', faceStyle);
           }
           syncControls();
         }
@@ -6881,7 +6908,7 @@
     // The guide: on the first visit (once the status is known), then from the ? button.
     $('guideBtn').addEventListener('click', startTour);
     $('guideBtn').title = tourText().title;
-    if (!read('cd-tour-done')) setTimeout(startTour, 1200);
+    if (!read('kara-tour-done')) setTimeout(startTour, 1200);
   }
 
   /* ---------- Menu column: width and side ---------- */

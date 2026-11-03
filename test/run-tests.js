@@ -770,7 +770,7 @@ async function main() {
   // Installing the local model files: ComfyUI says where its folders are, the app downloads what is missing.
   {
     console.log('  -- local model install');
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cd-comfy-'));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kara-comfy-'));
     const mock = start('test/mock-comfy.js', { MOCK_COMFY_DIR: dir });
     const app = start('server.js', { PORT: '3299', COMFY_MODE: 'local', COMFY_URL: MOCK, MODELS_URL: MOCK + '/hf', COMFY_DIR: '' });
     try {
@@ -1093,7 +1093,7 @@ async function main() {
   });
 
   await check('update: a copy without git is replaced from the archive, .env kept, nothing written outside', async () => {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cd-update-'));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kara-update-'));
     fs.writeFileSync(path.join(dir, '.env'), 'MINE=1\n');
     fs.writeFileSync(path.join(dir, 'server.js'), '// old\n');
     const mock = start('test/mock-comfy.js', {});

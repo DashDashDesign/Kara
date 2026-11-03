@@ -126,7 +126,7 @@ body.grid figure:hover .dl{opacity:1}
 <div class="figs">
 ${figures.join('\n')}
 </div>
-<script type="application/json" id="cd-session">${data}</script>
+<script type="application/json" id="kara-session">${data}</script>
 <script>
 (function () {
   var views = ['grid', 'medium', 'list'];
@@ -168,7 +168,8 @@ ${figures.join('\n')}
   // Reads a file made by exportHtml and returns cards with their image as a Blob.
   async function importHtml(text) {
     const doc = new DOMParser().parseFromString(text, 'text/html');
-    const node = doc.getElementById('cd-session');
+    // Files exported before the rename to Kara carry the old id.
+    const node = doc.getElementById('kara-session') || doc.getElementById('cd-session');
     if (!node) throw new Error('not a session file');
     const data = JSON.parse(node.textContent);
     if (!data || data.format !== FORMAT || !Array.isArray(data.cards)) throw new Error('not a session file');
