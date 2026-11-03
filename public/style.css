@@ -241,6 +241,9 @@ body.tiles-none .side .tile[aria-pressed="true"],body.tiles-none .dock .tiles:no
 .own{width:100%;margin-top:12px;background:var(--bg-2);border:1px dashed rgba(255,255,255,.22);border-radius:10px;color:var(--txt);padding:9px 13px;font:400 14px var(--corps)}
 .own:focus{border-color:rgba(62,207,96,.55);border-style:solid;outline:none}
 .tile:focus-visible,.card:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* In the menu column the ring is drawn inside the box (outside, the scrolling column cuts it), with the box's round corners */
+.side :is(.tile,button,input,textarea,summary):focus-visible{outline-offset:-2px}
+.side .group > summary:focus-visible{border-radius:13px}
 
 /* ---------- Dock: render settings, details, seed, Generate. Always on screen ---------- */
 .dock{padding:10px clamp(14px,2vw,28px) 12px;margin:0 calc(-1 * clamp(14px,2vw,28px));border-top:1px solid var(--bord);position:relative;z-index:20;background:var(--bg-2)}

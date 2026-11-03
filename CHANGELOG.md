@@ -15,6 +15,7 @@ Each version, newest first. The section of a version is also the text of its rel
 - In the bottom bar, a menu that opened a colour picker stays open, and no other menu opens on hover meanwhile.
 - In About, "Send feedback" has the same size as the buttons beside it.
 - The empty image window says on which side the menus are.
+- With the Tab key, the green focus ring in the menus is no longer cut off on one side, and follows their round corners.
 
 ### Under the hood
 - The choices saved in the browser are renamed from `cd-` (Character Designer, the old name) to `kara-`. They are moved once when the page opens: nobody loses their settings. Session files exported before still import.
