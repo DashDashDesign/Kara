@@ -935,7 +935,7 @@ input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offse
 #modelList[data-size="list"] .model-tile:hover:not(:disabled){border-color:rgba(255,255,255,.28)}
 #modelList[data-size="list"] .model-tile[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 /* The description of the model under the pointer: always at the same place, at the bottom of the panel */
-#modelList .model-info{position:sticky;bottom:-14px;z-index:2;margin:0 -14px -14px;padding:10px 14px 12px;background:#141416;border-top:1px solid var(--bord);min-height:calc(4 * 1.45em + 22px);max-height:calc(4 * 1.45em + 22px)}
+#modelList .model-info{flex:none;margin:0 -14px -14px;padding:10px 14px 12px;background:#141416;border-top:1px solid var(--bord);min-height:calc(4 * 1.45em + 22px);max-height:calc(4 * 1.45em + 22px)}
 .prov-menu > summary{list-style:none;cursor:pointer;padding:8px 14px;border:1px solid var(--bord);border-radius:999px}
 .prov-menu > summary::-webkit-details-marker{display:none}
 .prov-menu > summary:hover,.prov-menu[open] > summary{border-color:rgba(255,255,255,.28)}
@@ -1063,9 +1063,13 @@ input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offse
 
 /* Models window, provider row: title and size switch above, the providers together below */
 .prov-switch{display:grid;gap:10px}
-#modelList > .prov-switch{position:sticky;top:-14px;z-index:3;margin:-14px -14px 12px;padding:14px 14px 12px;background:#141416}
+/* The models window: title and header on top, the models in their own scrolling area, the description line at the bottom */
+#modelList{display:flex;flex-direction:column;gap:0;overflow:hidden}
+#modelList::before{flex:none}
+#modelList > .prov-switch{flex:none;margin:-14px -14px 0;padding:14px 14px 12px;background:#141416}
+.model-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;margin:0 -14px;padding:4px 14px 10px;background:#0e0e10}
 /* under the panel title (16 px line and 6 px below it), which stays at the top too */
-#modelList[data-title] > .prov-switch{top:22px;margin-top:-4px;padding-top:4px}
+#modelList[data-title] > .prov-switch{margin-top:-4px;padding-top:4px}
 .ps-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .ps-head .model-size{margin:0}
 .ps-chips{display:flex;flex-wrap:wrap;gap:6px}

@@ -4365,6 +4365,10 @@
     // A stable sort: models with the same figure keep the usual order.
     const order = (items) => [...items.filter(has).map((m, i) => [m, i]).sort((a, b) => (sortKey ? sortKey(a[0]) - sortKey(b[0]) || a[1] - b[1] : a[1] - b[1])).map(([m]) => m), ...items.filter((m) => !has(m))];
     const weights = modelWeights();
+    // Only the models scroll, on a slightly darker ground, between the header and the description line.
+    const scroller = document.createElement('div');
+    scroller.className = 'model-scroll';
+    list.appendChild(scroller);
     const groups = [
       [t('openModels'), order(all.filter((m) => m.open)), 'open'],
       [t('apiModels'), order(all.filter((m) => !m.open)), 'api'],
@@ -4388,13 +4392,13 @@
       // Folding a group shrinks the window: it would leave the pointer and close. Keep its height until it is closed.
       head.addEventListener('click', () => holdModelHeight());
       box.append(head, grid);
-      list.appendChild(box);
+      scroller.appendChild(box);
     }
     const none = document.createElement('p');
     none.className = 'menu-note model-none';
     none.hidden = true;
     none.textContent = t('noModelFound');
-    list.appendChild(none);
+    scroller.appendChild(none);
     filterModels();
     holdModelHeight();
     if (modelProv === 'local') loadLocalInfo();
@@ -6503,6 +6507,9 @@
         return;
       }
       tip.textContent = text;
+      // An open window (About, Keys...) sits above the page: its tooltips have to be drawn inside it.
+      const host = el.closest('dialog[open]') || document.body;
+      if (tip.parentNode !== host) host.appendChild(tip);
       tip.hidden = false;
       const r = el.getBoundingClientRect();
       const w = tip.offsetWidth;
