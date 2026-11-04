@@ -18,7 +18,7 @@ const comfy = require('./lib/comfy');
 const limits = require('./lib/limits');
 const install = require('./lib/install');
 const updater = require('./lib/update');
-const { buildPrompt } = require('./lib/prompt');
+const { buildPrompt, PACK_LAYOUT, packOptions, packCounts } = require('./lib/prompt');
 const mcpb = require('./lib/mcpb');
 const { resolveSize, refModeOf, packRefs, engineOf } = require('./lib/models');
 
@@ -141,7 +141,11 @@ async function promptAndSize(body) {
   }
   const refMode = refModeOf(models, body, comfy.mode());
   const packed = packRefs(models, body, comfy.mode());
-  const built = buildPrompt(options, body.selection, body.extra, refMode, packed.counts);
+  // Face export pack: a face-only prompt as if the face drawings were sent as reference images, whatever the model takes.
+  const pack = PACK_LAYOUT[body.pack] ? body.pack : null;
+  const built = pack
+    ? buildPrompt(packOptions(options), { ...(body.selection || {}), layout: PACK_LAYOUT[pack] }, body.extra, null, packCounts(pack))
+    : buildPrompt(options, body.selection, body.extra, refMode, packed.counts);
   const size = resolveSize(models, body.model, comfy.mode(), body.render, built.width, built.height);
   // A model that runs in ComfyUI may bring its own workflow (models.json, engine "workflow").
   const m = models.models.find((x) => x.id === size.model);

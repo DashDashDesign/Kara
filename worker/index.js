@@ -4,7 +4,7 @@
 // The Worker keeps no provider key. One optional secret, LINK_SECRET (or the older APP_PASSWORD),
 // signs the image links; without it, a random key per Worker instance is used.
 
-import { buildPrompt } from '../lib/prompt.js';
+import { buildPrompt, PACK_LAYOUT, packOptions, packCounts } from '../lib/prompt.js';
 import options from '../data/options.json';
 import presets from '../data/presets.json';
 import models from '../data/models.json';
@@ -145,7 +145,11 @@ async function readBody(request) {
 // Prompt from the menus; size from the sheet layout, or from "advanced render" when set.
 function promptAndSize(body, provider) {
   const packed = packRefs(models, body, provider);
-  const built = buildPrompt(options, body.selection, body.extra, refModeOf(models, body, provider), packed.counts);
+  // Face export pack: a face-only prompt as if the face drawings were sent as reference images, whatever the model takes.
+  const pack = PACK_LAYOUT[body.pack] ? body.pack : null;
+  const built = pack
+    ? buildPrompt(packOptions(options), { ...(body.selection || {}), layout: PACK_LAYOUT[pack] }, body.extra, null, packCounts(pack))
+    : buildPrompt(options, body.selection, body.extra, refModeOf(models, body, provider), packed.counts);
   const size = resolveSize(models, body.model, provider, body.render, built.width, built.height);
   return { prompt: built.prompt, width: size.width, height: size.height, resolution: size.resolution, model: size.model, refs: packed.refs };
 }

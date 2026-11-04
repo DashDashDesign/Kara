@@ -244,6 +244,25 @@
       guideNone: 'This model takes no image: only the words of the menus are used.',
       styleAvatar: 'Avatar',
       stylePlate: 'Anatomy plate',
+      packButton: 'Export pack',
+      packTip: 'A zip with the face drawings (front and profile, blurred and sharp) and the prompt, to use the face outside Kara',
+      packNote: 'Image models follow the drawing only loosely: the words of the prompt count much more, so the face will not match the drawing exactly.',
+      packDlgTitle: 'Which drawings do you want to export? Tick one or more.',
+      packExport: 'Export',
+      packLookAvatar: 'Avatar',
+      packLookAvatarHint: 'Flat colours, no lines. The softest.',
+      packLookPlate: 'Anatomy plate, no guide lines',
+      packLookPlateHint: 'Ink lines on paper.',
+      packLookLines: 'Anatomy plate, with guide lines',
+      packLookLinesHint: 'Same, with the dashed construction lines and the A B C marks.',
+      packReadme: "FACE PACK, made with Kara\n\nWhat it is: schematic drawings of the face (front and side) with prompts that ask for the face only, to use in another tool (Nano Banana, GPT Image, Seedream...).\n\nEach folder is one kind of drawing (the one you ticked when exporting):\n- avatar : flat colours, no lines. The softest, the least likely to be copied line by line.\n- plate : anatomy plate, ink lines on paper, without the dashed guide lines.\n- plate-with-guide-lines : the same with the dashed construction lines and the A B C marks.\n\nIn each folder:\n- face-front.png and face-profile.png : the drawings, blurred like Kara sends them to the models. Use these as reference images. The profile looks to the right of the image, like every side view in Kara.\n- prompt-front.txt, prompt-profile.txt, prompt-both.txt : the prompt for a face seen from the front, from the side, or both side by side. The top of each file says which image(s) to give, in which order, and the format of the image (indication only, it is not in the prompt).\n- sharp : the same drawings, sharp, for any other use.\n\nHow to use it: pick a folder, pick a prompt, give the tool the image(s) named at the top of the prompt (images first), then paste the prompt. The drawing only gives proportions: if the model copies its lines, try another folder. Models follow the drawing only loosely and the words of the prompt count much more, so the face will not match the drawing exactly.",
+      packFront: 'Face, front view',
+      packProfile: 'Face, side view',
+      packBoth: 'Face, front and side views together',
+      packUse: 'Reference image(s), in this order:',
+      packFormat: 'Format in Kara (indication only, not in the prompt): {size} pixels, ratio {ratio}',
+      feLines: 'Guide lines',
+      feLinesTip: 'Show or hide the dashed construction lines and the A B C marks',
       faceHint: 'Drag the points on the face, or use the settings. Keys: V front or profile, S drawing style.',
       feViewKey: 'Front or profile (V key)',
       feStyleKey: 'Drawing style (S key)',
@@ -593,6 +612,25 @@
       guideNone: "Ce modèle ne prend pas d'image : seuls les mots des menus comptent.",
       styleAvatar: 'Avatar',
       stylePlate: "Planche d'anatomie",
+      packButton: "Pack d'export",
+      packTip: 'Un zip avec les dessins du visage (face et profil, flous et nets) et le prompt, pour utiliser le visage hors de Kara',
+      packNote: 'Les modèles ne suivent le dessin que de loin : ce sont surtout les mots du prompt qui comptent, le visage ne sera donc pas fidèle au dessin.',
+      packDlgTitle: 'Quels dessins voulez-vous exporter ? Cochez-en un ou plusieurs.',
+      packExport: 'Exporter',
+      packLookAvatar: 'Avatar',
+      packLookAvatarHint: 'Aplats de couleur, sans lignes. Le plus doux.',
+      packLookPlate: "Planche d'anatomie, sans lignes de repère",
+      packLookPlateHint: "Traits d'encre sur papier.",
+      packLookLines: "Planche d'anatomie, avec lignes de repère",
+      packLookLinesHint: 'La même, avec les lignes pointillées de construction et les repères A B C.',
+      packReadme: "PACK VISAGE, fait avec Kara\n\nCe que c'est : des dessins schématiques du visage (de face et de profil) avec des prompts qui demandent le visage seul, pour les utiliser dans un autre outil (Nano Banana, GPT Image, Seedream...).\n\nChaque dossier est un type de dessin (celui que vous avez coché à l'export) :\n- avatar : aplats de couleur, sans lignes. Le plus doux, celui qui risque le moins d'être recopié trait pour trait.\n- plate : planche d'anatomie, traits d'encre sur papier, sans les lignes pointillées de repère.\n- plate-with-guide-lines : la même avec les lignes pointillées de construction et les repères A B C.\n\nDans chaque dossier :\n- face-front.png et face-profile.png : les dessins, flous comme Kara les envoie aux modèles. À donner comme images de référence. Le profil regarde vers la droite de l'image, comme toutes les vues de profil dans Kara.\n- prompt-front.txt, prompt-profile.txt, prompt-both.txt : le prompt pour un visage de face, de profil, ou les deux côte à côte. Le haut de chaque fichier dit quelle(s) image(s) donner, dans quel ordre, et le format de l'image (simple indication, ce n'est pas dans le prompt).\n- sharp : les mêmes dessins, nets, pour tout autre usage.\n\nComment faire : choisissez un dossier, un prompt, donnez à l'outil la ou les images indiquées en haut du prompt (les images d'abord), puis collez le prompt. Le dessin ne donne que les proportions : si le modèle en recopie les traits, essayez un autre dossier. Les modèles ne suivent le dessin que de loin et ce sont surtout les mots du prompt qui comptent, le visage ne sera donc pas fidèle au dessin.",
+      packFront: 'Visage de face',
+      packProfile: 'Visage de profil',
+      packBoth: 'Visage de face et de profil ensemble',
+      packUse: 'Image(s) de référence, dans cet ordre :',
+      packFormat: "Format dans Kara (simple indication, pas dans le prompt) : {size} pixels, ratio {ratio}",
+      feLines: 'Lignes de repère',
+      feLinesTip: 'Afficher ou masquer les lignes pointillées et les repères A B C',
       faceHint: 'Faites glisser les points sur le visage, ou utilisez les réglages. Touches : V face ou profil, S style du dessin.',
       feViewKey: 'Face ou profil (touche V)',
       feStyleKey: 'Style du dessin (touche S)',
@@ -1465,6 +1503,8 @@
   let faceSeq = 0;
   // Drawing style of the face: 'avatar' (flat colours) or 'plate' (anatomy plate: ink lines on paper, construction guides).
   let faceStyle = read('kara-face-style') === 'avatar' ? 'avatar' : 'plate';
+  // Construction lines of the anatomy plate (dashed circle, thirds, A B C): can be hidden, e.g. before using the drawing as a reference image.
+  let faceGuides = read('kara-face-lines') !== '0';
   // Which side of the head the drawings show: front or profile (the guide sent to the models stays the front).
   let faceView = read('kara-face-view') === 'profile' ? 'profile' : 'front';
   // out: 'control' (lines only, open skull so the hair stays free: the image for ControlNet) or 'ref' (flat colours: a reference image).
@@ -1565,13 +1605,14 @@
     const ex = fx + 9;
     const eyeShape = `M${ex - ew * 0.15} ${eyeY - eh * 0.2}Q${ex + ew * 0.5} ${eyeY - eh * 1.1} ${ex + ew * 0.75} ${eyeY - eh * 0.1 - (e.tilt - 50) * 0.04}Q${ex + ew * 0.45} ${eyeY + eh * 0.9} ${ex - ew * 0.1} ${eyeY + eh * 0.25}Z`;
     const guide = (x1, y1, x2, y2) => `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;
-    const guides = !plate ? '' : `<g fill="none" stroke="#a0522d" stroke-width=".5" stroke-dasharray="2 2" opacity=".7">
+    const guides = !plate || !faceGuides ? '' : `<g fill="none" stroke="#a0522d" stroke-width=".5" stroke-dasharray="2 2" opacity=".7">
         <circle cx="${(fx + depth * 0.55).toFixed(1)}" cy="${(cy - h * 0.28).toFixed(1)}" r="${(depth * 0.45).toFixed(1)}"/>
         ${[browY, eyeY, baseY, mouthY, chinY].map((y) => guide(fx - 22, y, fx + depth + 8, y)).join('')}
         ${guide(fx + depth * 0.62, cy - h - 6, fx + depth * 0.62, chinY + 8)}
-      </g>
-      <g fill="#a0522d" font-family="monospace" font-size="5" opacity=".8">
-        ${[[browY, 'A'], [baseY, 'B'], [chinY, 'C']].map(([y, k]) => `<text x="${(fx + depth + 10).toFixed(1)}" y="${(y + 1.7).toFixed(1)}">${k}</text>`).join('')}
+      </g>`;
+    // The marks are drawn after the mirror, at the left end of the lines (the lines end at 200 - (fx + depth + 8) once mirrored).
+    const letters = !plate || !faceGuides ? '' : `<g fill="#a0522d" font-family="monospace" font-size="5" opacity=".8" text-anchor="end">
+        ${[[browY, 'A'], [baseY, 'B'], [chinY, 'C']].map(([y, k]) => `<text x="${(200 - (fx + depth + 8) - 3).toFixed(1)}" y="${(y + 1.7).toFixed(1)}">${k}</text>`).join('')}
       </g>`;
     const handles = !edit ? '' : [
       [tipX, tipY, 'nose', 'nose.length:x:-9 nose.tip:y:-11'],
@@ -1587,10 +1628,15 @@
       [jawPt[0], jawPt[1], 'faceShape', 'faceShape.jaw:y:8'],
       [fx + depth * 1.02, cy - h * 0.45, 'faceShape', 'faceShape.width:x:8'],
       [ex + ew * 0.75, eyeY, 'eyeShape', 'eyeShape.size:x:9 eyeShape.tilt:y:-9'],
-    ].map(([x, y, g2, map]) => `<g class="fp-h${focus === g2 ? ' on' : ''}" data-h="${map}" data-g="${g2}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" class="fp-hit"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" class="fp-dot"/></g>`).join('');
+    ].map(([x0, y, g2, map0]) => {
+      const x = 200 - x0;
+      const map = map0.replace(/:x:(-?[\d.]+)/g, (m, k) => `:x:${-Number(k)}`);
+      return `<g class="fp-h${focus === g2 ? ' on' : ''}" data-h="${map}" data-g="${g2}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" class="fp-hit"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" class="fp-dot"/></g>`;
+    }).join('');
     return `<svg viewBox="0 0 200 230" aria-hidden="true">
-      <defs><radialGradient id="${uid}s" cx="40%" cy="38%" r="70%"><stop offset="0" stop-color="${shade(skin, 0.14)}"/><stop offset=".7" stop-color="${skin}"/><stop offset="1" stop-color="${shade(skin, -0.22)}"/></radialGradient></defs>
+      <defs><radialGradient id="${uid}s" cx="60%" cy="38%" r="70%"><stop offset="0" stop-color="${shade(skin, 0.14)}"/><stop offset=".7" stop-color="${skin}"/><stop offset="1" stop-color="${shade(skin, -0.22)}"/></radialGradient></defs>
       ${plate ? `<rect width="200" height="230" fill="${paper}"/>` : ''}
+      <g transform="translate(200 0) scale(-1 1)">
       <path d="${neck}" fill="${c(shade(skin, -0.18), paper)}"${line}/>
       <path d="${head}" fill="${c(`url(#${uid}s)`, paper)}"${line}/>
       ${earFront(fx + depth * 0.6, eyeY + 8, 6 * earK, h * 0.17 * earK, 1, ea.tip, `fill="${c(shade(skin, -0.1), paper)}"${line || ` stroke="${shade(skin, -0.3)}" stroke-width=".8"`}`)}
@@ -1603,24 +1649,273 @@
       <path d="M${tipX + 5} ${baseY - 1}q3 -2 6 1" fill="none" stroke="${c(shade(skin, -0.5), ink)}" stroke-width="1" stroke-linecap="round"/>
       <path d="M${fx - lip + 1} ${mouthY - 3}Q${fx + 1} ${mouthY - 1} ${fx + 3} ${mouthY}Q${fx + 1} ${mouthY + 1} ${fx - lip + 2} ${mouthY + 3.5}" fill="${lipColour}"${plate ? ` fill-opacity=".45"${line}` : ''}/>
       <path d="M${fx + 1} ${mouthY}L${fx + 7} ${mouthY + 0.5}" stroke="${c(shade(lipColour, -0.45), ink)}" stroke-width="1" stroke-linecap="round"/>
+      </g>
+      ${letters}
       ${handles}
     </svg>`;
   }
 
   // Face editor: download the drawing as a PNG
-  async function faceDrawingBlob() {
-    const svg = faceSvg(null, false).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="230" ');
+  async function faceDrawingBlob(view, blur, style, guides) {
+    const keep = [faceView, faceStyle, faceGuides];
+    if (view) faceView = view;
+    if (style) faceStyle = style;
+    if (guides !== undefined) faceGuides = guides;
+    const plateLook = faceStyle === 'plate';
+    let svg;
+    try {
+      svg = faceSvg(null, false).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="230" ');
+    } finally {
+      [faceView, faceStyle, faceGuides] = keep;
+    }
     const img = new Image();
     img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
     await img.decode();
     const canvas = document.createElement('canvas');
     canvas.width = 1000;
     canvas.height = 1150;
-    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+    const ctx = canvas.getContext('2d');
+    if (blur) {
+      // Blurred like the drawing Kara sends to the models: they take the proportions, not the drawn lines.
+      ctx.fillStyle = plateLook ? '#f1ebdd' : '#e9e9e6';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.filter = `blur(${blur}px)`;
+    }
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    ctx.filter = 'none';
     return new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
   }
 
-async function downloadFaceDrawing() {
+  // Export pack: the schematic drawings (front and profile, sharp and blurred) and the prompt, to use the face outside Kara.
+  const CRC_TABLE = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+  function crc32Bytes(u8) {
+    let c = 0xffffffff;
+    for (let i = 0; i < u8.length; i++) c = CRC_TABLE[(c ^ u8[i]) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+  }
+  // A zip without compression (the PNG files are already compressed), written by hand: no dependency.
+  function makeZip(files) {
+    const enc = new TextEncoder();
+    const now = new Date();
+    const time = (now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1);
+    const date = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+    const parts = [];
+    const central = [];
+    let offset = 0;
+    for (const { name, data } of files) {
+      const nameBuf = enc.encode(name);
+      const crc = crc32Bytes(data);
+      const local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true);
+      local.setUint16(4, 20, true);
+      local.setUint16(6, 0x0800, true);
+      local.setUint16(10, time, true);
+      local.setUint16(12, date, true);
+      local.setUint32(14, crc, true);
+      local.setUint32(18, data.length, true);
+      local.setUint32(22, data.length, true);
+      local.setUint16(26, nameBuf.length, true);
+      parts.push(local, nameBuf, data);
+      const head = new DataView(new ArrayBuffer(46));
+      head.setUint32(0, 0x02014b50, true);
+      head.setUint16(4, 20, true);
+      head.setUint16(6, 20, true);
+      head.setUint16(8, 0x0800, true);
+      head.setUint16(12, time, true);
+      head.setUint16(14, date, true);
+      head.setUint32(16, crc, true);
+      head.setUint32(20, data.length, true);
+      head.setUint32(24, data.length, true);
+      head.setUint16(28, nameBuf.length, true);
+      head.setUint32(42, offset, true);
+      central.push(head, nameBuf);
+      offset += 30 + nameBuf.length + data.length;
+    }
+    let size = 0;
+    for (const c of central) size += c.byteLength;
+    const end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true);
+    end.setUint16(8, files.length, true);
+    end.setUint16(10, files.length, true);
+    end.setUint32(12, size, true);
+    end.setUint32(16, offset, true);
+    return new Blob([...parts, ...central, end], { type: 'application/zip' });
+  }
+  // The export pack asks first which kinds of drawing to export (a small form with check boxes).
+  const PACK_LOOKS = [
+    { id: 'avatar', style: 'avatar', lines: false, name: 'packLookAvatar', hint: 'packLookAvatarHint' },
+    { id: 'plate', style: 'plate', lines: false, name: 'packLookPlate', hint: 'packLookPlateHint' },
+    { id: 'plate-with-guide-lines', style: 'plate', lines: true, name: 'packLookLines', hint: 'packLookLinesHint' },
+  ];
+  function askPackLooks() {
+    return new Promise((resolve) => {
+      let saved = [];
+      try {
+        saved = JSON.parse(read('kara-pack-looks') || '[]');
+      } catch (err) {
+        saved = [];
+      }
+      const dlg = document.createElement('dialog');
+      dlg.className = 'ask';
+      const title = document.createElement('p');
+      title.textContent = t('packDlgTitle');
+      title.style.marginBottom = '12px';
+      const list = document.createElement('div');
+      list.className = 'pack-looks';
+      const boxes = [];
+      for (const look of PACK_LOOKS) {
+        const row = document.createElement('label');
+        row.className = 'guide-toggle';
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.checked = saved.length ? saved.includes(look.id) : look.id === 'avatar';
+        const text = document.createElement('span');
+        text.textContent = t(look.name);
+        const hint = document.createElement('small');
+        hint.textContent = t(look.hint);
+        row.append(input, text, hint);
+        list.appendChild(row);
+        boxes.push([look, input]);
+      }
+      const row = document.createElement('div');
+      row.className = 'ask-actions';
+      const no = document.createElement('button');
+      no.type = 'button';
+      no.className = 'ghost small';
+      no.textContent = t('cancel');
+      const yes = document.createElement('button');
+      yes.type = 'button';
+      yes.className = 'primary small';
+      yes.textContent = t('packExport');
+      row.append(no, yes);
+      const note = document.createElement('p');
+      note.className = 'pack-note';
+      note.textContent = t('packNote');
+      dlg.append(title, list, note, row);
+      document.body.appendChild(dlg);
+      const chosen = () => boxes.filter(([, input]) => input.checked).map(([look]) => look);
+      const sync = () => {
+        yes.disabled = !chosen().length;
+      };
+      for (const [, input] of boxes) input.addEventListener('change', sync);
+      sync();
+      const done = (answer) => {
+        dlg.close();
+        dlg.remove();
+        resolve(answer);
+      };
+      no.addEventListener('click', () => done(null));
+      yes.addEventListener('click', () => {
+        const looks = chosen();
+        store('kara-pack-looks', JSON.stringify(looks.map((l) => l.id)));
+        done(looks);
+      });
+      dlg.addEventListener('cancel', (e) => {
+        e.preventDefault();
+        done(null);
+      });
+      dlg.addEventListener('click', (e) => {
+        if (e.target === dlg) done(null);
+      });
+      dlg.addEventListener('keydown', (e) => e.stopPropagation());
+      dlg.showModal();
+      yes.focus();
+    });
+  }
+  async function downloadFacePack(looks) {
+    const btn = $('facePack');
+    if (btn) btn.disabled = true;
+    try {
+      const bytes = async (blob) => new Uint8Array(await blob.arrayBuffer());
+      const enc = new TextEncoder();
+      // The three face-only prompts, as Kara would send them with the blurred drawings as reference images.
+      const gcd = (x, y) => (y ? gcd(y, x % y) : x);
+      const kinds = [
+        ['front', 'packFront', 'face-front.png'],
+        ['profile', 'packProfile', 'face-profile.png'],
+        ['both', 'packBoth', 'face-front.png + face-profile.png'],
+      ];
+      const prompts = [];
+      for (const [kind, key, use] of kinds) {
+        const data = await postJson('/api/preview', { selection: payloadSelection(), extra: state.extra, model: state.model, render: renderPayload(), pack: kind });
+        const g = gcd(data.width, data.height);
+        const head = [
+          t(key),
+          `${t('packUse')} ${use}`,
+          t('packFormat').replace('{size}', `${data.width} x ${data.height}`).replace('{ratio}', `${data.width / g}:${data.height / g}`),
+        ].join('\n');
+        prompts.push([`prompt-${kind}.txt`, `${head}\n\n${data.prompt}\n`]);
+      }
+      // One folder per kind of drawing: the blurred drawings and the prompts together, the sharp ones in a sub folder.
+      const files = [];
+      for (const look of looks) {
+        for (const view of ['front', 'profile']) {
+          files.push({ name: `${look.id}/face-${view}.png`, data: await bytes(await faceDrawingBlob(view, 8, look.style, look.lines)) });
+          files.push({ name: `${look.id}/sharp/face-${view}.png`, data: await bytes(await faceDrawingBlob(view, 0, look.style, look.lines)) });
+        }
+        for (const [name, text] of prompts) files.push({ name: `${look.id}/${name}`, data: enc.encode(text) });
+      }
+      files.push({ name: 'README.txt', data: enc.encode(`${t('packReadme')}\n`) });
+      const pad = (n) => String(n).padStart(2, '0');
+      const now = new Date();
+      const stamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+      const url = URL.createObjectURL(makeZip(files));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${slug(state.name) || 'character'}_face-pack_${stamp}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (err) {
+      console.error('Face pack export failed', err);
+      showNote(t('copyFailed'));
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  }
+
+// Right click on the face drawing: same small menu as on the generated image.
+  function faceMenu(e) {
+    e.preventDefault();
+    closeImageMenu();
+    const menu = document.createElement('div');
+    menu.className = 'img-menu';
+    menu.id = 'imgMenu';
+    const save = document.createElement('button');
+    save.type = 'button';
+    save.textContent = t('download');
+    save.addEventListener('click', () => {
+      closeImageMenu();
+      downloadFaceDrawing(true);
+    });
+    const copy = document.createElement('button');
+    copy.type = 'button';
+    copy.textContent = t('copyImage');
+    copy.addEventListener('click', async () => {
+      closeImageMenu();
+      try {
+        const blob = await faceDrawingBlob();
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+        showNote(t('copied'));
+      } catch (err) {
+        showNote(t('copyFailed'));
+      }
+    });
+    menu.append(save, copy);
+    document.body.appendChild(menu);
+    menu.style.left = `${Math.min(e.clientX, window.innerWidth - menu.offsetWidth - 8)}px`;
+    menu.style.top = `${Math.min(e.clientY, window.innerHeight - menu.offsetHeight - 8)}px`;
+  }
+  async function downloadFaceDrawing(ask) {
     let blob = null;
     try {
       blob = await faceDrawingBlob();
@@ -1634,27 +1929,16 @@ async function downloadFaceDrawing() {
     const view = faceView === 'profile' ? 'profile' : 'front';
     const look = faceStyle === 'plate' ? 'lines' : 'colours';
     
-    // Safely check state and valid text inputs (excluding URLs)
-    let rawName = (state.selection && state.selection.name) || state.name;
-    
-    if (!rawName) {
-      const nameInput = document.querySelector('#characterName') || document.querySelector('input.character-name');
-      if (nameInput && nameInput.value && !nameInput.value.includes('http')) {
-        rawName = nameInput.value;
-      }
+    const charName = slug(state.name) || 'character';
+    const fileName = `${charName}_face-${view}-${look}_${stamp}.png`;
+    if (ask) {
+      await saveWithDialog(blob, fileName);
+      return;
     }
-    
-    // Clean and validate: if it contains an URL or is empty, use 'character'
-    let charName = (rawName || 'character').toLowerCase();
-    if (charName.includes('http') || charName.includes('127.0.0.1')) {
-      charName = 'character';
-    }
-    charName = charName.replace(/[^a-z0-9-_]/g, '_').substring(0, 25);
-
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${charName}_face-${view}-${look}_${stamp}.png`;
+    a.download = fileName;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -1691,6 +1975,20 @@ function addFaceDownload(root) {
       }
     }
     
+    let pack = $('facePack');
+    if (!pack) {
+      pack = document.createElement('button');
+      pack.type = 'button';
+      pack.id = 'facePack';
+      pack.className = 'fe-download-btn';
+      pack.addEventListener('click', async () => {
+        const looks = await askPackLooks();
+        if (looks) downloadFacePack(looks);
+      });
+      btn.after(pack);
+    }
+    pack.textContent = t('packButton');
+    pack.title = t('packTip');
     const fr = (document.documentElement.lang || '').toLowerCase().startsWith('fr');
     const textSpan = btn.querySelector('.fe-download-text');
     if (textSpan) {
@@ -1813,14 +2111,14 @@ function addFaceDownload(root) {
     // Anatomy plate: construction of the head (cranium circle, middle line, brow, eye, nose and mouth lines, thirds).
     const guide = (x1, y1, x2, y2) => `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;
     const span = w + 16;
-    const guides = !plate || out ? '' : `<g fill="none" stroke="#a0522d" stroke-width=".5" stroke-dasharray="2 2" opacity=".7">
+    const guides = !plate || out || !faceGuides ? '' : `<g fill="none" stroke="#a0522d" stroke-width=".5" stroke-dasharray="2 2" opacity=".7">
         <circle cx="${cx}" cy="${(cy - h * 0.28).toFixed(1)}" r="${(w * 0.92).toFixed(1)}"/>
         ${guide(cx, cy - h - 8, cx, cy + h + 8)}
         ${[browY, eyeY, noseBot, mouthY, cy + h * 0.96].map((y) => guide(cx - span, y, cx + span, y)).join('')}
         ${guide(cx - w, cy - h * 0.4, cx - w, cy + h * 0.5)}${guide(cx + w, cy - h * 0.4, cx + w, cy + h * 0.5)}
       </g>
-      <g fill="#a0522d" font-family="monospace" font-size="5" opacity=".8">
-        ${[[browY, 'A'], [noseBot, 'B'], [cy + h * 0.96, 'C']].map(([y, k]) => `<text x="${(cx + span + 2).toFixed(1)}" y="${(y + 1.7).toFixed(1)}">${k}</text>`).join('')}
+      <g fill="#a0522d" font-family="monospace" font-size="5" opacity=".8" text-anchor="end">
+        ${[[browY, 'A'], [noseBot, 'B'], [cy + h * 0.96, 'C']].map(([y, k]) => `<text x="${(cx - span - 3).toFixed(1)}" y="${(y + 1.7).toFixed(1)}">${k}</text>`).join('')}
       </g>`;
     // Editor: points to drag. Each one moves sliders: "menu.slider:axis:gain", gain in slider steps per drawing unit.
     const handles = !edit ? '' : [
@@ -2035,6 +2333,19 @@ function addFaceDownload(root) {
       });
       styles.appendChild(b);
     }
+    const linesBox = document.createElement('label');
+    linesBox.className = 'fe-lines';
+    linesBox.title = t('feLinesTip');
+    const linesInput = document.createElement('input');
+    linesInput.type = 'checkbox';
+    const linesText = document.createElement('span');
+    linesText.textContent = t('feLines');
+    linesBox.append(linesInput, linesText);
+    linesInput.addEventListener('change', () => {
+      faceGuides = linesInput.checked;
+      store('kara-face-lines', faceGuides ? '1' : '0');
+      syncControls();
+    });
     const views = document.createElement('div');
     views.className = 'tile-size fe-style fe-view';
     for (const [id, key] of [['front', 'viewFront'], ['profile', 'viewProfile']]) {
@@ -2120,6 +2431,8 @@ function addFaceDownload(root) {
       art.innerHTML = faceSvg(feFocus, true);
       art.classList.toggle('plate', faceStyle === 'plate');
       for (const b of styles.children) b.setAttribute('aria-pressed', b.dataset.style === faceStyle ? 'true' : 'false');
+      linesBox.hidden = faceStyle !== 'plate';
+      linesInput.checked = faceGuides;
       for (const b of views.children) b.setAttribute('aria-pressed', b.dataset.view === faceView ? 'true' : 'false');
       for (const [group, block, value, chips] of blocks) {
         value.textContent = currentValue(group);
@@ -2195,6 +2508,7 @@ function addFaceDownload(root) {
     };
     art.addEventListener('pointerup', end);
     art.addEventListener('pointercancel', end);
+    art.addEventListener('contextmenu', faceMenu);
 
     // The drawing with its two switches on top of it: view (left) and style (right).
     const stage = document.createElement('div');
@@ -2213,7 +2527,7 @@ function addFaceDownload(root) {
     const wt = document.createElement('p');
     wt.id = 'feWords';
     words.append(wl, wt);
-    stage.append(art, views, styles, words);
+    stage.append(art, views, styles, linesBox, words);
     const body = document.createElement('div');
     body.className = 'fe-body';
     body.append(stage, side);
@@ -3216,6 +3530,34 @@ function addFaceDownload(root) {
   }
 
   // Right click on the image (page or zoomed view): save it, or copy it to the clipboard.
+  // Saves a file asking where, and under which name, when the browser has a "Save as" window (Chrome, Edge);
+  // elsewhere it is a plain download. source: a link or a Blob. Returns false when the person cancels.
+  async function saveWithDialog(source, name) {
+    const ext = ((name.match(/\.([a-z0-9]+)$/i) || [])[1] || 'png').toLowerCase();
+    const mime = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp' }[ext] || 'application/octet-stream';
+    if (window.showSaveFilePicker) {
+      try {
+        const handle = await window.showSaveFilePicker({ suggestedName: name, types: [{ description: ext.toUpperCase(), accept: { [mime]: [`.${ext}`] } }] });
+        const blob = typeof source === 'string' ? await (await fetch(source)).blob() : source;
+        const out = await handle.createWritable();
+        await out.write(blob);
+        await out.close();
+        return true;
+      } catch (err) {
+        // Cancelled in the window: nothing to do. Any other error: fall through to the plain download.
+        if (err && err.name === 'AbortError') return false;
+      }
+    }
+    const url = typeof source === 'string' ? source : URL.createObjectURL(source);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    if (typeof source !== 'string') setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return true;
+  }
   function imageMenu(e) {
     const item = state.history[state.view];
     if (!item) return;
@@ -3228,11 +3570,8 @@ function addFaceDownload(root) {
     save.type = 'button';
     save.textContent = t('download');
     save.addEventListener('click', () => {
-      const a = document.createElement('a');
-      a.href = item.url;
-      a.download = item.name;
-      a.click();
       closeImageMenu();
+      saveWithDialog(item.url, item.name);
     });
     const copy = document.createElement('button');
     copy.type = 'button';

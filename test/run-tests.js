@@ -111,6 +111,24 @@ async function main() {
       assert.deepEqual([r.width, r.height], [1792, 1024]);
     });
 
+    await check('face export pack: face-only prompts, one per view, with the drawings as references', async () => {
+      const sel = { presentation: 'man', build: 'athletic', outfit: 'suit', accessories: ['hat', 'backpack'], custom: { nose: 'a very long hooked nose' } };
+      const front = await (await post('/api/preview', { selection: sel, pack: 'front' })).json();
+      const profile = await (await post('/api/preview', { selection: sel, pack: 'profile' })).json();
+      const both = await (await post('/api/preview', { selection: sel, pack: 'both' })).json();
+      assert.match(front.prompt, /^Close-up head and shoulders portrait, front facing/);
+      assert.match(front.prompt, /Reference image 1 is a schematic drawing of the face \(front view\)/);
+      assert.match(profile.prompt, /side profile view[^.]*facing the right side of the image/);
+      assert.match(profile.prompt, /Reference image 1 is a schematic drawing of the face \(side view\)/);
+      assert.match(both.prompt, /^Face sheet with two tight close-ups/);
+      assert.match(both.prompt, /Reference images 1 and 2 are schematic drawings of the same face/);
+      assert.deepEqual([both.width, both.height], [1536, 1024]);
+      for (const r of [front, profile, both]) {
+        assert.doesNotMatch(r.prompt, /athletic|suit|backpack|Outfit:/);
+        assert.match(r.prompt, /Accessories: a hat/);
+      }
+    });
+
     await check('bald ignores hair colour, layout changes size', async () => {
       const r = await (await post('/api/preview', { selection: { hairStyle: 'bald', hairColor: 'pink', layout: 'fullbody' } })).json();
       assert.match(r.prompt, /bald head/);
