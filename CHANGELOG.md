@@ -13,6 +13,9 @@ Each version, newest first. The section of a version is also the text of its rel
 ### Changed
 - In the face editor, the side view now looks to the right of the image, like every side view in Kara (its points follow). The A B C marks sit on the left of the lines, in both views.
 
+### Fixed
+- In the face editor's side view, a very short, scooped, drooping nose no longer sinks into the face: the tip always juts out a little and the bridge stays in front of the forehead line.
+
 ### Under the hood
 - One more automatic check, for the face-only prompts of the export pack.
 

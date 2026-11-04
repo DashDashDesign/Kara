@@ -1545,9 +1545,12 @@
     const noseLen = 24 + (n.length - 50) * 0.18;
     const nasion = [fx + 5, eyeY - 2];
     const baseY = nasion[1] + noseLen;
-    const tipX = fx - 9 - (n.length - 50) * 0.1 - (n.width - 50) * 0.02;
-    const tipY = baseY - 2 + (50 - n.tip) * 0.09;
+    // Limits, so that the nose never sinks into the face: the tip always juts out a little, never hangs lower than the nostril,
+    // and the bridge (even deeply scooped) stays in front of the line of the nasion.
+    const tipX = Math.min(fx - 6, fx - 9 - (n.length - 50) * 0.1 - (n.width - 50) * 0.02);
+    const tipY = Math.min(baseY + 1, baseY - 2 + (50 - n.tip) * 0.09);
     const bump = (n.bridge - 50) * 0.2;
+    const bridgeMid = [Math.min((nasion[0] + tipX) / 2 - bump, nasion[0] - 0.5), (nasion[1] + tipY) / 2];
     const mouthY = baseY + (cy + h - baseY) * 0.38;
     const lip = 1.5 + m.fullness * 0.035;
     const chinY = cy + h * 0.96;
@@ -1569,7 +1572,7 @@
       [fx + 1 + slope * 0.5, cy - h * 0.4 - foreH * 0.4],
       [fx - 1 - ridge, browY + 1],
       nasion,
-      [(nasion[0] + tipX) / 2 - bump, (nasion[1] + tipY) / 2],
+      bridgeMid,
       [tipX, tipY],
       [fx - 2, baseY + 2],
       [fx + 3, baseY + 3],
@@ -1616,7 +1619,7 @@
       </g>`;
     const handles = !edit ? '' : [
       [tipX, tipY, 'nose', 'nose.length:x:-9 nose.tip:y:-11'],
-      [(nasion[0] + tipX) / 2 - bump, (nasion[1] + tipY) / 2, 'nose', 'nose.bridge:x:-8'],
+      [bridgeMid[0], bridgeMid[1], 'nose', 'nose.bridge:x:-8'],
       [fx - lip + 1, mouthY - 3, 'mouth', 'mouth.fullness:x:-25'],
       [fx + 1 - j * 2 - (ch.jut - 50) * 0.12, chinY - 4, 'chin', 'chin.jut:x:-8'],
       [fx + depth * 0.6 + 6 * earK, eyeY + 8 - h * 0.12, 'ears', 'ears.size:y:-9 ears.tip:x:10'],
