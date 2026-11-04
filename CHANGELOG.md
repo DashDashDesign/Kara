@@ -2,6 +2,20 @@
 
 Each version, newest first. The section of a version is also the text of its release on GitHub.
 
+## v1.4.2 (4 November 2026)
+
+### New
+- The face editor can export its drawing. "Download PNG" saves the drawing as shown (front or profile, anatomy plate or avatar). Thanks to Anurag Dubey for this one (#23, closes #22). A right click on the drawing offers Download and Copy image, like on a generated image.
+- "Export pack" in the face editor: a small form asks which drawings to export (avatar, anatomy plate, anatomy plate with guide lines), then one zip is made with a folder for each choice. A folder holds the front and side drawings (blurred, as Kara sends them to the models), three ready prompts (front face, side face, both side by side) that ask for the face only, with the image format written on top, and the same drawings sharp in a sub folder. A README explains it all. This is for using the face outside Kara, in another image tool. Image models follow such a drawing only loosely: the words of the prompt count much more.
+- A "Guide lines" check box on the anatomy plate hides the dashed construction lines and the A B C marks.
+- Right click on an image, then Download: Chrome and Edge now open a "Save as" window, to choose the folder and rename the file (other browsers keep the plain download).
+
+### Changed
+- In the face editor, the side view now looks to the right of the image, like every side view in Kara (its points follow). The A B C marks sit on the left of the lines, in both views.
+
+### Under the hood
+- One more automatic check, for the face-only prompts of the export pack.
+
 ## v1.4.1 (3 November 2026)
 
 ### New
