@@ -1248,3 +1248,34 @@ body.layout-side .menu-tools{box-shadow:none;padding-bottom:16px}
   .dock .pop:not(#modelPop),.dock #advancedBtn,.dock .promptpop{min-width:40px}
   .dock .pop:not(#modelPop) > summary.chipbtn{min-width:40px}
 }
+
+/* Face editor: dynamic, non-collapsing PNG download button */
+.fe-download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f1ebdd;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+  z-index: 60;
+}
+
+.fe-download-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.fe-download-btn:active {
+  transform: translateY(0px);
+  background: rgba(255, 255, 255, 0.05);
+}

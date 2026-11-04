@@ -1607,6 +1607,98 @@
     </svg>`;
   }
 
+  // Face editor: download the drawing as a PNG
+  async function faceDrawingBlob() {
+    const svg = faceSvg(null, false).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="230" ');
+    const img = new Image();
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    await img.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = 1000;
+    canvas.height = 1150;
+    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+    return new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+  }
+
+async function downloadFaceDrawing() {
+    let blob = null;
+    try {
+      blob = await faceDrawingBlob();
+    } catch (err) {
+      console.error('Face drawing export failed', err);
+    }
+    if (!blob) return;
+    const pad = (n) => String(n).padStart(2, '0');
+    const now = new Date();
+    const stamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+    const view = faceView === 'profile' ? 'profile' : 'front';
+    const look = faceStyle === 'plate' ? 'lines' : 'colours';
+    
+    // Safely check state and valid text inputs (excluding URLs)
+    let rawName = (state.selection && state.selection.name) || state.name;
+    
+    if (!rawName) {
+      const nameInput = document.querySelector('#characterName') || document.querySelector('input.character-name');
+      if (nameInput && nameInput.value && !nameInput.value.includes('http')) {
+        rawName = nameInput.value;
+      }
+    }
+    
+    // Clean and validate: if it contains an URL or is empty, use 'character'
+    let charName = (rawName || 'character').toLowerCase();
+    if (charName.includes('http') || charName.includes('127.0.0.1')) {
+      charName = 'character';
+    }
+    charName = charName.replace(/[^a-z0-9-_]/g, '_').substring(0, 25);
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${charName}_face-${view}-${look}_${stamp}.png`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  
+function addFaceDownload(root) {
+    let btn = $('faceDownload');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.id = 'faceDownload';
+      btn.className = 'fe-download-btn';
+      btn.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: -2px;">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span class="fe-download-text">Download PNG</span>
+      `;
+      btn.addEventListener('click', downloadFaceDrawing);
+      
+      // Find the "Done" button or header action area to position dynamically
+      const doneBtn = root.querySelector('button.primary') || root.querySelector('#feDone') || root.lastElementChild;
+      if (doneBtn && doneBtn.parentNode) {
+        // Insert right before the Done button so they flow naturally together
+        doneBtn.parentNode.style.display = 'flex';
+        doneBtn.parentNode.style.alignItems = 'center';
+        doneBtn.parentNode.style.gap = '10px';
+        doneBtn.parentNode.insertBefore(btn, doneBtn);
+      } else {
+        root.appendChild(btn);
+      }
+    }
+    
+    const fr = (document.documentElement.lang || '').toLowerCase().startsWith('fr');
+    const textSpan = btn.querySelector('.fe-download-text');
+    if (textSpan) {
+      textSpan.textContent = fr ? 'Télécharger en PNG' : 'Download PNG';
+    }
+    btn.title = fr ? 'Télécharger ce dessin en image PNG' : 'Download this drawing as a PNG image';
+  }
+
   function faceSvg(focus, edit, out) {
     if (!out && faceView === 'profile') return profileSvg(focus, edit);
     const plate = out ? out === 'control' : faceStyle === 'plate';
@@ -2158,6 +2250,14 @@
 
   function openFaceEditor(groupId) {
     const root = $('faceEditor') || buildFaceEditor();
+    addFaceDownload(root);
+
+    const fr = (document.documentElement.lang || '').toLowerCase().startsWith('fr');
+    const doneBtn = root.querySelector('#feDone') || root.querySelector('button.primary');
+    if (doneBtn) {
+      doneBtn.textContent = fr ? 'Terminé' : 'Done';
+    }
+
     feFocus = FACE_GROUPS.includes(groupId) ? groupId : 'faceShape';
     root.hidden = false;
     document.body.classList.add('fe-open');
@@ -5403,6 +5503,7 @@
     if (!guideOn) return t('guideOff');
     return mode === 'control' ? t('guideControl') : mode === 'ref' ? t('guideRef') : t('guideNone');
   }
+  // 
   // The details chip: the start of what is written (green), or "Add…" when the field is empty.
   function syncExtraChip() {
     const pop = $('extraPop');
