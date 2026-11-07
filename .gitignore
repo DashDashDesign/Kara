@@ -16,3 +16,8 @@ CLAUDE.md
 apercus.bat
 
 notes/
+
+.claude/skills/
+.claude/hooks/
+CRAFT_ANYTHING/
+.claude/launch.json
