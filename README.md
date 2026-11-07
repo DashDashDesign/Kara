@@ -14,7 +14,7 @@ It runs on **your own ComfyUI** for free, on **Comfy Router** with your Comfy ke
 - **A real face editor.** A live drawing of the face, front or profile, as an anatomy plate or a flat avatar. Drag the points (face width and length, jaw, forehead, brows, eye spacing, size and tilt, nose, mouth and lips, ears, chin): the sliders and the prompt follow, and the sentences sent to the model are shown under the drawing.
 - **10 sheet layouts, 8 looks.** Front, back and face; three-quarter portrait plus full body; turnaround; face from three angles; portrait or full body alone, front, three-quarter or profile. Photoreal, cinematic, illustration, stylized 3D, anime, comics, oil painting or watercolor.
 - **Your references.** Drop one or several pictures of a character to get its sheet, or use pictures only for the outfit, the accessories or the visual style. Kara counts every image it will send and greys out the ones a model cannot take.
-- **26 models, 5 providers, prices and times up front.** The model window shows each provider in turn (your own machine, Comfy Router, KIE, fal, Magnific) with the price and the usual render time of each model, sorts by price or time, filters open weights or API only, and finds a model by name. On your own machine, a model's files install with one click (its size shown first, pausable), and delete just as easily. The menu at the top right shows the balance of each provider you have a key for.
+- **28 models, 5 providers, prices and times up front.** The model window shows each provider in turn (your own machine, Comfy Router, KIE, fal, Magnific) with the price and the usual render time of each model, sorts by price or time, filters open weights or API only, and finds a model by name. On your own machine, a model's files install with one click (its size shown first, pausable), and delete just as easily. The menu at the top right shows the balance of each provider you have a key for.
 - **Made for iteration.** Named history with undo and redo, batches of up to 4 images, seed control, a gallery with favourites and batches, a full screen viewer with zoom and minimap, and a one-file export of the whole session (images included).
 - **Bilingual** (English and French), works on desktop, tablet and phone.
 
@@ -74,10 +74,10 @@ Open **Keys** at the top right of the app. Each provider has its card; a key is 
 | Provider | What you need | Models |
 | --- | --- | --- |
 | **Your own machine** (ComfyUI) | ComfyUI running on `http://127.0.0.1:8188` (the address can be changed in Keys) and an NVIDIA GPU. The **Install the model** button downloads the Z-Image Turbo files (and its ControlNet) into your ComfyUI folders. | Z-Image Turbo, FLUX 3 Klein, Qwen-Image 2.1, MOSS-Image. Free. |
-| **Comfy Router** | A Comfy API key (platform.comfy.org) and Comfy credits, no subscription | Nano Banana (Pro, 2.1, 2, 2 Lite, first version), GPT Image (all three), Seedream 5 (Pro, Lite, Flash), FLUX 3, Krea 3, Ideogram 4.5 |
-| **KIE** (kie.ai) | An API key | Nano Banana (Pro, 2.1, 2, 2 Lite, first version), GPT Image 2, 2.5 Flare and 2.5 Sunburst, Seedream 5 (Pro, Lite, Flash), Qwen-Image 3, 3 Pro and 2.1, FLUX 3 Klein, Z-Image Turbo |
-| **fal** (fal.ai) | An API key | Nano Banana (all five), GPT Image (all three), Seedream 5 (all three), FLUX 3 and FLUX 3 Klein, Krea 3, Ideogram 4.5, MOSS-Image, Z-Image Turbo |
-| **Magnific** | An API key | Nano Banana (Pro, 2.1, 2, first version), GPT Image (all three), Seedream 5 Pro and Lite, Ideogram 4.5, Z-Image Turbo |
+| **Comfy Router** | A Comfy API key (platform.comfy.org) and Comfy credits, no subscription | Nano Banana (Pro, 2.1, 2, 2 Lite, first version), GPT Image 2, 2.5 Flare and 2.5 Sunburst, Seedream 5 (Pro, Lite, Flash), FLUX 3, Krea 3, Ideogram 4.5 |
+| **KIE** (kie.ai) | An API key | Nano Banana (Pro, 2.1, 2, 2 Lite, first version), GPT Image 2, 2.5 and 2.6 (Flare and Sunburst), Seedream 5 (Pro, Lite, Flash), Qwen-Image 3, 3 Pro and 2.1, FLUX 3 Klein, Z-Image Turbo |
+| **fal** (fal.ai) | An API key | Nano Banana (all five), GPT Image 2, 2.5 and 2.6 (Flare and Sunburst), Seedream 5 (all three), FLUX 3 and FLUX 3 Klein, Krea 3, Ideogram 4.5, MOSS-Image, Z-Image Turbo |
+| **Magnific** | An API key | Nano Banana (Pro, 2.1, 2, first version), GPT Image 2, 2.5 Flare and 2.5 Sunburst, Seedream 5 Pro and Lite, Ideogram 4.5, Z-Image Turbo |
 
 When a model exists at several providers, Kara uses the first one you have a key for and remembers your choice per model. Every image keeps the name of the provider that made it.
 

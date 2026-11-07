@@ -2,6 +2,11 @@
 
 Each version, newest first. The section of a version is also the text of its release on GitHub.
 
+## v1.4.3 (7 November 2026)
+
+### New
+- Two new models: GPT Image 2.6 Flare and GPT Image 2.6 Sunburst, with your own KIE or fal key, on your own machine and in the online version. Kara now has 28 models. Their prices in the models window are estimates for now: both providers bill by the token, at the same rates as GPT Image 2.5.
+
 ## v1.4.2 (4 November 2026)
 
 ### New
